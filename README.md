@@ -32,7 +32,7 @@ Once the node has been modified to accept video from the local camera, we have d
 ##### [YOTUBE VIDEO] Selectable Source (Camera Stream).
 [![Selectable Source](https://img.youtube.com/vi/meVvdFs3Vt0/0.jpg)](https://www.youtube.com/watch?v=meVvdFs3Vt0 "")
 ##### [YOTUBE VIDEO] Selectable Source (Output).
-[![Output](https://img.youtube.com/vi/ouDR7TC1_uI/0.jpg)](https://www.youtube.com/watch?v=ouDR7TC1_uI "")
+[![Output](https://img.youtube.com/vi/D8dOrv6z3BM/0.jpg)](https://www.youtube.com/watch?v=D8dOrv6z3BM "")
 
 ## Weeks 3 and 4
 The next steps are to modify the Academy Web Server to store the Notebooks and take advantage of the computer capacity of the student's system (local kernel and remote notebook). With this we will be able to have the Notebook on the Web and connect it with the local camera of each student, without needing them to have the Notebook.
