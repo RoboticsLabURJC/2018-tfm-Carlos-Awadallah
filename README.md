@@ -15,10 +15,11 @@ The video source is selectable by modifying the configuration file of the exerci
 #### Solution
 A solution for the exercise has been proposed in order to verify the correct functioning of the changes made. In addition, an entry has been created in the [developer's forum](https://developers.jderobot.org/t/color-filter-exercise/58) to discuss possible improvements or failures.
 
-![alt text](http://url/to/img.png)
-![alt text](http://url/to/img.png)
-![alt text](http://url/to/img.png)
-![alt text](http://url/to/img.png)
+![Input](https://github.com/RoboticsURJC-students/2018-tfm-Carlos-Awadallah/blob/master/docs/inputImage.png)
+![Smooth](https://github.com/RoboticsURJC-students/2018-tfm-Carlos-Awadallah/blob/master/docs/smoothImage.png)
+![HSV](https://github.com/RoboticsURJC-students/2018-tfm-Carlos-Awadallah/blob/master/docs/hsvImage.png)
+![Threshold](https://github.com/RoboticsURJC-students/2018-tfm-Carlos-Awadallah/blob/master/docs/thresholdImage.png)
+![Output](https://github.com/RoboticsURJC-students/2018-tfm-Carlos-Awadallah/blob/master/docs/filteredImage.png)
 
 #### CamServerWeb + CamVizWeb
 In the future we will try to make a new version of this practice via WebRTC + Electron. We started this path by running the JdeRobot [CamServerWeb + CamVizWeb tutorial](https://jderobot.org/Tutorials#Cameraserver-web_.2B_Cameraview-web), with recently developed tools. We found some execution problems related to incompatibilities between RosBridgeServer and some Python packages. We modified this tutorial and the installation instructions to incorporate the solution to the problem.
