@@ -30,9 +30,9 @@ In the future we will try to make a new version of this practice via WebRTC + El
 Once the node has been modified to accept video from the local camera, we have done the same with the Jupyter Notebook version. This new booklet also accepts different configurable video sources. The main one will be to obtain the flow of the student's local camera with OpenCV.
 
 ##### [YOTUBE VIDEO] Selectable Source (Camera Stream).
-[![Selectable Source](https://www.youtube.com/watch?v=meVvdFs3Vt0/0.jpg)](https://www.youtube.com/watch?v=meVvdFs3Vt0 "")
+[![Selectable Source](https://img.youtube.com/vi/meVvdFs3Vt0/0.jpg)](https://www.youtube.com/watch?v=meVvdFs3Vt0 "")
 ##### [YOTUBE VIDEO] Selectable Source (Output).
-[![Output](https://www.youtube.com/watch?v=ouDR7TC1_uI/0.jpg)](https://www.youtube.com/watch?v=ouDR7TC1_uI "")
+[![Output](https://img.youtube.com/vi/ouDR7TC1_uI/0.jpg)](https://www.youtube.com/watch?v=ouDR7TC1_uI "")
 
 ## Weeks 3 and 4
 The next steps are to modify the Academy Web Server to store the Notebooks and take advantage of the computer capacity of the student's system (local kernel and remote notebook). With this we will be able to have the Notebook on the Web and connect it with the local camera of each student, without needing them to have the Notebook.
@@ -56,6 +56,6 @@ We fine-tune details and complete the Jupyter Notebook of the Color Filter pract
 We have added a button that allows the student to print several consecutive frames in the Notebook (both the video of the camera and the successive images segmented by his/her algorithm).
 
 ##### [YOTUBE VIDEO] Button to print Video (Camera Stream).
-[![Print Video Button](https://www.youtube.com/watch?v=ouDR7TC1_uI/0.jpg)](https://www.youtube.com/watch?v=ouDR7TC1_uI "")
+[![Print Video Button](https://img.youtube.com/vi/ouDR7TC1_uI/0.jpg)](https://www.youtube.com/watch?v=ouDR7TC1_uI "")
 ##### [YOTUBE VIDEO] Button to print Video (Filtered Images).
-[![Print Video Button](https://www.youtube.com/watch?v=Qq9KgkcM5FU/0.jpg)](https://www.youtube.com/watch?v=Qq9KgkcM5FU "")
+[![Print Video Button](https://img.youtube.com/vi/Qq9KgkcM5FU/0.jpg)](https://www.youtube.com/watch?v=Qq9KgkcM5FU "")
