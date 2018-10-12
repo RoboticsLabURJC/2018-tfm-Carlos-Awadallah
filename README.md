@@ -59,3 +59,22 @@ We have added a button that allows the student to print several consecutive fram
 [![Print Video Button](https://img.youtube.com/vi/ouDR7TC1_uI/0.jpg)](https://www.youtube.com/watch?v=ouDR7TC1_uI "")
 ##### [YOTUBE VIDEO] Button to print Video (Filtered Images).
 [![Print Video Button](https://img.youtube.com/vi/Qq9KgkcM5FU/0.jpg)](https://www.youtube.com/watch?v=Qq9KgkcM5FU "")
+
+## Week 7
+On the occasion of the celebration of [IROS2018](https://www.iros2018.org/) in Madrid, and the contribution of JdeRobot to the conference with the [Program-A-Robot-2018](https://jderobot.org/Program-A-Robot-2018) contest, we have made a break to help in the organization and participate in it. During this week I prepared solutions for the two exercises proposed for the contest: 
+
+Cat & Mouse
+![catmouse](http://jderobot.org/store/jmplaza/uploads/campeonato-drones/dronecatmouse.jpg)
+
+Escape from the hangar
+![hangar](http://jderobot.org/store/jmplaza/uploads/campeonato-drones/hangar.jpg)
+
+### Competition 
+##### [YOTUBE VIDEO] Execution during the competition.
+[![catmousecompetition](https://img.youtube.com/vi/Qq9KgkcM5FU/0.jpg)](https://www.youtube.com/watch?v=Qq9KgkcM5FU "")
+
+### Research
+In parallel I have started an investigation to discover tools with which to refine the visualization of the Color Filter practice.
+
+### Beta-testing
+Due to recent advances in new practices, I have acted as a beta-tester of the [Chrono](https://github.com/PabloMorenoVera/Academy/tree/master/exercises/chrono) practice, with which JdeRobot-Academy will soon be expanded:
