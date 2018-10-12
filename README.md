@@ -71,7 +71,7 @@ Escape from the hangar
 
 ### Competition 
 ##### [YOTUBE VIDEO] Execution during the competition.
-[![catmousecompetition](https://img.youtube.com/vi/Qq9KgkcM5FU/0.jpg)](https://www.youtube.com/watch?v=Qq9KgkcM5FU "")
+[![catmousecompetition](https://img.youtube.com/vi/V7mwVIvlWqk/0.jpg)](https://www.youtube.com/watch?v=V7mwVIvlWqk "")
 
 ### Research
 In parallel I have started an investigation to discover tools with which to refine the visualization of the Color Filter practice.
@@ -81,3 +81,42 @@ Due to recent advances in new practices, I have acted as a beta-tester of the [C
 
 ![Chrono World](https://github.com/RoboticsURJC-students/2018-tfm-Carlos-Awadallah/blob/master/docs/chrono1.png)
 ![Chrono GUI](https://github.com/RoboticsURJC-students/2018-tfm-Carlos-Awadallah/blob/master/docs/chrono2.png)
+
+## Week 8
+As part of the refinement of the visualization and the interaction with the Jupyter Notebook of the Color Filter exercise, I have found and tested a series of tools not officially related to the IPython development team that allow to add functionality to the Jupyter Notebook. These extensions are mostly written in Javascript and will be loaded locally in client's browser. These are the [nbextensions](https://github.com/ipython-contrib/jupyter_contrib_nbextensions).
+
+The link above contains a brief description of the repository and the extensions, a recipe for the installation and a user guide. I've installed as shown and tested two of the extensions provided: Initialization Cells and Hide Cell. When finishing the installation, a new section in the tree section toolbar is added:
+
+![nbextensions](https://github.com/RoboticsURJC-students/2018-tfm-Carlos-Awadallah/blob/master/docs/nbextensions1.png)
+
+### Initialization Cells
+Once installed, you can enable this extensions via [jupyter_nbextensions_configurator](https://github.com/Jupyter-contrib/jupyter_nbextensions_configurator):
+![jupyter_nbextensions_configurator](https://github.com/RoboticsURJC-students/2018-tfm-Carlos-Awadallah/blob/master/docs/nbextensions2.png)
+
+You may have problems by enabling this way due to lacks of permissions (depending on your system). If so, just open a temrinal and type:
+```
+sudo jupyter nbextension enable init_cell/main
+```
+Once enabled, selecting the necessary toolbars for each extension as shown,
+![toolbars](https://github.com/RoboticsURJC-students/2018-tfm-Carlos-Awadallah/blob/master/docs/nbextensions5.png) 
+a toolbar is added to each cell with options to mark the cell as "initialization cell", in such a way that when reloading the page (and restarting the kernel) the marked cells will autoexecute:
+
+![checkbox](https://github.com/RoboticsURJC-students/2018-tfm-Carlos-Awadallah/blob/master/docs/nbextensions3.png) 
+
+### Hide Cells
+Similar to the previous extension, there is another one that allows to hide the marked cells. Together with the previous one, the use of these extensions will help me to create a button in the Notebook without the code that generates it being visible.
+
+Again, we need to enable this extension using the Jupyter nbextensions Configurator, or running:
+```
+sudo jupyter nbextension enable hide_input/main
+```
+Then, as shown [here](https://jupyter-contrib-nbextensions.readthedocs.io/en/latest/nbextensions/hide_input/readme.html), we need to mark the cell to be hidden. I've done it by modifying cell's metadata:
+
+![metadata](https://github.com/RoboticsURJC-students/2018-tfm-Carlos-Awadallah/blob/master/docs/nbextensions4.png)
+
+THE RESULT IS THE FOLLOWING:
+##### [YOTUBE VIDEO] Result of the extensions 'Initialization Cells' added to Color Filter Notebook.
+[![catmousecompetition](https://img.youtube.com/vi/e2_fgAAeLx4/0.jpg)](https://www.youtube.com/watch?v=e2_fgAAeLx4 "")
+
+
+
