@@ -1,5 +1,14 @@
 # 2018-tfm-Carlos-Awadallah
 
+## Week 10
+To make the experience of the users of this exercise easier, we have decided to implement buttons that act as interactive widgets between the student and the Notebook, which will be responsible for executing the actions implemented on Week 9, both the academic pause and the visualization (the latter can be activated or deactivated whenever the student wants).
+
+We have improved the visualization loop to show filtered images every second, and also to display a warning message if a filtered image has not been established yet. 
+All these widgets will be responsible, in addition, to manage the cleaning of the output of the cell where the code is executed, in such a way that the student does not need to restart the kernel or leave the booklet to solve the exercise and debug it.
+
+##### [YOTUBE VIDEO] Buttons for Play, Pause and Visualization On/Off
+[![buttons](https://img.youtube.com/vi/00w6aofU95A/0.jpg)](https://www.youtube.com/watch?v=00w6aofU95A "")
+
 ## Week 9
 
 ### Visualization Loop
