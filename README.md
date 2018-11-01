@@ -13,6 +13,7 @@ We are close to integrating this new exercise in the JdeRobot-Academy web practi
 We also did some research in other tools that allow us to enrich the functionality and intuitiveness of the exercises:
   - JupyterLab
   - Extensions
+  
 And also another ones to get closer to local execution of Notebooks stored on a remote server.
   
 
