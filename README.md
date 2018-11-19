@@ -1,5 +1,19 @@
 # 2018-tfm-Carlos-Awadallah
 
+## Week 13
+
+The first thing we have done is to try to study the Google Colab solution. We have uploaded one of our Notebooks to their server as a test, and we have used the tools they offer to connect to a local execution environment (https://research.google.com/colaboratory/local-runtimes.html)
+
+![local_runtimes](https://github.com/RoboticsURJC-students/2018-tfm-Carlos-Awadallah/blob/master/docs/local_runtimes_colab.png)
+
+To try to get an idea of its behaviour, I used Wireshark to capture the traffic in my Loopback interface on the port where I had launched the kernel that the Colab server was connected.
+
+![wireshark](https://github.com/RoboticsURJC-students/2018-tfm-Carlos-Awadallah/blob/master/docs/wireshark_loclruntimes.png)
+
+I tried to connect the server without having launched the kernel and to kill the kernel while connected with no revealing results: the server just reconnected to a kernel on the reomote server and still working.
+
+At this point, I have thoroughly studied the communication between the Notebook Server and the Jupyter Kernel.
+
 ## Week 12
 
 At this point, we need to explore possible ways to make the Notebook, stored on the Academy server (remote), execute the code using the local hardware (Local Jupyter Kernel).
