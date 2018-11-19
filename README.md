@@ -8,7 +8,7 @@ The first thing we have done is to try to study the Google Colab solution. We ha
 
 To try to get an idea of its behaviour, I used Wireshark to capture the traffic in my Loopback interface on the port where I had launched the kernel that the Colab server was connected.
 
-![wireshark](https://github.com/RoboticsURJC-students/2018-tfm-Carlos-Awadallah/blob/master/docs/wireshark_loclruntimes.png)
+![wireshark](https://github.com/RoboticsURJC-students/2018-tfm-Carlos-Awadallah/blob/master/docs/wireshark_localruntimes.png)
 
 I tried to connect the server without having launched the kernel and to kill the kernel while connected with no revealing results: the server just reconnected to a kernel on the reomote server and still working.
 
