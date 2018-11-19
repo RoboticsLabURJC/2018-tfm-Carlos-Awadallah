@@ -5,8 +5,8 @@
 At this point, we need to explore possible ways to make the Notebook, stored on the Academy server (remote), execute the code using the local hardware (Local Jupyter Kernel).
 This is possible through local execution environments, such as the [Google Collaborative solution](https://research.google.com/colaboratory/local-runtimes.html). For this, it is necessary to incorporate an extension to the kernel of jupyter, enable it, and replace the ZeroMQ protocol in charge of the communication between Jupyter frontends and kernels by a solution that allows to "deceive" the local browser so that certain things coming from the server are sent to the jupyter local kernel, in such a way that the Notebook Server will connect with the browser and the browser with the jupyter kernel => JdeRobot Colaboratory
 
-In principle, this script should work: ![typescript](https://www.npmjs.com/package/@jupyterlab/services)
-repo: ![repo](https://github.com/jupyterlab/jupyterlab/tree/master/packages/services)
+In principle, this script should work: (https://www.npmjs.com/package/@jupyterlab/services)
+repo: (https://github.com/jupyterlab/jupyterlab/tree/master/packages/services)
 
 The next weeks will be devoted to the investigation of these routes and the search for a possible solution to the problem, to achieve full local execution of the Color Filter Notebook.
 
