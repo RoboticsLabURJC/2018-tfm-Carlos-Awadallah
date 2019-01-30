@@ -1,5 +1,13 @@
 # 2018-tfm-Carlos-Awadallah
 
+# Week 20
+We have built the first version of the test server through Django. This server simply waits for requests, and when it receives a "start exercise" type request, it simply serves the appropriate Notebook (this time there is only one exercise available) through the REST API, to a kernel that the user must launch (in this case, in a different port).
+![TEST SERVER](https://github.com/RoboticsURJC-students/2018-tfm-Carlos-Awadallah/blob/master/docs/TEST_SERVER.png)
+Through the POST operation and establishing the appropriate route, the body of the HTTP message with the correct options and the appropriate security headers (through the token that the Notebook Server establishes to create user sessions), we get the Kernel to receive the Notebook:
+![POST](https://github.com/RoboticsURJC-students/2018-tfm-Carlos-Awadallah/blob/master/docs/POST_REST_API.png)
+
+We have to study the options for the client to request the rest of the code files on which the Notebook depends (back-end of the exercise). We also have to study the possibilities to try to replace the token with the cookies that the Notebook Server establishes in the browser when it is launched.
+
 # Week 19
 We started working on a test server. We explore two routes:
 
