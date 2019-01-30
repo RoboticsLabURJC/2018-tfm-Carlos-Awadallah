@@ -1,5 +1,12 @@
 # 2018-tfm-Carlos-Awadallah
 
+# Week 21
+The next step is to remotely start (via messages from our test web server) a Jupyter session and a kernel associated with the Notebook that has been sent. We use other REST API operations (duly completed), sent to the appropriate routes to start and connect everything.
+
+For debugging purposes and to verify the operation and execution of the code by the kernel that has been launched in the client, we studied the options of embed the Notebook on the web that serves the test server. It may be necessary to re-write the jupyter configuration file, to tweak the security options (XSRF) of the Tornado server on which the Notebooks server is mounted. We focus on using <iframe>.
+  
+Up to this point, all the agents involved are correctly started, and the kernel seems to be ready to receive execution requests associated with the code of the Notebook from the web.
+
 # Week 20
 We have built the first version of the test server through Django. This server simply waits for requests, and when it receives a "start exercise" type request, it simply serves the appropriate Notebook (this time there is only one exercise available) through the REST API, to a kernel that the user must launch (in this case, in a different port).
 ![TEST SERVER](https://github.com/RoboticsURJC-students/2018-tfm-Carlos-Awadallah/blob/master/docs/TEST_SERVER.png)
