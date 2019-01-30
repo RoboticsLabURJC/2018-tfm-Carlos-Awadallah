@@ -1,5 +1,18 @@
 # 2018-tfm-Carlos-Awadallah
 
+## Week 18
+We finish studying the traces that the source code of Jupyter prints to know what is happening during the establishment of the communication. We also studied the [extension](https://github.com/googlecolab/jupyter_http_over_ws/blob/master/jupyter_http_over_ws/handlers.py) of Colaboratory to embed the HTTP communication in the WebSockets protocol, to later adapt this solution to avoid problems with the users' firewalls, since the jupyter infrastructure allows it to be used to package the ZMQ messages.
+
+We studied the possibility of installing Jupyter from source to change the main files for others with the retouched code to print more traces, and to observe more clearly the steps that are followed. We also started to explore other tools such as the Jupyter REST API.
+
+## Weeks 16 and 17
+
+Now it's time to deepen the distribution of Jupyter through the code files accessible from the browser (session.js and kernel.js mainly) to fully understanding the tools we can use to achieve the objectives of local runtimes for Jupyter Notebooks .
+
+We also used some sniffers to monitor the communication between the Colaboratory server and the browser, and between the last and the local kernel to check how the communication was resolved (involving the HTTP and WebSockets protocols).
+
+I uploaded the resources that the Notebook incorporates to a [Github Pages' repository](https://github.com/RoboticsURJC-students/2018-tfm-Carlos-Awadallah/tree/master/docs) to be able to link them via HTTP with the Notebook, so that they are visible without the end user having to download them. These resources will be moved to the web server when we have built the final version.
+
 ## Week 15
 
 We have continued doing research of the colaboratory infrastructure to adapt the exercise Notebook so that it could work normally on the Google server, allowing the visualization loop. In addition, we have rulet out using integrated widgets in the Notebook since Colaboratory does not have support for custom messages, only has certain widgets adapted for machine leraning that do not work for us. The possibility of including buttons in the front-end will be investigated. This is the result of the running Notebook through a mixed connection:
