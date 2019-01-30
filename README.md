@@ -1,5 +1,15 @@
 # 2018-tfm-Carlos-Awadallah
 
+# Week 22
+We perform a series of tests to verify that the kernel that executes the code is the right one (the one that we started remotely in the client's Notebook Server). We check that by interrupting the kernel in the client, the Notebook code of the test website can no longer be executed. The next test will be already using two different machines.
+
+We also implemented a way to collect the filled Notebook with the code retouched by the user. The test server, when a certain event occurs (according to predictions of whether the client has made a change in the iframe), will request the kernel to send the current version of the Notebook. In addition, when the user clicks on a button to exit the exercise, this latest version will also be requested, and will be stored on the test server.
+
+##### [YOTUBE VIDEO] Mixed Execution (Remote Web Server + Local Notenook Server + Local Kernel) FIRST VERSION
+[![mixed execution 2](https://img.youtube.com/vi/2BqTAunmx30/0.jpg)](https://www.youtube.com/watch?v=2BqTAunmx30 "")
+
+We continue investigating how to use browser cookies. Django [sessions](https://docs.djangoproject.com/en/2.1/topics/http/sessions/) may be necessary.
+
 # Week 21
 The next step is to remotely start (via messages from our test web server) a Jupyter session and a kernel associated with the Notebook that has been sent. We use other REST API operations (duly completed), sent to the appropriate routes to start and connect everything.
 
