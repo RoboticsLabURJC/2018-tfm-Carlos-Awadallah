@@ -1,5 +1,16 @@
 # 2018-tfm-Carlos-Awadallah
 
+# Week 19
+We started working on a test server. We explore two routes:
+
+- Open the client's docker ports, so that it uses the self-contained docker of Academy (gazebo + gazeo web + notebook server + jupyter kernel). The web server authenticates itself in github and collects the private Notebook with secure copy and copies it to the docker of the machine. This works, but we can not ask users to tweak the status of the ports on their computer.
+
+- Notebook Server + Kernel on the client side. The remote server (web server) puts the notebook in the directory where the Notebook Server is running (local), and then sends orders to it in order to work normal. We need to understand the HTTP API that the Notebook Server uses (in search of an operation that says, for example, take this Notebook). We suspect that we would need HTTP from browser to web server and local WebSockets from the browser to the notebook server.
+
+Since the second option is the most interesting, we studied the [REST API](https://github.com/jupyter/jupyter/wiki/Jupyter-Notebook-Server-API), that contains some operations that can be useful to us.
+
+![REST API](https://github.com/RoboticsURJC-students/2018-tfm-Carlos-Awadallah/blob/master/docs/REST_API.png)
+
 ## Week 18
 We finish studying the traces that the source code of Jupyter prints to know what is happening during the establishment of the communication. We also studied the [extension](https://github.com/googlecolab/jupyter_http_over_ws/blob/master/jupyter_http_over_ws/handlers.py) of Colaboratory to embed the HTTP communication in the WebSockets protocol, to later adapt this solution to avoid problems with the users' firewalls, since the jupyter infrastructure allows it to be used to package the ZMQ messages.
 
