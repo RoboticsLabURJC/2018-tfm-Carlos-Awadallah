@@ -5,7 +5,7 @@ We perform a series of tests to verify that the kernel that executes the code is
 
 We also implemented a way to collect the filled Notebook with the code retouched by the user. The test server, when a certain event occurs (according to predictions of whether the client has made a change in the iframe), will request the kernel to send the current version of the Notebook. In addition, when the user clicks on a button to exit the exercise, this latest version will also be requested, and will be stored on the test server.
 
-##### [YOTUBE VIDEO] Mixed Execution (Remote Web Server + Local Notenook Server + Local Kernel) FIRST VERSION
+##### [YOUTUBE VIDEO] Mixed Execution (Remote Web Server + Local Notenook Server + Local Kernel) FIRST VERSION
 [![mixed execution 2](https://img.youtube.com/vi/2BqTAunmx30/0.jpg)](https://www.youtube.com/watch?v=2BqTAunmx30 "")
 
 We continue investigating how to use browser cookies. Django [sessions](https://docs.djangoproject.com/en/2.1/topics/http/sessions/) may be necessary.
@@ -52,7 +52,7 @@ I uploaded the resources that the Notebook incorporates to a [Github Pages' repo
 ## Week 15
 
 We have continued doing research of the colaboratory infrastructure to adapt the exercise Notebook so that it could work normally on the Google server, allowing the visualization loop. In addition, we have rulet out using integrated widgets in the Notebook since Colaboratory does not have support for custom messages, only has certain widgets adapted for machine leraning that do not work for us. The possibility of including buttons in the front-end will be investigated. This is the result of the running Notebook through a mixed connection:
-##### [YOTUBE VIDEO] Mixed Execution (Remote Server + Local Kernel) Through Google Colaboratory
+##### [YOUTUBE VIDEO] Mixed Execution (Remote Server + Local Kernel) Through Google Colaboratory
 [![mixed execution](https://img.youtube.com/vi/oF6kp_x16M4/0.jpg)](https://www.youtube.com/watch?v=oF6kp_x16M4 "")
 
 We will now focus on the study of the sessions and the kernel that jupyter uses for messaging, to extract the connection information (URL) from a new local kernel and connect to it from the browser.
@@ -110,7 +110,7 @@ To make the experience of the users of this exercise easier, we have decided to 
 We have improved the visualization loop to show filtered images every second, and also to display a warning message if a filtered image has not been established yet. 
 All these widgets will be responsible, in addition, to manage the cleaning of the output of the cell where the code is executed, in such a way that the student does not need to restart the kernel or leave the booklet to solve the exercise and debug it.
 
-##### [YOTUBE VIDEO] Buttons for Play, Pause and Visualization On/Off
+##### [YOUTUBE VIDEO] Buttons for Play, Pause and Visualization On/Off
 [![buttons](https://img.youtube.com/vi/00w6aofU95A/0.jpg)](https://www.youtube.com/watch?v=00w6aofU95A "")
 
 ## Week 9
@@ -118,13 +118,13 @@ All these widgets will be responsible, in addition, to manage the cleaning of th
 ### Visualization Loop
 Taking advantage of the infinite loop of the iterative method that executes the algorithm of the students, we have programmed the visualization of the filtered images resulting from the execution of said algorithm in the loop, sampling every certain iterations to print a filtered image in the Notebook every 3 seconds. With this, we extended the set of debugging tools for this exercise:
 
-##### [YOTUBE VIDEO] Visualization Loop printing filtered images each 3sec
+##### [YOUTUBE VIDEO] Visualization Loop printing filtered images each 3sec
 [![visloop](https://img.youtube.com/vi/BBZKI12Hxtg/0.jpg)](https://www.youtube.com/watch?v=BBZKI12Hxtg "")
 
 ### Academic Pause
 To make it easier for students to complete the task, we have modified the Notebook of this exercise so that it follows a "Live Programming" philosophy, with which students have tools to pause the execution of the code, make changes to their algorithm and rerun their code with the changes made, all without having to restart the kernel or leave the Notebook:
 
-##### [YOTUBE VIDEO] Academic Pause
+##### [YOUTUBE VIDEO] Academic Pause
 [![academicpause](https://img.youtube.com/vi/lGeGHJZUxpY/0.jpg)](https://www.youtube.com/watch?v=lGeGHJZUxpY "")
 
 ## Week 8
@@ -160,7 +160,7 @@ Then, as shown [here](https://jupyter-contrib-nbextensions.readthedocs.io/en/lat
 ![metadata](https://github.com/RoboticsURJC-students/2018-tfm-Carlos-Awadallah/blob/master/docs/nbextensions4.png)
 
 THE RESULT IS THE FOLLOWING:
-##### [YOTUBE VIDEO] Result of the extensions 'Initialization Cells' added to Color Filter Notebook.
+##### [YOUTUBE VIDEO] Result of the extensions 'Initialization Cells' added to Color Filter Notebook.
 [![catmousecompetition](https://img.youtube.com/vi/e2_fgAAeLx4/0.jpg)](https://www.youtube.com/watch?v=e2_fgAAeLx4 "")
 
 ## Week 7
@@ -173,7 +173,7 @@ Escape from the hangar
 ![hangar](http://jderobot.org/store/jmplaza/uploads/campeonato-drones/hangar.jpg)
 
 ### Competition 
-##### [YOTUBE VIDEO] Execution during the competition.
+##### [YOUTUBE VIDEO] Execution during the competition.
 [![catmousecompetition](https://img.youtube.com/vi/V7mwVIvlWqk/0.jpg)](https://www.youtube.com/watch?v=V7mwVIvlWqk "")
 
 ### Research
@@ -208,9 +208,9 @@ We also started to explore the new WebSim tool for future projects.
 #### Selectable Video Source (Color Filter Notebook)
 Once the node has been modified to accept video from the local camera, we have done the same with the Jupyter Notebook version. This new booklet also accepts different configurable video sources. The main one will be to obtain the flow of the student's local camera with OpenCV.
 
-##### [YOTUBE VIDEO] Selectable Source (Camera Stream).
+##### [YOUTUBE VIDEO] Selectable Source (Camera Stream).
 [![Selectable Source](https://img.youtube.com/vi/meVvdFs3Vt0/0.jpg)](https://www.youtube.com/watch?v=meVvdFs3Vt0 "")
-##### [YOTUBE VIDEO] Selectable Source (Output).
+##### [YOUTUBE VIDEO] Selectable Source (Output).
 [![Output](https://img.youtube.com/vi/D8dOrv6z3BM/0.jpg)](https://www.youtube.com/watch?v=D8dOrv6z3BM "")
 
 ## Week 1
@@ -240,7 +240,7 @@ In the future we will try to make a new version of this practice via WebRTC + El
 ### Add-Ons
 We have added a button that allows the student to print several consecutive frames in the Notebook (both the video of the camera and the successive images segmented by his/her algorithm).
 
-##### [YOTUBE VIDEO] Button to print Video (Camera Stream).
+##### [YOUTUBE VIDEO] Button to print Video (Camera Stream).
 [![Print Video Button](https://img.youtube.com/vi/ouDR7TC1_uI/0.jpg)](https://www.youtube.com/watch?v=ouDR7TC1_uI "")
-##### [YOTUBE VIDEO] Button to print Video (Filtered Images).
+##### [YOUTUBE VIDEO] Button to print Video (Filtered Images).
 [![Print Video Button](https://img.youtube.com/vi/Qq9KgkcM5FU/0.jpg)](https://www.youtube.com/watch?v=Qq9KgkcM5FU "")
