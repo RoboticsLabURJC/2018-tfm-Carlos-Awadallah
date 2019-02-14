@@ -1,5 +1,14 @@
 # 2018-tfm-Carlos-Awadallah
 
+# Week 24
+We went to perform the tests on different machines. For this, a first machine has been used to run the web server with Django technology, which will be waiting to receive the request for the ColorFilter exercise that was adapted last week. A second machine will act as a client, where the Jupyter server will be run, which will wait to receive orders from the web server to obtain, execute, modify and re-send the Notebook based on the interaction with the human user. A video example of the two-machine mixed execution is shown on the next video:
+
+##### [YOUTUBE VIDEO] Mixed Execution Testing with Two Machines
+[![mixed execution 2 machines](https://img.youtube.com/vi/nGDd6HG124s/0.jpg)](https://www.youtube.com/watch?v=nGDd6HG124s "")
+
+Given that the current option involves sending several code and configuration files that support the exercise, we began to study ways to minimize Python code.
+
+
 # Week 23
 To test the mixed execution implemented, this week has focused on adapting the ColorFilter Notebook to connect to the available webcam and operate normally on the customer's machine. This includes sending the back-end files of the exercise, for which different mechanisms have been studied among which are: take advantage of the REST API with the necessary format, investigate the Python web import mechanisms and also the systems of packaging of files of this language. For now, the best option is to continue with the REST API, although we leave the other options open for later review.
 
@@ -10,7 +19,7 @@ We perform a series of tests to verify that the kernel that executes the code is
 
 We also implemented a way to collect the filled Notebook with the code retouched by the user. The test server, when a certain event occurs (according to predictions of whether the client has made a change in the iframe), will request the kernel to send the current version of the Notebook. In addition, when the user clicks on a button to exit the exercise, this latest version will also be requested, and will be stored on the test server.
 
-##### [YOUTUBE VIDEO] Mixed Execution (Remote Web Server + Local Notenook Server + Local Kernel) FIRST VERSION
+##### [YOUTUBE VIDEO] Mixed Execution (Remote Web Server + Local Notebook Server + Local Kernel) FIRST VERSION
 [![mixed execution 2](https://img.youtube.com/vi/2BqTAunmx30/0.jpg)](https://www.youtube.com/watch?v=2BqTAunmx30 "")
 
 We continue investigating how to use browser cookies. Django [sessions](https://docs.djangoproject.com/en/2.1/topics/http/sessions/) may be necessary.
