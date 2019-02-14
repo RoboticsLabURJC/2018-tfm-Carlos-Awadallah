@@ -1,5 +1,10 @@
 # 2018-tfm-Carlos-Awadallah
 
+# Week 23
+To test the mixed execution implemented, this week has focused on adapting the ColorFilter Notebook to connect to the available webcam and operate normally on the customer's machine. This includes sending the back-end files of the exercise, for which different mechanisms have been studied among which are: take advantage of the REST API with the necessary format, investigate the Python web import mechanisms and also the systems of packaging of files of this language. For now, the best option is to continue with the REST API, although we leave the other options open for later review.
+
+In addition, we have studied the Django sessions and some web mechanisms to replace the token (manual) with the cookie that Jupyter establishes in order to connect to the server, so that later we will substitute the token for that cookie to increase the automation of the process.
+
 # Week 22
 We perform a series of tests to verify that the kernel that executes the code is the right one (the one that we started remotely in the client's Notebook Server). We check that by interrupting the kernel in the client, the Notebook code of the test website can no longer be executed. The next test will be already using two different machines.
 
