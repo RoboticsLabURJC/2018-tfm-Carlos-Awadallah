@@ -1,17 +1,144 @@
 # 2018-tfm-Carlos-Awadallah
 
+# Week 24
+We went to perform the tests on different machines. For this, a first machine has been used to run the web server with Django technology, which will be waiting to receive the request for the ColorFilter exercise that was adapted last week. A second machine will act as a client, where the Jupyter server will be run, which will wait to receive orders from the web server to obtain, execute, modify and re-send the Notebook based on the interaction with the human user. A video example of the two-machine mixed execution is shown on the next video:
+
+##### [YOUTUBE VIDEO] Mixed Execution Testing with Two Machines
+[![mixed execution 2 machines](https://img.youtube.com/vi/nGDd6HG124s/0.jpg)](https://www.youtube.com/watch?v=nGDd6HG124s "")
+
+Given that the current option involves sending several code and configuration files that support the exercise, we began to study ways to minimize Python code.
+
+
+# Week 23
+To test the mixed execution implemented, this week has focused on adapting the ColorFilter Notebook to connect to the available webcam and operate normally on the customer's machine. This includes sending the back-end files of the exercise, for which different mechanisms have been studied among which are: take advantage of the REST API with the necessary format, investigate the Python web import mechanisms and also the systems of packaging of files of this language. For now, the best option is to continue with the REST API, although we leave the other options open for later review.
+
+In addition, we have studied the Django sessions and some web mechanisms to replace the token (manual) with the cookie that Jupyter establishes in order to connect to the server, so that later we will substitute the token for that cookie to increase the automation of the process.
+
+# Week 22
+We perform a series of tests to verify that the kernel that executes the code is the right one (the one that we started remotely in the client's Notebook Server). We check that by interrupting the kernel in the client, the Notebook code of the test website can no longer be executed. The next test will be already using two different machines.
+
+We also implemented a way to collect the filled Notebook with the code retouched by the user. The test server, when a certain event occurs (according to predictions of whether the client has made a change in the iframe), will request the kernel to send the current version of the Notebook. In addition, when the user clicks on a button to exit the exercise, this latest version will also be requested, and will be stored on the test server.
+
+##### [YOUTUBE VIDEO] Mixed Execution (Remote Web Server + Local Notebook Server + Local Kernel) FIRST VERSION
+[![mixed execution 2](https://img.youtube.com/vi/2BqTAunmx30/0.jpg)](https://www.youtube.com/watch?v=2BqTAunmx30 "")
+
+We continue investigating how to use browser cookies. Django [sessions](https://docs.djangoproject.com/en/2.1/topics/http/sessions/) may be necessary.
+
+# Week 21
+The next step is to remotely start (via messages from our test web server) a Jupyter session and a kernel associated with the Notebook that has been sent. We use other REST API operations (duly completed), sent to the appropriate routes to start and connect everything.
+
+For debugging purposes and to verify the operation and execution of the code by the kernel that has been launched in the client, we studied the options of embed the Notebook on the web that serves the test server. It may be necessary to re-write the jupyter configuration file, to tweak the security options (XSRF) of the Tornado server on which the Notebooks server is mounted. We focus on using <iframe>.
+  
+Up to this point, all the agents involved are correctly started, and the kernel seems to be ready to receive execution requests associated with the code of the Notebook from the web.
+
+# Week 20
+We have built the first version of the test server through Django. This server simply waits for requests, and when it receives a "start exercise" type request, it simply serves the appropriate Notebook (this time there is only one exercise available) through the REST API, to a kernel that the user must launch (in this case, in a different port).
+![TEST SERVER](https://github.com/RoboticsURJC-students/2018-tfm-Carlos-Awadallah/blob/master/docs/TEST_SERVER.png)
+Through the POST operation and establishing the appropriate route, the body of the HTTP message with the correct options and the appropriate security headers (through the token that the Notebook Server establishes to create user sessions), we get the Kernel to receive the Notebook:
+![POST](https://github.com/RoboticsURJC-students/2018-tfm-Carlos-Awadallah/blob/master/docs/POST_REST_API.png)
+
+We have to study the options for the client to request the rest of the code files on which the Notebook depends (back-end of the exercise). We also have to study the possibilities to try to replace the token with the cookies that the Notebook Server establishes in the browser when it is launched.
+
+# Week 19
+We started working on a test server. We explore two routes:
+
+- Open the client's docker ports, so that it uses the self-contained docker of Academy (gazebo + gazeo web + notebook server + jupyter kernel). The web server authenticates itself in github and collects the private Notebook with secure copy and copies it to the docker of the machine. This works, but we can not ask users to tweak the status of the ports on their computer.
+
+- Notebook Server + Kernel on the client side. The remote server (web server) puts the notebook in the directory where the Notebook Server is running (local), and then sends orders to it in order to work normal. We need to understand the HTTP API that the Notebook Server uses (in search of an operation that says, for example, take this Notebook). We suspect that we would need HTTP from browser to web server and local WebSockets from the browser to the notebook server.
+
+Since the second option is the most interesting, we studied the [REST API](https://github.com/jupyter/jupyter/wiki/Jupyter-Notebook-Server-API), that contains some operations that can be useful to us.
+
+![REST API](https://github.com/RoboticsURJC-students/2018-tfm-Carlos-Awadallah/blob/master/docs/REST_API.png)
+
+## Week 18
+We finish studying the traces that the source code of Jupyter prints to know what is happening during the establishment of the communication. We also studied the [extension](https://github.com/googlecolab/jupyter_http_over_ws/blob/master/jupyter_http_over_ws/handlers.py) of Colaboratory to embed the HTTP communication in the WebSockets protocol, to later adapt this solution to avoid problems with the users' firewalls, since the jupyter infrastructure allows it to be used to package the ZMQ messages.
+
+We studied the possibility of installing Jupyter from source to change the main files for others with the retouched code to print more traces, and to observe more clearly the steps that are followed. We also started to explore other tools such as the Jupyter REST API.
+
+## Weeks 16 and 17
+
+Now it's time to deepen the distribution of Jupyter through the code files accessible from the browser (session.js and kernel.js mainly) to fully understanding the tools we can use to achieve the objectives of local runtimes for Jupyter Notebooks .
+
+We also used some sniffers to monitor the communication between the Colaboratory server and the browser, and between the last and the local kernel to check how the communication was resolved (involving the HTTP and WebSockets protocols).
+
+I uploaded the resources that the Notebook incorporates to a [Github Pages' repository](https://github.com/RoboticsURJC-students/2018-tfm-Carlos-Awadallah/tree/master/docs) to be able to link them via HTTP with the Notebook, so that they are visible without the end user having to download them. These resources will be moved to the web server when we have built the final version.
+
+## Week 15
+
+We have continued doing research of the colaboratory infrastructure to adapt the exercise Notebook so that it could work normally on the Google server, allowing the visualization loop. In addition, we have rulet out using integrated widgets in the Notebook since Colaboratory does not have support for custom messages, only has certain widgets adapted for machine leraning that do not work for us. The possibility of including buttons in the front-end will be investigated. This is the result of the running Notebook through a mixed connection:
+##### [YOUTUBE VIDEO] Mixed Execution (Remote Server + Local Kernel) Through Google Colaboratory
+[![mixed execution](https://img.youtube.com/vi/oF6kp_x16M4/0.jpg)](https://www.youtube.com/watch?v=oF6kp_x16M4 "")
+
+We will now focus on the study of the sessions and the kernel that jupyter uses for messaging, to extract the connection information (URL) from a new local kernel and connect to it from the browser.
+
+## Week 14
+
+This week we focused on refining the Notebook to find a solution that allows us to preserve the ability to visualize in an iterative loop and the buttons that allow executing or stopping the code and turn on or off the display of filtered images.
+We have studied Colab available widgets: (https://colab.research.google.com/notebooks/widgets.ipynb)
+Some changes need to be made to the infrastructure of the exercise.
+
+## Week 13
+
+The first thing we have done is to try to study the Google Colab solution. We have uploaded one of our Notebooks to their server as a test, and we have used the tools they offer to connect to a local execution environment (https://research.google.com/colaboratory/local-runtimes.html)
+
+![local_runtimes](https://github.com/RoboticsURJC-students/2018-tfm-Carlos-Awadallah/blob/master/docs/local_runtimes_colab.png)
+
+To try to get an idea of its behaviour, I used Wireshark to capture the traffic in my Loopback interface on the port where I had launched the kernel that the Colab server was connected.
+
+![wireshark](https://github.com/RoboticsURJC-students/2018-tfm-Carlos-Awadallah/blob/master/docs/wireshark_localruntimes.png)
+
+I tried to connect the server without having launched the kernel and to kill the kernel while connected with no revealing results: the server just reconnected to a kernel on the reomote server and still working.
+
+At this point, I have thoroughly studied the communication between the Notebook Server and the Jupyter Kernel.
+
+## Week 12
+
+At this point, we need to explore possible ways to make the Notebook, stored on the Academy server (remote), execute the code using the local hardware (Local Jupyter Kernel).
+This is possible through local execution environments, such as the [Google Collaborative solution](https://research.google.com/colaboratory/local-runtimes.html). For this, it is necessary to incorporate an extension to the kernel of jupyter, enable it, and replace the ZeroMQ protocol in charge of the communication between Jupyter frontends and kernels by a solution that allows to "deceive" the local browser so that certain things coming from the server are sent to the jupyter local kernel, in such a way that the Notebook Server will connect with the browser and the browser with the jupyter kernel => JdeRobot Colaboratory
+
+In principle, this script should work: (https://www.npmjs.com/package/@jupyterlab/services)
+repo: (https://github.com/jupyterlab/jupyterlab/tree/master/packages/services)
+
+The next weeks will be devoted to the investigation of these routes and the search for a possible solution to the problem, to achieve full local execution of the Color Filter Notebook.
+
+## Week 11
+
+We have made some improvements in the user experience, such as clear all outputs when the students clicks on any button, so that they won't need to restar the kernel during the coding and debugging process. We have also replaced the "Play Code" and "Pause Code" buttons with an unique toggle "Play Code / Pause Code" button, which is more clear:
+
+![nbextensions](https://github.com/RoboticsURJC-students/2018-tfm-Carlos-Awadallah/blob/master/docs/playtoggle.png)
+
+![nbextensions](https://github.com/RoboticsURJC-students/2018-tfm-Carlos-Awadallah/blob/master/docs/pausetoggle.png)
+
+We are close to integrating this new exercise in the JdeRobot-Academy web practices set, contributing with a new practice in computer vision. The code is already available in [GitLab](https://gitlab.jderobot.org/JdeRobot-Academy/exercises/tree/master/jupyter/color_filter_opencv).
+
+We also did some research in other tools that allow us to enrich the functionality and intuitiveness of the exercises:
+  - JupyterLab
+  - Extensions
+  
+And also another ones to get closer to local execution of Notebooks stored on a remote server.
+  
+
+## Week 10
+To make the experience of the users of this exercise easier, we have decided to implement buttons that act as interactive widgets between the student and the Notebook, which will be responsible for executing the actions implemented on Week 9, both the academic pause and the visualization (the latter can be activated or deactivated whenever the student wants).
+
+We have improved the visualization loop to show filtered images every second, and also to display a warning message if a filtered image has not been established yet. 
+All these widgets will be responsible, in addition, to manage the cleaning of the output of the cell where the code is executed, in such a way that the student does not need to restart the kernel or leave the booklet to solve the exercise and debug it.
+
+##### [YOUTUBE VIDEO] Buttons for Play, Pause and Visualization On/Off
+[![buttons](https://img.youtube.com/vi/00w6aofU95A/0.jpg)](https://www.youtube.com/watch?v=00w6aofU95A "")
+
 ## Week 9
 
 ### Visualization Loop
 Taking advantage of the infinite loop of the iterative method that executes the algorithm of the students, we have programmed the visualization of the filtered images resulting from the execution of said algorithm in the loop, sampling every certain iterations to print a filtered image in the Notebook every 3 seconds. With this, we extended the set of debugging tools for this exercise:
 
-##### [YOTUBE VIDEO] Visualization Loop printing filtered images each 3sec
+##### [YOUTUBE VIDEO] Visualization Loop printing filtered images each 3sec
 [![visloop](https://img.youtube.com/vi/BBZKI12Hxtg/0.jpg)](https://www.youtube.com/watch?v=BBZKI12Hxtg "")
 
 ### Academic Pause
 To make it easier for students to complete the task, we have modified the Notebook of this exercise so that it follows a "Live Programming" philosophy, with which students have tools to pause the execution of the code, make changes to their algorithm and rerun their code with the changes made, all without having to restart the kernel or leave the Notebook:
 
-##### [YOTUBE VIDEO] Academic Pause
+##### [YOUTUBE VIDEO] Academic Pause
 [![academicpause](https://img.youtube.com/vi/lGeGHJZUxpY/0.jpg)](https://www.youtube.com/watch?v=lGeGHJZUxpY "")
 
 ## Week 8
@@ -47,7 +174,7 @@ Then, as shown [here](https://jupyter-contrib-nbextensions.readthedocs.io/en/lat
 ![metadata](https://github.com/RoboticsURJC-students/2018-tfm-Carlos-Awadallah/blob/master/docs/nbextensions4.png)
 
 THE RESULT IS THE FOLLOWING:
-##### [YOTUBE VIDEO] Result of the extensions 'Initialization Cells' added to Color Filter Notebook.
+##### [YOUTUBE VIDEO] Result of the extensions 'Initialization Cells' added to Color Filter Notebook.
 [![catmousecompetition](https://img.youtube.com/vi/e2_fgAAeLx4/0.jpg)](https://www.youtube.com/watch?v=e2_fgAAeLx4 "")
 
 ## Week 7
@@ -60,7 +187,7 @@ Escape from the hangar
 ![hangar](http://jderobot.org/store/jmplaza/uploads/campeonato-drones/hangar.jpg)
 
 ### Competition 
-##### [YOTUBE VIDEO] Execution during the competition.
+##### [YOUTUBE VIDEO] Execution during the competition.
 [![catmousecompetition](https://img.youtube.com/vi/V7mwVIvlWqk/0.jpg)](https://www.youtube.com/watch?v=V7mwVIvlWqk "")
 
 ### Research
@@ -95,9 +222,9 @@ We also started to explore the new WebSim tool for future projects.
 #### Selectable Video Source (Color Filter Notebook)
 Once the node has been modified to accept video from the local camera, we have done the same with the Jupyter Notebook version. This new booklet also accepts different configurable video sources. The main one will be to obtain the flow of the student's local camera with OpenCV.
 
-##### [YOTUBE VIDEO] Selectable Source (Camera Stream).
+##### [YOUTUBE VIDEO] Selectable Source (Camera Stream).
 [![Selectable Source](https://img.youtube.com/vi/meVvdFs3Vt0/0.jpg)](https://www.youtube.com/watch?v=meVvdFs3Vt0 "")
-##### [YOTUBE VIDEO] Selectable Source (Output).
+##### [YOUTUBE VIDEO] Selectable Source (Output).
 [![Output](https://img.youtube.com/vi/D8dOrv6z3BM/0.jpg)](https://www.youtube.com/watch?v=D8dOrv6z3BM "")
 
 ## Week 1
@@ -127,7 +254,7 @@ In the future we will try to make a new version of this practice via WebRTC + El
 ### Add-Ons
 We have added a button that allows the student to print several consecutive frames in the Notebook (both the video of the camera and the successive images segmented by his/her algorithm).
 
-##### [YOTUBE VIDEO] Button to print Video (Camera Stream).
+##### [YOUTUBE VIDEO] Button to print Video (Camera Stream).
 [![Print Video Button](https://img.youtube.com/vi/ouDR7TC1_uI/0.jpg)](https://www.youtube.com/watch?v=ouDR7TC1_uI "")
-##### [YOTUBE VIDEO] Button to print Video (Filtered Images).
+##### [YOUTUBE VIDEO] Button to print Video (Filtered Images).
 [![Print Video Button](https://img.youtube.com/vi/Qq9KgkcM5FU/0.jpg)](https://www.youtube.com/watch?v=Qq9KgkcM5FU "")
