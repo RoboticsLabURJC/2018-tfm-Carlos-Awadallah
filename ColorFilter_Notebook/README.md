@@ -20,6 +20,7 @@ You can install the python2 package with your distribution package manager:
 
 2. Install the Jupyter Project (http://jupyter.org/install)
 `$ python -m pip install --upgrade pip`
+
 `$ python -m pip install jupyter`
 
 3. Install OpenCV (Computer Vision Library):
