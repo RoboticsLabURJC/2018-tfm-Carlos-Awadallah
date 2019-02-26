@@ -1,0 +1,25 @@
+{% extends "remoteAcademy/base.html" %}
+{% load static %}
+{% block content %}
+
+{% load staticfiles %}
+<script id="jupyter" src="{% static 'remoteAcademy/js/local.js' %}" _ip={{ip_address}} _port={{port}} nbcontent='{{notebook}}' _token={{token}} codefile='{{codefile}}' configfile='{{configfile}}'></script>
+<link rel="stylesheet" type="text/css" href="{% static 'remoteAcademy/css/local.css' %}"/>
+
+<div class="row col-md-12">
+    <div class="col-md-6" id="nb">
+        <!-- Jupyter -->
+        <iframe id="ifr" class="col-lg-12" frameBorder="0" src='http://{{ip_address}}:{{port}}/notebooks/color_filter.ipynb?token={{token}}'></iframe>
+    </div>
+    <div id="videodiv" class="col-md-2">
+    <!--<video id="myVideo" src="#" type="video/mp4" preload="auto" width="500px" height="300px" autoplay controls loop>
+        Your browser does not support the video tag.
+    </video>-->  <!--usaaaar WebRTC!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!111 -->
+        <p id="error" style="display:none">Access to the webcam Rejected!</p>
+    </div>
+</div>
+
+{% load staticfiles %}
+<script src="{% static 'remoteAcademy/js/webcam.js' %}"></script>
+{% endblock %}
+
