@@ -3,13 +3,33 @@
 {% block content %}
 
 {% load staticfiles %}
-<script id="jupyter" src="{% static 'remoteAcademy/js/local.js' %}" _ip={{ip_address}} _port={{port}} nbcontent='{{notebook}}' _token={{token}} codefile='{{codefile}}' configfile='{{configfile}}'></script>
 <link rel="stylesheet" type="text/css" href="{% static 'remoteAcademy/css/local.css' %}"/>
+<script id="jupyter" src="{% static 'remoteAcademy/js/local.js' %}" _ip={{ip_address}} _port={{port}} nbcontent='{{notebook}}' _token={{token}} codefile='{{codefile}}' configfile='{{configfile}}'></script>
+
+<div id="myModal" class="modal">
+     <!-- Modal content -->
+    <div class="modal-content">
+      <div class="modal-header">
+        <span class="close" onclick="closeModal()">×</span>
+        <h2 id="help" align="center">Have you saved your progress?</h2>
+      </div>
+      <div class="modal-body">
+        <p> make sure you have saved all the changes made to your Notebbok by pressing <span id="save">Ctrl + s</span> anywhere in it </p>
+        <form action="{% url 'exercises' %}" method="post" accept-charset="utf-8">{% csrf_token %}
+          <textarea id="fillednb" name="filledNotebook" cols="2000" rows="2000" style='display:none'></textarea>
+          <textarea id="session" name="kernelSession" cols="100" rows="1" style='display:none'></textarea>
+          <input id="connect" type="submit" value="CONTINUE"></input>
+        </form>
+        <button onclick="closeModal()">GO BACK</button>
+      </div>
+      <div class="modal-footer"></div>
+    </div>
+</div>
 
 <div class="row col-md-12">
     <div class="col-md-6" id="nb">
         <!-- Jupyter -->
-        <iframe id="ifr" class="col-lg-12" frameBorder="0" src='ws://{{ip_address}}:{{port}}/http_over_websocket/notebooks/color_filter.ipynb?token={{token}}'></iframe>
+        <iframe id="ifr" class="col-lg-12" frameBorder="0" src='http://{{ip_address}}:{{port}}/notebooks/color_filter.ipynb?token={{token}}'></iframe>
     </div>
     <div id="videodiv" class="col-md-2">
     <!--<video id="myVideo" src="#" type="video/mp4" preload="auto" width="500px" height="300px" autoplay controls loop>

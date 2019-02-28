@@ -117,6 +117,8 @@
           {% endif %}
         {% load staticfiles %}
         <script src="{% static 'remoteAcademy/js/exercises.js' %}"></script>
-          
+        {% if logout %}
+            <script id="jupyter" src="{% static 'remoteAcademy/js/logout.js' %}" _ip={{ip_address}} _port={{port}} _token={{token}} _session={{session}}></script>
+        {% endif %}
     </body>
   </html>

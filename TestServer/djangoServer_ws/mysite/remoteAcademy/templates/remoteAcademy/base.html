@@ -7,7 +7,6 @@
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link rel="icon" type="image/png" href='{% static 'remoteAcademy/images/logos/favicon_jderobot.png'%}' sizes="16x16">
         <title>Academy Server - Exercises</title>
-
     </head>
     <body onload="init()">
         <!-- NAVBAR -->
@@ -17,7 +16,7 @@
 		    <a type="button" data-toggle="modal" data-target="#Exit" title="Formulation">Exit from exercise</a></li>
             <a data-toggle="modal" data-target="#Guide_Modal">Local Simulate Guide</a></li>
 	        <a class="dropdown" data-toggle="dropdown"> <span class="glyphicon glyphicon-user"></span> cawadall <span class="glyphicon glyphicon-triangle-bottom"></span></a>
-            <a href="{% url 'logout' %}"><span class="logout"></span> Logout</a></li>
+            <a href="#" onclick="logout()"><span class="logout"></span> Logout</a></li>
           </div>
 
 

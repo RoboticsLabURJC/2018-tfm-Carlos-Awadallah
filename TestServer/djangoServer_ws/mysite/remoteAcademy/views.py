@@ -39,12 +39,42 @@ def index(request):
 def main_page(request):
     """ Página principal de la Aplicación """
 
-    cf = Exercise('Color Filter', 'portfolio_color_filter.png')
-    exercises_list = [cf]
-    context = {
-        "message": "Hi! Welcome to JdeRobot Academy Web!",
-        "exercises_list": exercises_list,
-    }
+    if request.method == 'GET':
+        cf = Exercise('Color Filter', 'portfolio_color_filter.png')
+        exercises_list = [cf]
+        context = {
+            "message": "Hi! Welcome to JdeRobot Academy Web!",
+            "exercises_list": exercises_list,
+        }
+    elif request.method == 'POST':
+        filled_notebook = request.POST['filledNotebook'] 
+        kernel_session = request.POST['kernelSession']    
+        print filled_notebook
+        print kernel_session
+        # Guardar el Notebook Relleno en el servidor web
+        __location__ = os.path.realpath(os.path.join(os.getcwd(), os.path.dirname(__file__)))
+        with open(os.path.join(__location__, 'color_filter.ipynb'), 'w') as nb:
+            #json.dump(json.dumps(filled_notebook), nb)
+            nb.write(filled_notebook)
+        nb.close()
+
+        cf = Exercise('Color Filter', 'portfolio_color_filter.png')
+        exercises_list = [cf]
+        _ip = '127.0.0.1'
+        global kernel_port
+        _port = kernel_port
+        global tk
+        _token = tk
+        context = {
+            "message": "Hi! Welcome to JdeRobot Academy Web!",
+            "exercises_list": exercises_list,
+            "logout": True,
+            "port": _port,
+            "ip_address": _ip,
+            "token": _token,
+            "session": kernel_session,
+        }
+
     return render(request, 'remoteAcademy/main_page.html', context)
 
 def del_code(ip,port,token,src):
@@ -60,7 +90,7 @@ def del_code(ip,port,token,src):
 def logout(request):
     """ Vista de logout. Redirecciona a la página principal """
     # Direccion IP del cliente
-    _ip = get_client_ip(request)
+    _ip = '127.0.0.1'
 
     # Recoger Notebook relleno
     global kernel_port
@@ -114,7 +144,13 @@ def logout(request):
                         print f+' NOT FOUND'
     
 
-    return redirect('exercises')
+    cf = Exercise('Color Filter', 'portfolio_color_filter.png')
+    exercises_list = [cf]
+    context = {
+        "message": "Hi! Welcome to JdeRobot Academy Web!",
+        "exercises_list": exercises_list,
+    }
+    return render(request, 'remoteAcademy/main_page.html', context)
 
 # ==============================================================================
 # ============================ EXERCISE SIMULATION =============================
@@ -145,8 +181,9 @@ def send_code(ip,port,token,src):
 def local(request):
     """ Página de Simulación Local de un ejercicio """
     # Direccion IP del cliente
-    _ip = get_client_ip(request)
-    print "Client ip: "+_ip
+    client_ip = get_client_ip(request)
+    print "Client ip: "+client_ip
+    _ip = '127.0.0.1'
     # Recoger del formulario el puerto y el token del Notebook Server
     _port = request.POST['port']
     _token = request.POST['token']
@@ -178,27 +215,6 @@ def local(request):
         configfile = f.read()
     # Convertir fichero a objeto JSON
     configfile = json.dumps(configfile, indent = 2, encoding="utf8")
-
-    # Iniciar Session y Kernel en el Notebook Server remoto
-    '''src_session = 'http://'+_ip+':'+_port+'/api/sessions'
-    data_session_post = '{"name":"color_filter.ipynb","path":"color_filter.ipynb","type": "notebook","kernel": {"name": "python2"}}'
-    request_jupyter_post = urllib2.Request(src_session, data=data_session_post)
-    request_jupyter_post.add_header('Content-Type', 'application/json')
-    request_jupyter_post.add_header('Authorization', 'token ' + _token)
-    request_jupyter_post.get_method = lambda: 'POST'
-    res = urllib2.urlopen(request_jupyter_post)
-    content = res.read()
-    #print content
-    message_info = json.loads(content)
-    session_id = message_info['id']
-    print "Current Jupyter Session: "+session_id
-    global session
-    session = session_id
-    kernel_id = message_info['kernel']['id']
-    print "Kernel ID: "+kernel_id
-    print "---------------"
-    print "KERNEL CREATED"
-    print "---------------"'''
 
     context = {
         "src": src,
