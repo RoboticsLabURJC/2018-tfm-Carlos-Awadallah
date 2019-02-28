@@ -1,4 +1,32 @@
 
+function upgrade2Ws() {
+
+    // NO SE PUEDEN TOCAR ESAS CABECRAAAAAAAAAAAAAAAAAAAAAAS!! PROBAR A ENVIAR UN SOCKET DIRECTAMENTE
+    var _ip = document.getElementById("jupyter").getAttribute("_ip");
+    var _port = document.getElementById("jupyter").getAttribute("_port");
+    var nbcontent = document.getElementById("jupyter").getAttribute("nbcontent");
+    var _token = document.getElementById("jupyter").getAttribute("_token");
+
+    const url = 'ws://'+_ip+':'+_port+'/http_over_websocket?min_version=0.0.1a3';
+
+    var connection = new WebSocket(url);
+
+    // When the connection is open, send some data to the server
+    connection.onopen = function () {
+      connection.send('Ping'); // Send the message 'Ping' to the server
+    };
+
+    // Log errors
+    connection.onerror = function (error) {
+      console.log('WebSocket Error ' + error);
+    };
+
+    // Log messages from the server
+    connection.onmessage = function (e) {
+      console.log('Server: ' + e.data);
+    };
+}
+
 function postNotebook() {
     
     var _ip = document.getElementById("jupyter").getAttribute("_ip");
@@ -52,6 +80,8 @@ function sendCode() {
 
 }
 
+upgrade2Ws();
+console.log("upgrades to wensockets");
 postNotebook();
 console.log("NOTEBOOK COPIED");
 sendCode();
