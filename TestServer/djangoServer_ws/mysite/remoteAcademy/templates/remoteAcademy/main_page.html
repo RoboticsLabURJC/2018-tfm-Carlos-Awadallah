@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta http-equiv="content-type" content="text/html;charset=utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>JdeRobot Academy</title>
+        {% load staticfiles %}
+        <link rel="stylesheet" type="text/css" href="{% static 'remoteAcademy/css/exercises.css' %}"/>
+    </head>
+    <body>
+        <div class="header">
+          <a href=""><h1>Academy Server - Exercises</h1></a>
+        </div>
+        <div id="myModal" class="modal">
+             <!-- Modal content -->
+            <div class="modal-content">
+              <div class="modal-header">
+                <span class="close" onclick="closeModal()">×</span>
+                <h2 id="help" align="center">LOCAL RUNTIME</h2>
+              </div>
+              <div class="modal-body">
+                <p> Run a Jupyter Notebook Server instance. Then specify the next information: </p>
+                <form action="{% url 'local' %}" method="post" accept-charset="utf-8">{% csrf_token %}
+                  <fieldset>
+                    <legend >Input port:</legend>
+                    <textarea id="observations" name="port" cols="11" rows="1" placeholder="port number"></textarea>
+                  </fieldset>
+                  <fieldset>
+                    <legend >Input token:</legend>
+                    <textarea id="observations" name="token" cols="54" rows="1" placeholder="ej: 9784a48374ba02660ab28b9c620e6115a1fe6d13c908d0ac"></textarea>
+                  </fieldset>
+                  <input id="connect" type="submit" value="CONNECT"></input>
+                </form>
+              </div>
+              <div class="modal-footer"></div>
+            </div>
+        </div>
+        <div class="row" id="init">
+          <div class="col-8">
+          	<nav class="menuCSS3">
+	            <ul>
+		            <li class="bar" id="categories"><a href="#">CATEGORIES</a>
+                        <ul>
+				            <li id="bikes"><a href="">Artificial Vision</a></li>
+				            <li id="cds"><a href="">Drones</a></li>
+				            <li id="books"><a href="">Autonomous Cars</a></li>
+				            <li id="personality"><a href="#">Mobile Robots</a></li>
+			            </ul>
+                    </li>
+		            <li class="bar" id="faq"><a href="">FAQ</a></li>
+	            </ul>
+            <nav>
+          </div>
+           <div class="col-4 dropdown">
+             <form action="" method="post" accept-charset="utf-8">{% csrf_token %}
+                <input id="search" onkeyup="" name="look4" autocomplete="off" placeholder="Search"/><input type="submit" value="Buscar"></input>
+             </form>
+          </div>
+        </div>
+        <div class="row">
+
+          <div class="col-3 menu">
+            <ul>
+              <li id="cll"><a href="{% url 'exercises' %}">EXERCISES</a></li>
+              <li id="sevillacity">Suggestions</li>
+              <li>Contact</li>
+              <li>About Me</li>
+            </ul>
+          </div>
+
+          <div class="col-9">
+            <div id="main">
+                <div class="col-12">
+
+                    <ul class="options">
+                        <li> Order By: </li>
+                        <li>
+                            <a rel="nofollow" data-filter-type="bestMatch" href="" style="">Relevance</a>
+                        </li>
+                        <li>
+                            <a rel="nofollow" data-filter-type="sellerRating" href="" style="">Valoration</a>
+                        </li>
+                         <li>
+                            <a rel="nofollow" data-filter-type="price-desc" style="">Price</a><a href="" style="">&#9652;</a><a href="" style="">&#9662;</a>
+                        </li>
+                     </ul>
+                </div>
+            </div>
+            <div class="col-12">
+                <p>Results: Showing 1 - 5 (of 5)</p>
+            </div>
+          </div>
+          {% if exercises_list %}
+              <ul>
+              {% for exercise in exercises_list %}
+                <div class="col-12 storeItem">
+                    <h2>{{ exercise.name }}</h2>
+                    <div class="col-13">
+                        {% load staticfiles %}
+                        <img id="item{{ forloop.counter }}" src="{{ exercise.get_src }}" alt="My image"/>
+                    </div>
+                    <div class="col-14">
+                        
+                    </div>
+                    <div class="col-13">
+                        <p class="price">Try it!</p>
+                        <p class="send">Execution</p>
+                        <p><button class="add2cart" onclick="displayModal()">Local Execution</button></p>
+                        <button class="add2cart" onclick="">Remote Execution</button>
+                    </div>
+                    
+                </div>
+              {% endfor %}
+              </ul>
+          {% else %}
+              <p>No exercises are available.</p>
+          {% endif %}
+        {% load staticfiles %}
+        <script src="{% static 'remoteAcademy/js/exercises.js' %}"></script>
+        {% if logout %}
+            <script id="jupyter" src="{% static 'remoteAcademy/js/logout.js' %}" _ip={{ip_address}} _port={{port}} _token={{token}} _session={{session}}></script>
+        {% endif %}
+    </body>
+  </html>

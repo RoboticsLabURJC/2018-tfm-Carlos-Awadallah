@@ -1,0 +1,10 @@
+1. Modifique el fichero de configuracion de jupyter:
+~.jupyter/jupyter_notebook_config.py 
+----------------------------------------------------------------------------------------------------------------
+L#283: c.NotebookApp.tornado_settings = { 'headers': { 'Content-Security-Policy': "frame-ancestors 'self' *" } }
+----------------------------------------------------------------------------------------------------------------
+
+
+2. Inicio Jupyter como:
+$ jupyter notebook --port=8888 --no-browser
+

@@ -1,0 +1,156 @@
+* {
+    box-sizing: border-box;
+}
+
+.col-1 {width: 8.33%;}
+.col-2 {width: 16.66%;}
+.col-3 {width: 25%;}
+.col-4 {width: 33.33%;}
+.col-5 {width: 41.66%;}
+.col-6 {width: 50%;}
+.col-7 {width: 58.33%;}
+.col-8 {width: 66.66%;}
+.col-9 {width: 75%;}
+.col-10 {width: 83.33%;}
+.col-11 {width: 91.66%;}
+.col-12 {width: 100%;}
+
+[class*="col-"] {
+    float: left;
+    padding: 15px;
+    /*border: 1px solid red;*/
+}
+
+.row::after {
+    content: "";
+    clear: both;
+    display: table;
+}
+
+html {
+    font-family: "Lucida Sans", sans-serif;
+}
+.header, .header h1 {
+    background-color: #9933cc;
+    color: #ffffff;
+    padding: 15px;
+}
+.menu ul {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+}
+.menu li {
+    padding: 8px;
+    margin-bottom: 7px;
+    background-color :#33b5e5;
+    color: #ffffff;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
+}
+.menu li:hover {
+    background-color: #C54528;
+}
+
+form { padding-left: 20px;}
+a {text-decoration: none;color: #333;}
+#carro {
+
+    color: #333;
+    position: relative;
+
+    display: block;
+
+    padding: 0px 60px 0px 38px;
+    margin-bottom:-10px;
+    /*z-index: -1;*/
+    text-decoration: none;
+    font: inherit;
+
+    vertical-align: baseline;
+    /*box-sizing: border-box;*/
+    left: 0;
+    width: 30px;
+    height: 30px;
+    /*overflow: hidden;*/
+    background-repeat: no-repeat;
+
+}
+
+.number {
+    padding: 5px 8px 5px 8px;
+    margin-left: 50px;
+    line-height: 16px;
+    text-align: center;
+    border-radius: 8px;
+    background-color: #e62e04;
+    color: #fff;
+    font-size: 12px;
+}
+
+
+#carro:hover {
+ color: #ff773c;
+ background-repeat: no-repeat;
+}
+
+.bar a:hover {color:#ff773c;}
+
+#init {background-color:#b69777;}
+.menuCSS3 ul {
+
+		display: flex;
+		padding:0;
+		margin: 0;
+		list-style: none;
+}
+.menuCSS3 ul li{
+    padding:0px 90px 0px 70px;
+}
+#categories {padding:0px 40px 0px 70px;}
+.menuCSS3 ul li ul {
+		display: none;
+        padding: 5px 0 0 0;
+}
+.menuCSS3 ul li ul li {
+    padding:10px 50px 10px 50px;
+}
+.menuCSS3 ul li ul li:hover {
+    background-color: #F9B53C;
+}
+.menuCSS3 ul li a:hover + ul, .menuCSS3 ul li ul:hover {
+	display: block;
+}
+
+#main, #main2 {display:none;}
+.slides {width:380px; height: 300px;}
+/*.slider:hover {display:inline-block}*/
+.slider {position:relative; left:17%}
+.slider button {color:#fff!important;background-color:#000!important;border:none;display:inline-block;padding:8px 16px;vertical-align:middle;overflow:hidden;text-decoration:none;color:inherit;background-color:inherit;text-align:center;cursor:pointer;white-space:nowrap}
+.slider button:hover{color:#000!important;background-color:#ccc!important}
+.display-left{position:absolute;top:50%;left:-5%;transform:translate(0%,-50%);-ms-transform:translate(-0%,-50%)}
+.display-right{position:absolute;top:50%;right:50%;transform:translate(0%,-50%);-ms-transform:translate(0%,-50%)}
+
+#success {display: none;}
+#succmsg {background-color: #82e0aa; border: 2px solid green;}
+
+
+.dropdown {
+    position: relative;
+    display: inline-block;
+}
+
+.dropdown-content {
+    display: none;
+    position: absolute;
+    background-color: #f9f9f9;
+    background-size: cover;
+    margin-left: 5%;
+    min-width: 300px;
+    z-index: 1;
+}
+
+.option {padding-top:5px; padding-bottom:5px;background-size: auto;}
+.option:hover {
+    background-color: #98a99f;
+}
+
