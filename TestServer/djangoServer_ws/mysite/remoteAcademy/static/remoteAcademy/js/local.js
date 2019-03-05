@@ -36,6 +36,11 @@ function closeModal() {
     };
 }*/
 
+function sleepFor( sleepDuration ){
+    var now = new Date().getTime();
+    while(new Date().getTime() < now + sleepDuration){ /* do nothing */ } 
+}
+
 function postNotebook() {
     
     var _ip = document.getElementById("jupyter").getAttribute("_ip");
@@ -115,9 +120,10 @@ function startKernel() {
 }
 
 //upgrade2Ws();
-//console.log("upgradeD to wensockets");
+//console.log("upgraded to websockets");
 postNotebook();
 console.log("NOTEBOOK COPIED");
+sleepFor(500);
 sendCode();
 console.log("CODE FILES SENT");
 startKernel();
