@@ -1,5 +1,10 @@
 # 2018-tfm-Carlos-Awadallah
 
+# Week 27
+We studied the need to use the Google extension for jupyter and the use of the websockets protocol. In principle, it seems that this does not intervene in the process, and therefore can be discarded, reducing the dependencies that customers must install to access the practices.
+
+On the other hand, and for reasons of security and integrity of the code, we studied the ways of obfuscating and minimizing the new javascript code that intervenes in the communication between browser and Notebook Server. The tool that has been most striking is (https://obfuscator.io/) that allows to act on many parameters that result in a protected code following the most convenient specifications.
+
 # Week 26
 Given the problems in the last tests, I have partially changed the focus of the problem: from this point, I will use the client's Browser as an intermediary between the remote Web Server and the client's Notebook Server. Basically, the browser will act as a proxy, forwarding the messages established by the web server as if it was the origin of them. With this, I get through the security mechanisms of the client's machine. However, it has been necessary to make multiple changes to the test server to send all the necessary data to the browser, in addition to using JavaScript for communication.
 
