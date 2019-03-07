@@ -1,5 +1,10 @@
 # 2018-tfm-Carlos-Awadallah
 
+# Week 26
+Given the problems in the last tests, I have partially changed the focus of the problem: from this point, I will use the client's Browser as an intermediary between the remote Web Server and the client's Notebook Server. Basically, the browser will act as a proxy, forwarding the messages established by the web server as if it was the origin of them. With this, I get through the security mechanisms of the client's machine. However, it has been necessary to make multiple changes to the test server to send all the necessary data to the browser, in addition to using JavaScript for communication.
+
+In this case, both the first test (UC3M -> URJC) and the second (HOME -> URJC) worked as planned.
+
 # Week 25
 Given the success in the test of using different machines with server and client roles, it is time to perform the test by placing the client's machine behind a NAT and a firewall, as would happen in any house of a potential user.
 In this case, the requests and commands that the web server sends to the Notebook server had to go through the security mechanisms of the machines in the face of foreign messages. Without demanding to open certain ports for communication (those used by the web server) the test was unsuccessful. I will thoroughly investigate the scenario to situate the error and study possible remedies.
