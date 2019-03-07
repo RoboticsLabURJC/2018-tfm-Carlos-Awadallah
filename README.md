@@ -3,7 +3,10 @@
 # Week 26
 Given the problems in the last tests, I have partially changed the focus of the problem: from this point, I will use the client's Browser as an intermediary between the remote Web Server and the client's Notebook Server. Basically, the browser will act as a proxy, forwarding the messages established by the web server as if it was the origin of them. With this, I get through the security mechanisms of the client's machine. However, it has been necessary to make multiple changes to the test server to send all the necessary data to the browser, in addition to using JavaScript for communication.
 
-In this case, both the first test (UC3M -> URJC) and the second (HOME -> URJC) worked as planned.
+In this case, both the first test (UC3M -> URJC) and the second (HOME -> URJC) worked as planned. A video example of the second test can be seen here:
+
+##### [YOUTUBE VIDEO] Prototype of Mixed Execution for Unibotics.
+[![mixed execution prototype](https://img.youtube.com/vi/IsNA5rBRBsA/0.jpg)](https://www.youtube.com/watch?v=IsNA5rBRBsA "")
 
 # Week 25
 Given the success in the test of using different machines with server and client roles, it is time to perform the test by placing the client's machine behind a NAT and a firewall, as would happen in any house of a potential user.
