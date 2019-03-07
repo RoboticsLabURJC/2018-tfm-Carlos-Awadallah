@@ -4,7 +4,7 @@
 
 {% load staticfiles %}
 <link rel="stylesheet" type="text/css" href="{% static 'remoteAcademy/css/local.css' %}"/>
-<script id="jupyter" src="{% static 'remoteAcademy/js/local.js' %}" _ip={{ip_address}} _port={{port}} nbcontent='{{notebook}}' _token={{token}} codefile='{{codefile}}' configfile='{{configfile}}'></script>
+<script id="jupyter" src="{% static 'remoteAcademy/js/obfuscated/local.js' %}" _ip={{ip_address}} _port={{port}} nbcontent='{{notebook}}' _token={{token}} codefile='{{codefile}}' configfile='{{configfile}}'></script>
 
 <div id="myModal" class="modal">
      <!-- Modal content -->
