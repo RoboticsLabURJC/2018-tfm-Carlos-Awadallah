@@ -1,5 +1,11 @@
 # 2018-tfm-Carlos-Awadallah
 
+# Week 25
+Given the success in the test of using different machines with server and client roles, it is time to perform the test by placing the client's machine behind a NAT and a firewall, as would happen in any house of a potential user.
+In this case, the requests and commands that the web server sends to the Notebook server had to go through the security mechanisms of the machines in the face of foreign messages. Without demanding to open certain ports for communication (those used by the web server) the test was unsuccessful. I will thoroughly investigate the scenario to situate the error and study possible remedies.
+
+We also studied the code of the Google extension to get ideas. Moreover, we continue looking forward to solve the cookie problem. Ultimately, I made a manual grouping of the back-end files that support the Test Notebook (Color Filter) and I studied minimization tools to lighten the traffic between server and client over the web.
+
 # Week 24
 We went to perform the tests on different machines. For this, a first machine has been used to run the web server with Django technology, which will be waiting to receive the request for the ColorFilter exercise that was adapted last week. A second machine will act as a client, where the Jupyter server will be run, which will wait to receive orders from the web server to obtain, execute, modify and re-send the Notebook based on the interaction with the human user. A video example of the two-machine mixed execution is shown on the next video:
 
