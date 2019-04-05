@@ -1,5 +1,14 @@
 # 2018-tfm-Carlos-Awadallah
 
+# Week 30
+The network connectivity with the docker has been checked from the host machine, and also the access to the camera through the corresponding flags in the command to launch the docker image, and the OpenCV utilities for accessing the webcam :
+```
+$ python -c "import cv2;print(cv2.VideoCapture(0).isOpened())"
+```
+For mixed execution to work, we need to launch a Jupyter server instance from within the docker, but at the same time it must be accessible from the user interface of the host machine (browser). We map the port of the docker in which the server listens to the same port of the machine, in such a way that the client has normal access to it. However, there are some problems of permissions to solve to be able to copy things from the outside to the inside of the docker.
+
+We have also revisited the issue of replacing the token check with the use of cookies. However, the CORS policies do not allow consulting, modifying or obtaining cookies from other domains, for which we are not able to obtain the value of the cookie for the Jupyter server domain. Other ways have been studied, such as including code in the iframe DOM (nor is it allowed).
+
 # Week 29
 Once the server is running, the client side will be prepared so that the mixed execution works through the installed docker. The intention is that the students who access the application do not have to install any tool, but will be provided with a simplified docker that will contain everything necessary to face robotic exercises through the web application. Therefore, the docker image will be expanded with OpenCV libraries, jupyter widgets and some extensions necessary for the exercises.
 
