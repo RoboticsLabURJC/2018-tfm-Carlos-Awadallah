@@ -1,5 +1,10 @@
 # 2018-tfm-Carlos-Awadallah
 
+# Week 29
+Once the server is running, the client side will be prepared so that the mixed execution works through the installed docker. The intention is that the students who access the application do not have to install any tool, but will be provided with a simplified docker that will contain everything necessary to face robotic exercises through the web application. Therefore, the docker image will be expanded with OpenCV libraries, jupyter widgets and some extensions necessary for the exercises.
+
+On the other hand, the relevant tests will be carried out with the docker itself to check if there is connectivity with the local webcam, network support and access to the hardware through the USB ports. With this, we can prepare exercises that access the camera or even the interfaces of a customer's robot.
+
 # Week 28
 Since mixed technology is already working at this point, it is time to build an instance of the real Unibotics server (a simple development server version) to adapt the code to the application and to the existing database and python classes. This week we will study the technologies used in the server infrastructure, including Docker, templates with JQuery and websockets. It will be tried to lift up a linux virtual environment that allows to install the corresponding versions of all the involved parts so that the server works correctly.
 The official docker image will also be installed.
