@@ -1,5 +1,9 @@
 # 2018-tfm-Carlos-Awadallah
 
+# Week 28
+Since mixed technology is already working at this point, it is time to build an instance of the real Unibotics server (a simple development server version) to adapt the code to the application and to the existing database and python classes. This week we will study the technologies used in the server infrastructure, including Docker, templates with JQuery and websockets. It will be tried to lift up a linux virtual environment that allows to install the corresponding versions of all the involved parts so that the server works correctly.
+The official docker image will also be installed.
+
 # Week 27
 We studied the need to use the Google extension for jupyter and the use of the websockets protocol. In principle, it seems that this does not intervene in the process, and therefore can be discarded, reducing the dependencies that customers must install to access the practices.
 
