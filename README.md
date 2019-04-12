@@ -6,7 +6,7 @@ This week we launched the third prototype of the mixed execution, with the clien
 ##### [YOUTUBE VIDEO] Mixed Execution Testing with Docker-Based Client side
 [![mixed execution docker](https://img.youtube.com/vi/KlgqdIBA4TE/0.jpg)](https://www.youtube.com/watch?v=KlgqdIBA4TE "")
 
-Token access has been removed since the XSRF checking is not needed here: the docker container, once launched by the client, is only accesible from the client's network, so there are not security problems coming from outside. In addition, the potential problems the client (or whatever) could cause would affect only the container, resulting in the client having to re-run the another docker, but no further problems (anything involving client's machine).
+Token access has been removed since the XSRF checking is not needed here: the docker container, once launched by the client, is only accesible from the client's network, so there are not security problems coming from outside. In addition, the potential problems the client (or whatever) could cause would affect only the container, resulting in the client having to re-run the docker, but no further problems (anything involving client's machine).
 
 # Week 30
 The network connectivity with the docker has been checked from the host machine, and also the access to the camera through the corresponding flags in the command to launch the docker image, and the OpenCV utilities for accessing the webcam :
