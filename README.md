@@ -1,5 +1,18 @@
 # 2018-tfm-Carlos-Awadallah
 
+# Week 34
+Although this week was intended to put the Mixed Execution in production on the Unibotics server, this objective has had to be postponed due to some necessary improvements and changes that have had to be introduced in the processing of local execution requests in order to expand the generalization capacity, i.e. make the application more robust to unexpected situations or Notebooks that depend on more elements of different nature (e.g. images). The encoding of images is more sensitive when transmitted through the web, since in many cases contain characters that can not be sent in the form of string. For this reason, it has been contemplated in the code the possibility of making a Base64 transformation according to the extension of the file that is going to be sent to the client's hardware. Similarly, when picking up the filled Notebook, the same problem has to be dealt with, as the outputs of the cells may contain images.
+
+In order to demonstrate the correct functioning of the application in these cases, the [TFG of a URJC student] (https://github.com/RoboticsURJC-students/2019-tfg-ana-cuevas) has been used. Part of her project focuses on transforming the practices of the subject Digital Image Processing (TDI) into Jupyter Notebooks that retain the same functionality, which will contain images as well as other complex data structures. Below are two videos with the first two practices integrated into the current server infrastructure, with the changes mentioned:
+
+##### [YOUTUBE VIDEO] Mixed Execution Testing with First TDI Practice
+[![TDI_practice1](https://img.youtube.com/vi/6VyEktlbWdM/0.jpg)](https://www.youtube.com/watch?v=6VyEktlbWdM "")
+
+##### [YOUTUBE VIDEO] Mixed Execution Testing with Second TDI Practice
+[![TDI_practice2](https://img.youtube.com/vi/MOYrnSbF818/0.jpg)](https://www.youtube.com/watch?v=MOYrnSbF818 "")
+
+Additional functionality to improve usability has also been added this week, such as personalized Notebooks for those cases in which the user had previously faced the exercise and had saved some progress.
+
 # Week 33
 In order to improve the user experience (which installs the docker image, executes a container and accesses the application's website), the port (on which the client executes the jupyter server) request has been removed from by adding a default port. This does not interfere with the operation since the user is guided at all times with the command that must be executed to start the container, in which this port is specified, and which is configurable if the user wishes. For this purpose, a configuration button has been added in the local execution section in case the default port is changed.
 
