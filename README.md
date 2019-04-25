@@ -1,5 +1,10 @@
 # 2018-tfm-Carlos-Awadallah
 
+# Week 32
+Since our Notebooks (both current and potential) have extended functionality through Jupyter extensions and widgets, we have studied the way (in the form of instructions in the DockerFile) to enable this functionality within the container in which the Jupyter server is running.
+
+On the other hand, we have studied the current state of support of the Docker tool for other operating systems, such as Windows or MacOS, since one of the reasons for using these containers is to make the application multiplatform. However, we have found that, for the time being, in the case of Windows OS there is only support for Windows 10 Pro and Windows Enterprise versions, while for MacOS the problem lies in the lack of access to the hardware connected via USB. Therefore, it is still not worth continuing with this line of research, which we will postpone until this situation changes.
+
 # Week 31
 This week we launched the third prototype of the mixed execution, with the client side prepared through a docker image that launches everything necessary (including the Jupyter extensions, the OpenCV libraries, the Notebook server, ..) and that provides access to the local hardware. Here is a video-example:
 
