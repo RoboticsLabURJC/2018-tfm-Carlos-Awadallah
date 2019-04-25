@@ -1,5 +1,12 @@
 # 2018-tfm-Carlos-Awadallah
 
+# Week 33
+In order to improve the user experience (which installs the docker image, executes a container and accesses the application's website), the port (on which the client executes the jupyter server) request has been removed from by adding a default port. This does not interfere with the operation since the user is guided at all times with the command that must be executed to start the container, in which this port is specified, and which is configurable if the user wishes. For this purpose, a configuration button has been added in the local execution section in case the default port is changed.
+
+Regarding the previous week, some problems have arisen related to widgets that are created inside initialization cells (through the extension 'init_cell'). This problem arises due to the order of loading of the extensions, which are executed before the loading of the widgets. We will study how to reverse the order.
+
+We will also begin to study the syntax of Docker and BASH, in order to transform what was installed manually in the containers during the tests into instructions inside the image. The creation of a new simplified image and an ENTRYPOINT that prepares the environment will also be valued.
+
 # Week 32
 Since our Notebooks (both current and potential) have extended functionality through Jupyter extensions and widgets, we have studied the way (in the form of instructions in the DockerFile) to enable this functionality within the container in which the Jupyter server is running.
 
