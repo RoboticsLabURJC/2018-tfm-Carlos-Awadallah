@@ -2,7 +2,9 @@
 
 #### ÍNDICE TENTATIVO
 1. Introducción
+
 1.1. Robótica 
+
 1.2. Software Robótico 
 1.2.1. Middlewares robóticos 
 1.2.2. Simuladores robóticos 
