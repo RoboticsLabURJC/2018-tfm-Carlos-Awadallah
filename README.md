@@ -1,330 +1,202 @@
-# 2018-tfm-Carlos-Awadallah
+# TFM-Webserver
 
-# Week 34
-Although this week was intended to put the Mixed Execution in production on the Unibotics server, this objective has had to be postponed due to some necessary improvements and changes that have had to be introduced in the processing of local execution requests in order to expand the generalization capacity, i.e. make the application more robust to unexpected situations or Notebooks that depend on more elements of different nature (e.g. images). The encoding of images is more sensitive when transmitted through the web, since in many cases contain characters that can not be sent in the form of string. For this reason, it has been contemplated in the code the possibility of making a Base64 transformation according to the extension of the file that is going to be sent to the client's hardware. Similarly, when picking up the filled Notebook, the same problem has to be dealt with, as the outputs of the cells may contain images.
 
-In order to demonstrate the correct functioning of the application in these cases, the [TFG of a URJC student](https://github.com/RoboticsURJC-students/2019-tfg-ana-cuevas) has been used. Part of her project focuses on transforming the practices of the subject Digital Image Processing (TDI) into Jupyter Notebooks that retain the same functionality, which will contain images as well as other complex data structures. Below are two videos with the first two practices integrated into the current server infrastructure, with the changes mentioned:
+* [1. Descripción del Proyecto.](#1-descripcion)
+    + [1.1. Visisón General.](#1.1-vision-general)
+    + [1.2. Estructura de Módulos de la Aplicación.](#1.2-estructura-aplicacion)
+* [2. Ejecución de la Aplicación.](#2-ejecucion_aplicacion)
+    + [2.1. Ejecución del lado Servidor Web.](#2.1-ejecucion-servidor-web)
+    + [2.2. Ejecución del lado Servidor de Ejecución Mixta.](#2.2.ejecucion-servidor-mixta)
+* [3. Uso de la Ejecución Mixta.](#3-uso)
+* [4. Instalación.](#4-instalacion)
+    + [4.1. Instalación para Cliente](#4.1-instalacion-cliente)
+    + [4.2. Instalación para Desarrollador](#4.2-instalacion-desarrollador)
+        - [4.2.1. Instalación de docker para desarrollo.](#4.2.1-instalacion-docker-desarrollo)
+        - [4.2.2. Instalación de Base de Datos (MySQL).](#4.2.2-instalacion-mysql)
+        - [4.2.3. Instalación de Django y Dependencias.](#4.2.3-instalacion-django-dependencias)
 
-##### [YOUTUBE VIDEO] Mixed Execution Testing with First TDI Practice
-[![TDI_practice1](https://img.youtube.com/vi/6VyEktlbWdM/0.jpg)](https://www.youtube.com/watch?v=6VyEktlbWdM "")
+## 0. Diagrama General de la Aplicación
 
-##### [YOUTUBE VIDEO] Mixed Execution Testing with Second TDI Practice
-[![TDI_practice2](https://img.youtube.com/vi/MOYrnSbF818/0.jpg)](https://www.youtube.com/watch?v=MOYrnSbF818 "")
+![esquema_general](./docs/img/esquema_general.png)
 
-Additional functionality to improve usability has also been added this week, such as personalized Notebooks for those cases in which the user had previously faced the exercise and had saved some progress.
+---
 
-# Week 33
-In order to improve the user experience (which installs the docker image, executes a container and accesses the application's website), the port (on which the client executes the jupyter server) request has been removed from by adding a default port. This does not interfere with the operation since the user is guided at all times with the command that must be executed to start the container, in which this port is specified, and which is configurable if the user wishes. For this purpose, a configuration button has been added in the local execution section in case the default port is changed.
+<a name="1-descripcion"></a>
 
-Regarding the previous week, some problems have arisen related to widgets that are created inside initialization cells (through the extension 'init_cell'). This problem arises due to the order of loading of the extensions, which are executed before the loading of the widgets. We will study how to reverse the order.
+## 1. Descripción del Proyecto.
 
-We will also begin to study the syntax of Docker and BASH, in order to transform what was installed manually in the containers during the tests into instructions inside the image. The creation of a new simplified image and an ENTRYPOINT that prepares the environment will also be valued.
+Este repositorio se ha creado para alojar el código relacionado con la implementación de la idea propuesta como Tésis de Fin de Máster bajo el título "Ejecución Mixta de Ejercicios de Visión Artificial y Robótica a través de la Web" porpuesto por Carlos Awadallah Estévez como colofón al Máster en Robótica y Automatización de la Universidad Carlos III de Madrid, España.
 
-# Week 32
-Since our Notebooks (both current and potential) have extended functionality through Jupyter extensions and widgets, we have studied the way (in the form of instructions in the DockerFile) to enable this functionality within the container in which the Jupyter server is running.
+<a name="1.1-vision-general"></a>
+### 1.1. Visisón General.
 
-On the other hand, we have studied the current state of support of the Docker tool for other operating systems, such as Windows or MacOS, since one of the reasons for using these containers is to make the application multiplatform. However, we have found that, for the time being, in the case of Windows OS there is only support for Windows 10 Pro and Windows Enterprise versions, while for MacOS the problem lies in the lack of access to the hardware connected via USB. Therefore, it is still not worth continuing with this line of research, which we will postpone until this situation changes.
+Para este trabajo se ha creado un servidor que ofrece a través de la web una aplicación robótica orientada, en principio, a la docencia, enseñanza e investigación en robótica. El servicio que se ofrece es de escasa relevancia, pues sólo se ha implementado con el fin de demostrar el funcionamiento de la herramienta de Ejecución Mixta, objeto de este trabajo. Así, se ha montado una infraestructura básica que da un servicio de ejercicios robóticos, tanto simulados como reales, a usuarios que utilizan la Ejecución Mixta.
 
-# Week 31
-This week we launched the third prototype of the mixed execution, with the client side prepared through a docker image that launches everything necessary (including the Jupyter extensions, the OpenCV libraries, the Notebook server, ..) and that provides access to the local hardware. Here is a video-example:
+Esta herramienta será la encargada de comunicar el servicio robótico remoto con el _hardware_ local del cliente, con lo que se consigue que todo el consumo de recursos asoaciado a la ejecución y cómputo que genera la interacción con un usuario recaiga sobre él, liberando al servidor web de toda carga y abriendo la puerta a la construcción de aplicación con capacidad de personalización y multitud de opciones para el usuario, que dispone de un _hardware_ robótico específico, o ninguno.
 
-##### [YOUTUBE VIDEO] Mixed Execution Testing with Docker-Based Client side
-[![mixed execution docker](https://img.youtube.com/vi/KlgqdIBA4TE/0.jpg)](https://www.youtube.com/watch?v=KlgqdIBA4TE "")
+<a name="1.2-estructura-aplicacion"></a>
+### 1.2. Estructura de Módulos de la Aplicación.
 
-Token access has been removed since the XSRF checking is not needed here: the docker container, once launched by the client, is only accesible from the client's network, so there are not security problems coming from outside. In addition, the potential problems the client (or whatever) could cause would affect only the container, resulting in the client having to re-run the docker, but no further problems (anything involving client's machine).
+El código de este proyecto está dividido en dos partes principales, bien diferenciadas:
 
-# Week 30
-The network connectivity with the docker has been checked from the host machine, and also the access to the camera through the corresponding flags in the command to launch the docker image, and the OpenCV utilities for accessing the webcam :
+1. Aquello bajo la ruta `tfm_webserver` se corresponde con el código de la aplicación web que ofrece y sirve ejercicios de robótica y visión artificial. Esta basada en tecnología Django para el backend de operaciones de servicio web.
+
+2. El directorio `docker_files` contiene la mayor parte del código de la imagen de "Ejecución Mixta". El _middleware_ o secuenciador que se encarga de gestionar la comunicación entre ambas partes se encuentra entre el código JS de la aplicación web. Este directorio contiene todo aquello que la herramienta de Ejecución Mixta será capaz de ejecutar y gestionar para el usuario.
+
+---
+
+<a name="2-ejecucion_aplicacion"></a>
+## 2. Ejecución de la Aplicación.
+
+<a name="2.1-ejecucion-servidor-web"></a>
+### 2.1. Ejecución del lado Servidor Web.
+
+```bash
+python manage.py runserver 0.0.0.0:8000
 ```
-$ python -c "import cv2;print(cv2.VideoCapture(0).isOpened())"
+
+**NOTA**: se puede indicar cualquier otro _endpoint_ (IP:puerto) deseado. En este caso, la especificación 0.0.0.0 indica que se quiere escuchar en todas las direcciones de la máquina.
+
+<a name="2.2.ejecucion-servidor-mixta"></a>
+### 2.2. Ejecución del lado Servidor de Ejecución Mixta.
+
+```bash
+mkdir -p /tmp/siguelineaIR/ && docker run --rm -e DISPLAY=:0 -e JDEROBOT_SIMULATION_TYPE=REMOTE --entrypoint /entrypoint_mixed_execution.sh -v /tmp/siguelineaIR:/home/jderobot/volume/user/exercise:rw -p 8888:8888 -p 8080:8080 -p 9001:9001 -p 9002:9002 -it tfmdocker/local:dev2 [OPTIONAL WORLD] [OPTIONAL AUX1] [OPTIONAL AUX2] ...
 ```
-For mixed execution to work, we need to launch a Jupyter server instance from within the docker, but at the same time it must be accessible from the user interface of the host machine (browser). We map the port of the docker in which the server listens to the same port of the machine, in such a way that the client has normal access to it. However, there are some problems of permissions to solve to be able to copy things from the outside to the inside of the docker.
 
-We have also revisited the issue of replacing the token check with the use of cookies. However, the CORS policies do not allow consulting, modifying or obtaining cookies from other domains, for which we are not able to obtain the value of the cookie for the Jupyter server domain. Other ways have been studied, such as including code in the iframe DOM (nor is it allowed).
+- Como se puede observar, hay un establecimiento inicial de un entorno completamente aislado para el lanzamiento de la Ejecución Mixta sobre él, con la creación de un directorio temporal sobre el que se montará el volumen docker: `mkdir -p /tmp/siguelineaIR/` y `-v /tmp/siguelineaIR:/home/jderobot/volume/user/exercise:rw`.
 
-# Week 29
-Once the server is running, the client side will be prepared so that the mixed execution works through the installed docker. The intention is that the students who access the application do not have to install any tool, but will be provided with a simplified docker that will contain everything necessary to face robotic exercises through the web application. Therefore, the docker image will be expanded with OpenCV libraries, jupyter widgets and some extensions necessary for the exercises.
+- Por otro lado, se indica la configuración del secuenciador en el _entrypoint_. Esto es `--entrypoint /entrypoint_mixed_execution.sh`
 
-On the other hand, the relevant tests will be carried out with the docker itself to check if there is connectivity with the local webcam, network support and access to the hardware through the USB ports. With this, we can prepare exercises that access the camera or even the interfaces of a customer's robot.
+- Se indicará también la secuencia de puertos de escucha de la Ejecución Mixta, según distintas herramientas saquen o soliciten información por ellos: `-p 8888:8888 -p 8080:8080 -p 9001:9001 -p 9002:9002`
 
-# Week 28
-Since mixed technology is already working at this point, it is time to build an instance of the real Unibotics server (a simple development server version) to adapt the code to the application and to the existing database and python classes. This week we will study the technologies used in the server infrastructure, including Docker, templates with JQuery and websockets. It will be tried to lift up a linux virtual environment that allows to install the corresponding versions of all the involved parts so that the server works correctly.
-The official docker image will also be installed.
+- Se podrá indicar una serie de argumentos opcionales, como un fichero de simulación [WORLD] u otras aplicaciones auxiliares como _Proxys_ o _Drivers_.
 
-# Week 27
-We studied the need to use the Google extension for jupyter and the use of the websockets protocol. In principle, it seems that this does not intervene in the process, and therefore can be discarded, reducing the dependencies that customers must install to access the practices.
+---
 
-On the other hand, and for reasons of security and integrity of the code, we studied the ways of obfuscating and minimizing the new javascript code that intervenes in the communication between browser and Notebook Server. The tool that has been most striking is (https://obfuscator.io/) that allows to act on many parameters that result in a protected code following the most convenient specifications.
+<a name="3-uso"></a>
+## 3. Uso de la Ejecución Mixta.
 
-# Week 26
-Given the problems in the last tests, I have partially changed the focus of the problem: from this point, I will use the client's Browser as an intermediary between the remote Web Server and the client's Notebook Server. Basically, the browser will act as a proxy, forwarding the messages established by the web server as if it was the origin of them. With this, I get through the security mechanisms of the client's machine. However, it has been necessary to make multiple changes to the test server to send all the necessary data to the browser, in addition to using JavaScript for communication.
+Como Cliente Web se realiza la función de servidor de Ejecución Mixta. Para utilizar esta herramienta, sólo es necesario acceder a la web de la aplicación que utiliza esta tecnología y solicitar una conexión para iniciar una Ejecución Mixta de tareas robóticas. La aplicación accderá al API de Ejecución Mixta, resolviendo todo lo necesario para el buen funcionamiento, y le indicará al usuario web qué herramientas necesita lanzar en modo Mixto. Así, el servidor de Ejecución Mixta se lanzará, según sean estos requisitos, con un comando similar al que se mostró en [2.2](#2.2.ejecucion-servidor-mixta).
 
-In this case, both the first test (UC3M -> URJC) and the second (HOME -> URJC) worked as planned. A video example of the second test can be seen here:
+El uso es por tanto muy simple y no requiere la instalación de ningún módulo o paquete adicional a Docker.
 
-##### [YOUTUBE VIDEO] Prototype of Mixed Execution for Unibotics.
-[![mixed execution prototype](https://img.youtube.com/vi/IsNA5rBRBsA/0.jpg)](https://www.youtube.com/watch?v=IsNA5rBRBsA "")
+---
 
-# Week 25
-Given the success in the test of using different machines with server and client roles, it is time to perform the test by placing the client's machine behind a NAT and a firewall, as would happen in any house of a potential user.
-In this case, the requests and commands that the web server sends to the Notebook server had to go through the security mechanisms of the machines in the face of foreign messages. Without demanding to open certain ports for communication (those used by the web server) the test was unsuccessful. I will thoroughly investigate the scenario to situate the error and study possible remedies.
+<a name="4-instalacion"></a>
+## 4. Instalación.
 
-We also studied the code of the Google extension to get ideas. Moreover, we continue looking forward to solve the cookie problem. Ultimately, I made a manual grouping of the back-end files that support the Test Notebook (Color Filter) and I studied minimization tools to lighten the traffic between server and client over the web.
+<a name="4.1-instalacion-cliente"></a>
+### 4.1. Instalación para Cliente
 
-# Week 24
-We went to perform the tests on different machines. For this, a first machine has been used to run the web server with Django technology, which will be waiting to receive the request for the ColorFilter exercise that was adapted last week. A second machine will act as a client, where the Jupyter server will be run, which will wait to receive orders from the web server to obtain, execute, modify and re-send the Notebook based on the interaction with the human user. A video example of the two-machine mixed execution is shown on the next video:
+El cliente Web sólo debe instalar Docker para funcionar, dado que todo lo demás le es transparente. Para ello, ejecutar la siguiente instrucción:
 
-##### [YOUTUBE VIDEO] Mixed Execution Testing with Two Machines
-[![mixed execution 2 machines](https://img.youtube.com/vi/nGDd6HG124s/0.jpg)](https://www.youtube.com/watch?v=nGDd6HG124s "")
-
-Given that the current option involves sending several code and configuration files that support the exercise, we began to study ways to minimize Python code.
-
-
-# Week 23
-To test the mixed execution implemented, this week has focused on adapting the ColorFilter Notebook to connect to the available webcam and operate normally on the customer's machine. This includes sending the back-end files of the exercise, for which different mechanisms have been studied among which are: take advantage of the REST API with the necessary format, investigate the Python web import mechanisms and also the systems of packaging of files of this language. For now, the best option is to continue with the REST API, although we leave the other options open for later review.
-
-In addition, we have studied the Django sessions and some web mechanisms to replace the token (manual) with the cookie that Jupyter establishes in order to connect to the server, so that later we will substitute the token for that cookie to increase the automation of the process.
-
-# Week 22
-We perform a series of tests to verify that the kernel that executes the code is the right one (the one that we started remotely in the client's Notebook Server). We check that by interrupting the kernel in the client, the Notebook code of the test website can no longer be executed. The next test will be already using two different machines.
-
-We also implemented a way to collect the filled Notebook with the code retouched by the user. The test server, when a certain event occurs (according to predictions of whether the client has made a change in the iframe), will request the kernel to send the current version of the Notebook. In addition, when the user clicks on a button to exit the exercise, this latest version will also be requested, and will be stored on the test server.
-
-##### [YOUTUBE VIDEO] Mixed Execution (Remote Web Server + Local Notebook Server + Local Kernel) FIRST VERSION
-[![mixed execution 2](https://img.youtube.com/vi/2BqTAunmx30/0.jpg)](https://www.youtube.com/watch?v=2BqTAunmx30 "")
-
-We continue investigating how to use browser cookies. Django [sessions](https://docs.djangoproject.com/en/2.1/topics/http/sessions/) may be necessary.
-
-# Week 21
-The next step is to remotely start (via messages from our test web server) a Jupyter session and a kernel associated with the Notebook that has been sent. We use other REST API operations (duly completed), sent to the appropriate routes to start and connect everything.
-
-For debugging purposes and to verify the operation and execution of the code by the kernel that has been launched in the client, we studied the options of embed the Notebook on the web that serves the test server. It may be necessary to re-write the jupyter configuration file, to tweak the security options (XSRF) of the Tornado server on which the Notebooks server is mounted. We focus on using <iframe>.
-  
-Up to this point, all the agents involved are correctly started, and the kernel seems to be ready to receive execution requests associated with the code of the Notebook from the web.
-
-# Week 20
-We have built the first version of the test server through Django. This server simply waits for requests, and when it receives a "start exercise" type request, it simply serves the appropriate Notebook (this time there is only one exercise available) through the REST API, to a kernel that the user must launch (in this case, in a different port).
-![TEST SERVER](https://github.com/RoboticsURJC-students/2018-tfm-Carlos-Awadallah/blob/master/docs/TEST_SERVER.png)
-Through the POST operation and establishing the appropriate route, the body of the HTTP message with the correct options and the appropriate security headers (through the token that the Notebook Server establishes to create user sessions), we get the Kernel to receive the Notebook:
-![POST](https://github.com/RoboticsURJC-students/2018-tfm-Carlos-Awadallah/blob/master/docs/POST_REST_API.png)
-
-We have to study the options for the client to request the rest of the code files on which the Notebook depends (back-end of the exercise). We also have to study the possibilities to try to replace the token with the cookies that the Notebook Server establishes in the browser when it is launched.
-
-# Week 19
-We started working on a test server. We explore two routes:
-
-- Open the client's docker ports, so that it uses the self-contained docker of Academy (gazebo + gazeo web + notebook server + jupyter kernel). The web server authenticates itself in github and collects the private Notebook with secure copy and copies it to the docker of the machine. This works, but we can not ask users to tweak the status of the ports on their computer.
-
-- Notebook Server + Kernel on the client side. The remote server (web server) puts the notebook in the directory where the Notebook Server is running (local), and then sends orders to it in order to work normal. We need to understand the HTTP API that the Notebook Server uses (in search of an operation that says, for example, take this Notebook). We suspect that we would need HTTP from browser to web server and local WebSockets from the browser to the notebook server.
-
-Since the second option is the most interesting, we studied the [REST API](https://github.com/jupyter/jupyter/wiki/Jupyter-Notebook-Server-API), that contains some operations that can be useful to us.
-
-![REST API](https://github.com/RoboticsURJC-students/2018-tfm-Carlos-Awadallah/blob/master/docs/REST_API.png)
-
-## Week 18
-We finish studying the traces that the source code of Jupyter prints to know what is happening during the establishment of the communication. We also studied the [extension](https://github.com/googlecolab/jupyter_http_over_ws/blob/master/jupyter_http_over_ws/handlers.py) of Colaboratory to embed the HTTP communication in the WebSockets protocol, to later adapt this solution to avoid problems with the users' firewalls, since the jupyter infrastructure allows it to be used to package the ZMQ messages.
-
-We studied the possibility of installing Jupyter from source to change the main files for others with the retouched code to print more traces, and to observe more clearly the steps that are followed. We also started to explore other tools such as the Jupyter REST API.
-
-## Weeks 16 and 17
-
-Now it's time to deepen the distribution of Jupyter through the code files accessible from the browser (session.js and kernel.js mainly) to fully understanding the tools we can use to achieve the objectives of local runtimes for Jupyter Notebooks .
-
-We also used some sniffers to monitor the communication between the Colaboratory server and the browser, and between the last and the local kernel to check how the communication was resolved (involving the HTTP and WebSockets protocols).
-
-I uploaded the resources that the Notebook incorporates to a [Github Pages' repository](https://github.com/RoboticsURJC-students/2018-tfm-Carlos-Awadallah/tree/master/docs) to be able to link them via HTTP with the Notebook, so that they are visible without the end user having to download them. These resources will be moved to the web server when we have built the final version.
-
-## Week 15
-
-We have continued doing research of the colaboratory infrastructure to adapt the exercise Notebook so that it could work normally on the Google server, allowing the visualization loop. In addition, we have rulet out using integrated widgets in the Notebook since Colaboratory does not have support for custom messages, only has certain widgets adapted for machine leraning that do not work for us. The possibility of including buttons in the front-end will be investigated. This is the result of the running Notebook through a mixed connection:
-##### [YOUTUBE VIDEO] Mixed Execution (Remote Server + Local Kernel) Through Google Colaboratory
-[![mixed execution](https://img.youtube.com/vi/oF6kp_x16M4/0.jpg)](https://www.youtube.com/watch?v=oF6kp_x16M4 "")
-
-We will now focus on the study of the sessions and the kernel that jupyter uses for messaging, to extract the connection information (URL) from a new local kernel and connect to it from the browser.
-
-## Week 14
-
-This week we focused on refining the Notebook to find a solution that allows us to preserve the ability to visualize in an iterative loop and the buttons that allow executing or stopping the code and turn on or off the display of filtered images.
-We have studied Colab available widgets: (https://colab.research.google.com/notebooks/widgets.ipynb)
-Some changes need to be made to the infrastructure of the exercise.
-
-## Week 13
-
-The first thing we have done is to try to study the Google Colab solution. We have uploaded one of our Notebooks to their server as a test, and we have used the tools they offer to connect to a local execution environment (https://research.google.com/colaboratory/local-runtimes.html)
-
-![local_runtimes](https://github.com/RoboticsURJC-students/2018-tfm-Carlos-Awadallah/blob/master/docs/local_runtimes_colab.png)
-
-To try to get an idea of its behaviour, I used Wireshark to capture the traffic in my Loopback interface on the port where I had launched the kernel that the Colab server was connected.
-
-![wireshark](https://github.com/RoboticsURJC-students/2018-tfm-Carlos-Awadallah/blob/master/docs/wireshark_localruntimes.png)
-
-I tried to connect the server without having launched the kernel and to kill the kernel while connected with no revealing results: the server just reconnected to a kernel on the reomote server and still working.
-
-At this point, I have thoroughly studied the communication between the Notebook Server and the Jupyter Kernel.
-
-## Week 12
-
-At this point, we need to explore possible ways to make the Notebook, stored on the Academy server (remote), execute the code using the local hardware (Local Jupyter Kernel).
-This is possible through local execution environments, such as the [Google Collaborative solution](https://research.google.com/colaboratory/local-runtimes.html). For this, it is necessary to incorporate an extension to the kernel of jupyter, enable it, and replace the ZeroMQ protocol in charge of the communication between Jupyter frontends and kernels by a solution that allows to "deceive" the local browser so that certain things coming from the server are sent to the jupyter local kernel, in such a way that the Notebook Server will connect with the browser and the browser with the jupyter kernel => JdeRobot Colaboratory
-
-In principle, this script should work: (https://www.npmjs.com/package/@jupyterlab/services)
-repo: (https://github.com/jupyterlab/jupyterlab/tree/master/packages/services)
-
-The next weeks will be devoted to the investigation of these routes and the search for a possible solution to the problem, to achieve full local execution of the Color Filter Notebook.
-
-## Week 11
-
-We have made some improvements in the user experience, such as clear all outputs when the students clicks on any button, so that they won't need to restar the kernel during the coding and debugging process. We have also replaced the "Play Code" and "Pause Code" buttons with an unique toggle "Play Code / Pause Code" button, which is more clear:
-
-![nbextensions](https://github.com/RoboticsURJC-students/2018-tfm-Carlos-Awadallah/blob/master/docs/playtoggle.png)
-
-![nbextensions](https://github.com/RoboticsURJC-students/2018-tfm-Carlos-Awadallah/blob/master/docs/pausetoggle.png)
-
-We are close to integrating this new exercise in the JdeRobot-Academy web practices set, contributing with a new practice in computer vision. The code is already available in [GitLab](https://gitlab.jderobot.org/JdeRobot-Academy/exercises/tree/master/jupyter/color_filter_opencv).
-
-We also did some research in other tools that allow us to enrich the functionality and intuitiveness of the exercises:
-  - JupyterLab
-  - Extensions
-  
-And also another ones to get closer to local execution of Notebooks stored on a remote server.
-  
-
-## Week 10
-To make the experience of the users of this exercise easier, we have decided to implement buttons that act as interactive widgets between the student and the Notebook, which will be responsible for executing the actions implemented on Week 9, both the academic pause and the visualization (the latter can be activated or deactivated whenever the student wants).
-
-We have improved the visualization loop to show filtered images every second, and also to display a warning message if a filtered image has not been established yet. 
-All these widgets will be responsible, in addition, to manage the cleaning of the output of the cell where the code is executed, in such a way that the student does not need to restart the kernel or leave the booklet to solve the exercise and debug it.
-
-##### [YOUTUBE VIDEO] Buttons for Play, Pause and Visualization On/Off
-[![buttons](https://img.youtube.com/vi/00w6aofU95A/0.jpg)](https://www.youtube.com/watch?v=00w6aofU95A "")
-
-## Week 9
-
-### Visualization Loop
-Taking advantage of the infinite loop of the iterative method that executes the algorithm of the students, we have programmed the visualization of the filtered images resulting from the execution of said algorithm in the loop, sampling every certain iterations to print a filtered image in the Notebook every 3 seconds. With this, we extended the set of debugging tools for this exercise:
-
-##### [YOUTUBE VIDEO] Visualization Loop printing filtered images each 3sec
-[![visloop](https://img.youtube.com/vi/BBZKI12Hxtg/0.jpg)](https://www.youtube.com/watch?v=BBZKI12Hxtg "")
-
-### Academic Pause
-To make it easier for students to complete the task, we have modified the Notebook of this exercise so that it follows a "Live Programming" philosophy, with which students have tools to pause the execution of the code, make changes to their algorithm and rerun their code with the changes made, all without having to restart the kernel or leave the Notebook:
-
-##### [YOUTUBE VIDEO] Academic Pause
-[![academicpause](https://img.youtube.com/vi/lGeGHJZUxpY/0.jpg)](https://www.youtube.com/watch?v=lGeGHJZUxpY "")
-
-## Week 8
-As part of the refinement of the visualization and the interaction with the Jupyter Notebook of the Color Filter exercise, I have found and tested a series of tools not officially related to the IPython development team that allow to add functionality to the Jupyter Notebook. These extensions are mostly written in Javascript and will be loaded locally in client's browser. These are the [nbextensions](https://github.com/ipython-contrib/jupyter_contrib_nbextensions).
-
-The link above contains a brief description of the repository and the extensions, a recipe for the installation and a user guide. I've installed as shown and tested two of the extensions provided: Initialization Cells and Hide Cell. When finishing the installation, a new section in the tree section toolbar is added:
-
-![nbextensions](https://github.com/RoboticsURJC-students/2018-tfm-Carlos-Awadallah/blob/master/docs/nbextensions1.png)
-
-### Initialization Cells
-Once installed, you can enable this extensions via [jupyter_nbextensions_configurator](https://github.com/Jupyter-contrib/jupyter_nbextensions_configurator):
-![jupyter_nbextensions_configurator](https://github.com/RoboticsURJC-students/2018-tfm-Carlos-Awadallah/blob/master/docs/nbextensions2.png)
-
-You may have problems by enabling this way due to lacks of permissions (depending on your system). If so, just open a temrinal and type:
+```bash
+pip install docker
 ```
-sudo jupyter nbextension enable init_cell/main
+
+<a name="4.2-instalacion-desarrollador"></a>
+### 4.2. Instalación para Desarrollador
+
+Para desarrollar en este proyecto se hace necesario replicar el aldo servidor web. Para ello, existen algunas dependencias que satisfacer y herramientas que configurar que permitan ofrecer el servicio. A continuación se recoge dicha configuración.
+
+<a name="4.2.1-instalacion-docker-desarrollo"></a>
+#### 4.2.1. Instalación de docker para desarrollo.
+
+Procedimiento de instalación extraído de la documentación oficial. Febrero de 2019.
+
+```bash
+sudo apt update
+sudo apt install -y apt-transport-https ca-certificates curl software-properties-common
+curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo apt-key add -
+sudo add-apt-repository "deb [arch=amd64] https://download.docker.com/linux/ubuntu bionic stable"
+sudo apt update
+sudo apt install -y docker-ce
 ```
-Once enabled, selecting the necessary toolbars for each extension as shown,
-![toolbars](https://github.com/RoboticsURJC-students/2018-tfm-Carlos-Awadallah/blob/master/docs/nbextensions5.png) 
-a toolbar is added to each cell with options to mark the cell as "initialization cell", in such a way that when reloading the page (and restarting the kernel) the marked cells will autoexecute:
 
-![checkbox](https://github.com/RoboticsURJC-students/2018-tfm-Carlos-Awadallah/blob/master/docs/nbextensions3.png) 
+<a name="4.2.2-instalacion-mysql"></a>
+#### 4.2.2. Instalación de Base de Datos (MySQL).
 
-### Hide Cells
-Similar to the previous extension, there is another one that allows to hide the marked cells. Together with the previous one, the use of these extensions will help me to create a button in the Notebook without the code that generates it being visible.
+Para la instalación del backend de Base de Datos utilizado en esta aplicación es necesario hacer lo siguiente:
 
-Again, we need to enable this extension using the Jupyter nbextensions Configurator, or running:
+```bash
+sudo apt install mysql-server
+sudo apt-get install -y python-mysqldb
 ```
-sudo jupyter nbextension enable hide_input/main
+
+Después, depenediendo de la distribución del OS del servidor (Ubuntu 16.04 ó 18.04), hacer:
+---
+- Ubuntu 16.04
+---
+Meter la contraseña _root_
+
+---
+-Ubuntu 18.04
+---
+configuración inicial
+
+```bash
+sudo mysqld_safe --skip-grant-tables&
+sudo mysql --user=root mysql
+mysql> update user set authentication_string=PASSWORD('new-password') where user='root';
+mysql> flush privileges;
+mysql> quit
+sudo service mysql restart
+sudo mysql -u root -p
 ```
-Then, as shown [here](https://jupyter-contrib-nbextensions.readthedocs.io/en/latest/nbextensions/hide_input/readme.html), we need to mark the cell to be hidden. I've done it by modifying cell's metadata:
 
-![metadata](https://github.com/RoboticsURJC-students/2018-tfm-Carlos-Awadallah/blob/master/docs/nbextensions4.png)
+Después, lanzar el configurador
 
-THE RESULT IS THE FOLLOWING:
-##### [YOUTUBE VIDEO] Result of the extensions 'Initialization Cells' added to Color Filter Notebook.
-[![catmousecompetition](https://img.youtube.com/vi/e2_fgAAeLx4/0.jpg)](https://www.youtube.com/watch?v=e2_fgAAeLx4 "")
+```bash
+sudo mysql_secure_installation
+```
 
-## Week 7
-On the occasion of the celebration of [IROS2018](https://www.iros2018.org/) in Madrid, and the contribution of JdeRobot to the conference with the [Program-A-Robot-2018](https://jderobot.org/Program-A-Robot-2018) contest, we have made a break to help in the organization and participate in it. During this week I prepared solutions for the two exercises proposed for the contest: 
+Luego hay que entrar a la consola de MySQL y crear la base de datos:
 
-Cat & Mouse
-![catmouse](http://jderobot.org/store/jmplaza/uploads/campeonato-drones/dronecatmouse.jpg)
+```bash
+mysql> CREATE DATABASE <database>;
+```
 
-Escape from the hangar
-![hangar](http://jderobot.org/store/jmplaza/uploads/campeonato-drones/hangar.jpg)
+Se recomienda eliminar las restricciones en lo relativo a la contraseña de acceso antes de continuar:
 
-### Competition 
-##### [YOUTUBE VIDEO] Execution during the competition.
-[![catmousecompetition](https://img.youtube.com/vi/V7mwVIvlWqk/0.jpg)](https://www.youtube.com/watch?v=V7mwVIvlWqk "")
+```bash
+SET GLOBAL validate_password_mixed_case_count = 0;
+SET GLOBAL validate_password_number_count = 0;
+SET GLOBAL validate_password_special_char_count = 0;
+```
+---
 
-### Research
-In parallel I have started an investigation to discover tools with which to refine the visualization of the Color Filter practice.
+Una vez finalizada la instalación, hay que crear el usuario para acceder a la Base de Datos y administrarla. Para ello, hacer lo siguiente:
 
-### Beta-testing
-Due to recent advances in new practices, I have acted as a beta-tester of the [Chrono](https://github.com/PabloMorenoVera/Academy/tree/master/exercises/chrono) practice, with which JdeRobot-Academy will soon be expanded:
+Se crea el usuario con
 
-![Chrono World](https://github.com/RoboticsURJC-students/2018-tfm-Carlos-Awadallah/blob/master/docs/chrono1.png)
-![Chrono GUI](https://github.com/RoboticsURJC-students/2018-tfm-Carlos-Awadallah/blob/master/docs/chrono2.png)
+```bash
+mysql> CREATE USER '<user>'@'localhost' IDENTIFIED BY '<pass>';
+```
 
-## Week 6
-We fine-tune details and complete the Jupyter Notebook of the Color Filter practice assuming that the necessary components are executed locally (camera).
+Luego se garantiza los privilegios de acceso al nuevo usuario, y se refrescan los privilegios:
 
-## Week 5 
-We continued exploring and testing the 'Colaboratory' solution. We have also made a small break to become Academy Web's beta-tester to fine-tune the server and correct minor flaws in order to use it in the [IROS](https://www.iros2018.org/) PROGRAM-A-ROBOT contest.
+```bash
+GRANT ALL PRIVILEGES ON *.* TO '<user>'@'localhost';
+FLUSH PRIVILEGES;
+```
 
-## Weeks 3 and 4
-The next steps are to modify the Academy Web Server to store the Notebooks and take advantage of the computer capacity of the student's system (local kernel and remote notebook). With this we will be able to have the Notebook on the Web and connect it with the local camera of each student, without needing them to have the Notebook.
+**NOTA**: Con el usuario y la base de datos creados, puede resultar interesante rellenar las tablas de la nueva Base de Datos con una copia funcional del estado actual de la aplicación. Para ello, contactar con el administrador (carlosawadallah@gmail.com). Una vez se disponga de la copia, ejecutar lo siguiente: `mysql -u <user> -p <database> < copia.sql`
 
-#### Research
-We explored different ways to achieve the above, learning the [internal architecture of Jupyter](https://jupyter.readthedocs.io/en/latest/architecture/how_jupyter_ipython_work.html), and found a possible solution to the problem:
+<a name="4.2.3-instalacion-django-dependencias"></a>
+#### 4.2.3. Instalación de Django y Dependencias.
 
-LOCAL RUNTIME -> https://github.com/googlecolab/jupyter_http_over_ws
-LOCAL RUNTIME -> https://research.google.com/colaboratory/local-runtimes.html
+La lista de paquetes (pip), herramientas y dependencias de la aplicación web es la siguiente:
 
-Now it's time to test it.
+| Módulo       | Versión        | Instalación                   | Observaciones                                                |
+| ------------ | -------------- | ----------------------------- | ------------------------------------------------------------ |
+| Django       | `1.9` ó `1.11` | `pip install django==1.11`    | Versiones válidas entre la 1.9 y 1.11.                       |
+| JSON         | `3.16.0`       | `pip install simplejson`      | Gestión de Peticiones con contenido JSON.                    |
+| Channels     | `1.1.5`        | `pip install channels==1.1.5` | Conexiones WebSockets (incluye `daphne==1.4.2` y `asgi-redis==1.2.0`). |
+| PyGitHub     | `1.43.2`       | `pip install pygithub`        | Gestión de los ficheros de código de usuario con GitHub.     |
+| Django Extensions |     *     | `pip install django-extensions` |  Extensiones de Django                                     |
+| MySQL Client | `1.3.14`       | `pip install mysqlclient==1.3.14` | Cliente de MySQL para la Base de Datos                   |
+| Redis Server |     *          | `apt install redis-server`    | Backend de gestión de WebSockets.                            |
 
-We also started to explore the new WebSim tool for future projects.
 
-## Week 2
-#### Selectable Video Source (Color Filter Notebook)
-Once the node has been modified to accept video from the local camera, we have done the same with the Jupyter Notebook version. This new booklet also accepts different configurable video sources. The main one will be to obtain the flow of the student's local camera with OpenCV.
 
-##### [YOUTUBE VIDEO] Selectable Source (Camera Stream).
-[![Selectable Source](https://img.youtube.com/vi/meVvdFs3Vt0/0.jpg)](https://www.youtube.com/watch?v=meVvdFs3Vt0 "")
-##### [YOUTUBE VIDEO] Selectable Source (Output).
-[![Output](https://img.youtube.com/vi/D8dOrv6z3BM/0.jpg)](https://www.youtube.com/watch?v=D8dOrv6z3BM "")
-
-## Week 1
-During the recent development of the [JdeRobot-Academy website](http://academy.jderobot.org:8000/) we have been investigating tools for its enrichment with computer vision practices. To do this, we must ensure that the Jupyter Notebook connects to the camera of the client's system, in such a way that the solution can be programmed on the images provided by that camera.
-
-#### Selectable Video Source (Color Filter)
-We begin this process by modifying the Color Filter node so that it accepts different video streams, in a configurable way. With this, the user can choose the video source he/she wants to use to solve the practice:
-
-- Local Camera with OpenCV flow
-- Video file stored in the local file system
-- External camera (simulated or USB) through ROS / ICE plugins
-
-The video source is selectable by modifying the configuration file of the exercise.
-
-#### Solution
-A solution for the exercise has been proposed in order to verify the correct functioning of the changes made. In addition, an entry has been created in the [developer's forum](https://developers.jderobot.org/t/color-filter-exercise/58) to discuss possible improvements or failures.
-
-![Input](https://github.com/RoboticsURJC-students/2018-tfm-Carlos-Awadallah/blob/master/docs/inputImage.png)
-![Smooth](https://github.com/RoboticsURJC-students/2018-tfm-Carlos-Awadallah/blob/master/docs/smoothImage.png)
-![HSV](https://github.com/RoboticsURJC-students/2018-tfm-Carlos-Awadallah/blob/master/docs/hsvImage.png)
-![Threshold](https://github.com/RoboticsURJC-students/2018-tfm-Carlos-Awadallah/blob/master/docs/thresholdImage.png)
-![Output](https://github.com/RoboticsURJC-students/2018-tfm-Carlos-Awadallah/blob/master/docs/filteredImage.png)
-
-#### CamServerWeb + CamVizWeb
-In the future we will try to make a new version of this practice via WebRTC + Electron. We started this path by running the JdeRobot [CamServerWeb + CamVizWeb tutorial](https://jderobot.org/Tutorials#Cameraserver-web_.2B_Cameraview-web), with recently developed tools. We found some execution problems related to incompatibilities between RosBridgeServer and some Python packages. We modified this tutorial and the installation instructions to incorporate the solution to the problem.
-
-### Add-Ons
-We have added a button that allows the student to print several consecutive frames in the Notebook (both the video of the camera and the successive images segmented by his/her algorithm).
-
-##### [YOUTUBE VIDEO] Button to print Video (Camera Stream).
-[![Print Video Button](https://img.youtube.com/vi/ouDR7TC1_uI/0.jpg)](https://www.youtube.com/watch?v=ouDR7TC1_uI "")
-##### [YOUTUBE VIDEO] Button to print Video (Filtered Images).
-[![Print Video Button](https://img.youtube.com/vi/Qq9KgkcM5FU/0.jpg)](https://www.youtube.com/watch?v=Qq9KgkcM5FU "")
