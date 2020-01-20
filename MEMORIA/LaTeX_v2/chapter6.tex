@@ -1,0 +1,56 @@
+\chapter{Conclusiones y Líneas Futuras}
+
+Este capítulo recogerá las inferencias extraídas durante el desarrollo de esta tesis, mayoritariamente provenientes del periodo de investigación y confirmadas durante la implementación, así como unos ilustrativos casos de uso a modo de conclusión. También dedicará una sección a listar las líneas futuras de investigación que podrían potenciar el desarrollo o abrir nuevos frentes para hacerlo más completo.
+
+\section{Conclusiones} 
+
+Se distinguen dos grupos de conclusiones dada la estructura del presente proyecto que tienen relación con el planteamiento inicial de objetivos y el desarrollo e implementación en sí, respectivamente.
+En primer lugar cabe destacar que la herramienta desarrollada cumple los 4 sub-objetivos propuestos en primera instancia, así como todas las características deseables para un fácil y versátil acceso a aplicaciones robóticas. Además, la implementación final cuenta incluso con algunas propiedades no programadas en el planteamiento original, que lo hacen más robusto y seguro.
+
+Se ha llevado a cabo un proceso completo de estudio de herramientas relacionadas con la robótica y su accesibilidad, además de algunas otras con aparente carencia de dicha relación con el campo tecnológico robótico cuyos usos pueden ser replanteados para cumplir alguna función que sí tiene relación. Se ha desarrollado la capacidad de elección y la destreza necesarias para seleccionar un subconjunto de herramientas, aplicaciones y entornos que condujeron a la solución propuesta para un problema sin solución clara previa, además de la habilidad de discernir entre necesidad de desarrollar comportamientos y lógicas desde cero y la posibilidad de adaptar un programa o aplicación existente para que encajara en las necesidades del trabajo. Se consiguió descartar las vías que pudieran suponer no llegar a la solución o un cuello de botella en el desarrollo de la misma, llegando finalmente a la propuesta de un método válido y de funcionamiento verificado por distintas vías que constituye una buena solución para la idea expuesta entre todas las plausibles para este problema no abordado previamente. El cumplimiento de los objetivos demuestra que se ha desarrollado la capacidad de orientación, dirección y ejecución de un proceso de desarrollo asociado a una nueva idea, sin ser necesario el disponer de un guion preestablecido o un esquema de trabajo.
+En cuanto al periodo de implementación, se extrajo una serie de conclusiones más específicas acerca de la herramienta desarrollada, la coyuntura tecnológica en relación a la robótica y del modo de trabajar al enfrentarse a un proyecto robótico:
+\begin{itemize}
+    \item [-] Los primeros pasos de este proyecto desembocaron en un problema sin aparente solución, el cual fue abordable cambiando el enfoque inicial, algo muy común en proyectos tecnológicos. Esto arrojó luz sobre el método de ``trabajo previo’’ que es altamente recomendable llevar a cabo antes de empezar un proyecto: plantear un estudio previo de la viabilidad del mismo y de cada uno de los módulos que se quiere incluir en el diseño. Así pues, se dedujo que no sólo la implementación debe estar sujeta a un proceso iterativo de verificación de calidad como el planteado inicialmente, sino que también  el estudio debe estar sujeto a una constante supervisión en la que se busque mejorar la idea o el método e incluso en la que se replanteen los objetivos por el bien final del proyecto, lo que permite lidiar con potenciales imprevistos e incrementar la robustez y calidad.
+    \item [-] Comprender el funcionamiento latente de los agentes que se utiliza en un desarrollo facilita mucho su integración y permite aprovechar la flexibilidad que pueden ofrecer. Así pues, a la hora de escoger entre distintas opciones se ha de ser estricto y restrictivo con los objetivos que se pretende alcanzar, dado que suele haber diferentes soluciones a un mismo problema. Personalmente considero que el software robótico es muy versátil hoy en día gracias a las arquitecturas distribuidas y modulares que abren la puerta a la integración en todo tipo de proyectos, permitiendo potenciar el alcance de cada nuevo desarrollo.
+    \item [-] Hay una necesidad social de robótica. Muchas aplicaciones laborales, domésticas y relacionadas con dar servicio a las personas están siendo completamente automatizadas y dotadas de la presencia de robots, desembocando en el gran incremento de la necesidad de formación en el campo, que hasta ahora resulta en parte complicado de acceder. La ``Ejecución Mixta’’ supone un paso adelante en el acceso a la formación e investigación en robótica.
+    \item [-] Aunque hasta hace unos pocos años era impensable usar las tecnologías web en ámbitos robóticos dadas sus antiguas limitaciones, esto ha cambiado diametralmente hasta ofrecer un contexto tecnológico en el que esta vía de desarrollo es ideal para construir aplicaciones que permitan acercar la robótica a la gente.
+    \item [-] Finalmente se ha querido destacar el hecho de que, a pesar de la primera impresión, un proyecto robótico no sólo requiere exige conocimientos en hardware y software robótico, sino que también requiere el uso y conocimiento de herramientas asociadas a todo tipo de materias. Para el caso concreto de esta tesis ha sido necesario un nivel alto de conocimientos en telecomunicaciones y protocolos de intercambio de datos, así como adquirir conocimientos y destreza en el campo de la ingeniería de sistemas. Es por eso que se concluye que en proyectos de mayor calibre y envergadura se forma un grupo de desarrollo compuesto de expertos en distintos ámbitos, en tanto que la robótica agrupa muchos otros campos científicos y tecnológicos como la electrónica, mecánica, telecomunicaciones, sistemas, programación y física y matemáticas entre otras.
+\end{itemize}
+
+\section{Análisis de prestaciones}
+Se recoge en la siguiente tabla (\ref{tabla:pros_cons}) un análisis de los puntos favorables y desfavorables de la ``Ejecución Mixta'' desde el punto de vista de las aplicaciones robóticas que valoran si incorporar o no esta herramienta a su infraestructura:
+
+\begin{table}[htbp]
+\begin{center}
+\begin{tabular}{| p{5cm}| p{8cm} |}
+\hline
+Pros & Contras \\
+\hline \hline
+Accesible (API) & Requiere conectividad de red \\ \hline
+Multiplataforma & Depende del soporte de Docker (las capacidades en MacOS están algo limitadas por el momento)\\ \hline
+Versátil (modular). Fácil de integrar &   \\ \hline
+Seguro &   \\ \hline
+Fácil de usar &   \\ \hline
+\end{tabular}
+\caption{Tabla de Análisis de Prestaciones.}
+\label{tabla:pros_cons}
+\end{center}
+\end{table}
+
+\section{Casos de Uso }
+Se ejemplifica a continuación algunos de los casos en los que el uso de la ``Ejecución Mixta’’ es idóneo:
+\begin{enumerate}
+\item Se dispone de un servicio que se quiere prestar al público, pero no se dispone de soporte físico o recursos para prestarlo. La ``Ejecución Mixta’’ pone el énfasis en el lado cliente, liberando totalmente al lado servidor de carga computacional.
+\item Se pretende estudiar o entrar en contacto con el campo de la robótica, sin conocimiento ni habilidades suficientes para disponer un entorno práctico de aprendizaje. Esta herramienta envuelve toda la complejidad de bajo nivel en un API de sencilla utilización.
+\item Se dispone de \textit{hardware} robótico específico y se quiere conectar con alguna clase de aplicación. La solución de ``Ejecución Mixta’’ es fácilmente ampliable con soporte para nuevos controladores, y sencillamente integrable con cualquier tipo de aplicación en la que se pueda actuar sobre el mecanismo de mensajería.
+\item Se quiere trabajar con lógica robótica sin tener robots ni infraestructura típica. La ``Ejecución Mixta’’ funciona sobre cualquier sistema operativo, y no requiere disponer de nada más que un navegador web para trabar con robótica, en el que se puede tener soporte de simulación.
+\end{enumerate}
+
+\section{Trabajos Futuros y Líneas Futuras de Investigación }
+Dada la ``juventud’’ de la idea de este proyecto, su solución queda abierta a la alteración de algunas de sus partes para introducir mejoras e incrementar la eficiencia, o a la ampliación de sus características o de la funcionalidad que ofrece. Algunos ejemplos, escogidos por ser los de mayor prioridad, son los siguientes:
+Actualmente la herramienta Docker utilizada sobre MacOS tiene claras limitaciones en cuanto al acceso de \textit{hardware} conectado a través de los puertos USB del sistema. Se hará necesario revisitar la herramienta para las futuras versiones de Docker, en las cuales se asegura la superación de estas limitaciones, para garantizar el completo y correcto funcionamiento sobre dicho sistema operativo.
+Se pretende crear un REST API de ``Ejecución Mixta’’ que permita a las aplicaciones ejercer cierto control sobre algunas de las tareas de la herramienta, pudiendo lanzarlas, interrumpirlas o detenerlas si se necesita.
+En relación con lo anterior, se planea construir un envoltorio profesional para la herramienta, en vistas a extender su uso.
+En cuanto al enriquecimiento ``en caliente'' de la herramienta, estamos trabajando en la incorporación de un mecanismo que permita al usuario crear e incluir nuevos \textit{drivers} para sus robots o incluso sus propias versiones de los controladores de los robots ya soportados. La idea es que en tiempo de ejecución (sin que sea necesario el lanzamiento de una nueva versión de la herramienta) cada usuario pueda customizar su ``Ejecución Mixta'', adaptando el soporte al uso que quiere hacer de la aplicación robótica a la que accede.
+
+\section{Videos?}

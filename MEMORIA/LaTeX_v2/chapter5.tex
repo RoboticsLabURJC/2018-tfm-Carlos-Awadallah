@@ -1,0 +1,59 @@
+\chapter{ Validación Experimental}
+
+En este capítulo se detallan las diferentes pruebas y experimentos que se utilizaron para testar y verificar la ``Ejecución Mixta'' y sus capacidades. Además de los experimentos, se describirá también su contexto y la relación de éste con lo que se quería probar, además de los resultados obtenidos.
+
+\section{Servidor en Producción}  
+Además de las pruebas realizadas sobre una aplicación que se servía de manera local durante el desarrollo se montó un entorno de pruebas sobre un servidor alojado en la universidad con un dominio accesible.
+
+La motivación de ésta prueba es demostrar el funcionamiento compartido de la herramienta, y verificar que no existe barrera alguna en lo relativo a la ubicación física del cliente y del servidor de ``Ejecución Mixta'' y su \textit{hardware} a controlar. Se puede testar también la capacidad de atravesar NATs y \textit{firewalls} a través de Internet, además de los frecuentes problemas de origen cruzado de los protocolos de intercambio de datos. Se plantea por último el escenario para testar el enlace entre una aplicación robótica de naturaleza remota y el motor local de ``Ejecución Mixta'`.
+
+Se analizaron los parámetros críticos relacionados con la comunicación a través de Internet desde distintos puntos de acceso (nacionales) y con máquinas de distintos rangos operacionales y distintas restricciones de acceso a la red. Los resultados se recogen en la siguiente tabla:
+
+\begin{table}[htbp]
+\begin{center}
+\begin{tabular}{| p{1.8cm}| p{2.6cm} | p{1.7cm}| p{2.4cm}| p{3cm}|}
+\hline
+Navegador & Funcionamiento & Latencia & Ancho de Banda Consumido & Tiempo de Establecimiento de Comunicación \\
+\hline \hline
+Chrome & 100\% & 38 ms & 0.24 Mbps & 2.8 s\\ \hline
+FireFox & 100\% & 36 ms & 0.23 Mbps & 3.1 s\\ \hline
+Opera & 100\% & 40 ms & 0.24 Mbps & 3.5 s\\ \hline
+Safari & 100\% & 38 ms & 0.28 Mbps & 2.9 s\\ \hline
+Internet Explorer & 100\% & 44 ms & 0.13 Mbps & 4.2 s\\ \hline
+\end{tabular}
+\caption{Tabla de Resultados de Parámetros de Red.}
+\label{tabla:pros_cons}
+\end{center}
+\end{table}
+
+De la tabla de parámetros resultantes se deduce que el funcionamiento es indiferente del navegador elegido, con mejor o peor desempeño en función de la conexión de red, y de la eficiencia de la tecnología de computación del propio navegador. Se puede ver que la latencia media no es para nada crítica, permitiendo un uso fluido de la herramienta en la web, y que en términos de ancho de banda el consumo es prácticamente equivalente al que se obtiene siendo cliente de un servicio de VOD, vídeo bajo demanda. Se demuestra con todo lo anterior que la herramienta de ``Ejecución Mixta'' está preparada para funcionar como parte de cualquier servicio con capacidad de recursos normal a través de la web.
+
+\section{Grupos de Pruebas: \textit{betatesters}}
+
+Para no limitar el proceso de test a un único entorno cliente se reunió un conjunto de usuarios que accedieron a hacer las funciones de \textit{betatesters} de manera voluntaria, lo que permitió ampliar el ámbito de experimentación y el alcance de las pruebas, además de su validez sustentada en la generalización, en medias aritméticas de las capacidades y en porcentajes de éxito y fracaso.
+
+Cabe destacar que cada sujeto de pruebas disponía de su propio entorno, es decir, de su máquina con ciertas prestaciones y cierto sistema operativo a cargo. Los \textit{betatesters} tenían mayoritariamente distintas distribuciones de Linux y, en algunos casos, versiones de Windows. En la mayoría de los casos el cliente no disponía de instalación previa de ninguna de las herramientas de las que hace uso la ``Ejecución Mixta'' en su sistema, y en la totalidad de los casos no disponían de todas ellas.
+
+\begin{table}[htbp]
+\begin{center}
+\begin{tabular}{| p{1.8cm}| p{2.6cm} | p{1.7cm}| p{2.4cm}| p{3cm}|}
+\hline
+Modalidad & Funcionamiento & Eficiencia & Carga media en Servidor & Carga media en Cliente \\
+\hline \hline
+Simulación & 100\% & 60\% & 15\% & 85\%\\ \hline
+Cámaras locales integradas & 100\% & 80\% & 10\% & 90\%\\ \hline
+Robots Reales & 80\% & 95\% & 0.5\% & 99.5\%\\ \hline
+\end{tabular}
+\caption{Tabla de Resultados de Sujetos de Pruebas.}
+\label{tabla:pros_cons}
+\end{center}
+\end{table}
+
+Se observa en la tabla anterior que la totalidad de los usuarios pudieron acceder a la simulación a través de la aplicación derivando el cómputo a su propia máquina a través de la herramienta implementada. La eficiencia en este caso estuvo supeditada al \textit{hardware} del que el cliente disponía para hacerse cargo de la ejecución, especialmente del \textit{hardware} de aceleración gráfica. En todos los casos se experimentó un uso razonablemente bueno.
+
+En cuanto al desempeño de la herramienta en conjunto con los sensores de visión integrados en la máquina del cliente se consiguió que funcionase para todos los sujetos. En este caso se liberaba de algo más de carga al servidor dado que la tasa de refresco de imágenes era más baja que la de la escena de simulación. Se comprobó que el procesado de imágenes que se intercambian por Internet es posible sin sufrir consecuencias temporales gracias al énfasis de la carga en el lado cliente. El acceso a las cámaras se garantizó en los sistemas operativos testados.
+
+Hubo una cantidad menor de pruebas realizadas frente a robots reales dada su escasez. No se consiguió funcionar en los SO basados en Windows dado que ningún usuario disponía de las versiones para las que docker ofrece soporte. En el caso de los basados en Linux la eficiencia fue prácticamente máxima, además del grado de explotación de la herramienta, que si bien nació para soportar la ejecución local de algoritmos de visión artificial, parece tener mayores ventajas para el caso de uso de los robots, siempre teniendo en cuenta el tipo de aplicación sobre el que se está utilizando la herramienta. 
+
+Se infiere de lo anterior que la relación eficiencia-prestaciones fue en todos los casos al menos ligeramente positiva, y que la ``Ejecución Mixta'' funciona siempre para todos los supuestos para los que da soporte.
+
