@@ -49,8 +49,12 @@ Se ejemplifica a continuación algunos de los casos en los que el uso de la ``Ej
 \section{Trabajos Futuros y Líneas Futuras de Investigación }
 Dada la ``juventud’’ de la idea de este proyecto, su solución queda abierta a la alteración de algunas de sus partes para introducir mejoras e incrementar la eficiencia, o a la ampliación de sus características o de la funcionalidad que ofrece. Algunos ejemplos, escogidos por ser los de mayor prioridad, son los siguientes:
 Actualmente la herramienta Docker utilizada sobre MacOS tiene claras limitaciones en cuanto al acceso de \textit{hardware} conectado a través de los puertos USB del sistema. Se hará necesario revisitar la herramienta para las futuras versiones de Docker, en las cuales se asegura la superación de estas limitaciones, para garantizar el completo y correcto funcionamiento sobre dicho sistema operativo.
+
 Se pretende crear un REST API de ``Ejecución Mixta’’ que permita a las aplicaciones ejercer cierto control sobre algunas de las tareas de la herramienta, pudiendo lanzarlas, interrumpirlas o detenerlas si se necesita.
 En relación con lo anterior, se planea construir un envoltorio profesional para la herramienta, en vistas a extender su uso.
+
 En cuanto al enriquecimiento ``en caliente'' de la herramienta, estamos trabajando en la incorporación de un mecanismo que permita al usuario crear e incluir nuevos \textit{drivers} para sus robots o incluso sus propias versiones de los controladores de los robots ya soportados. La idea es que en tiempo de ejecución (sin que sea necesario el lanzamiento de una nueva versión de la herramienta) cada usuario pueda customizar su ``Ejecución Mixta'', adaptando el soporte al uso que quiere hacer de la aplicación robótica a la que accede.
+
+También se está trabajando en una segunda versión del contenedor Docker que reduzca casi a la mitad su peso actual (espacio en disco) a través de la utilización eficiente de las capas de construcción de Docker, cuyo tamaño se puede reducir mediante la recolocación inteligente de las instrucciones de instalación de herramientas afines o similares en grupos.
 
 \section{Videos?}
