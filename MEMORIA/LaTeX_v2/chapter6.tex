@@ -7,7 +7,7 @@ Este capítulo recogerá las inferencias extraídas durante el desarrollo de est
 Se distinguen dos grupos de conclusiones dada la estructura del presente proyecto que tienen relación con el planteamiento inicial de objetivos y el desarrollo e implementación en sí, respectivamente.
 En primer lugar cabe destacar que la herramienta desarrollada cumple los 4 sub-objetivos propuestos en primera instancia, así como todas las características deseables para un fácil y versátil acceso a aplicaciones robóticas. Además, la implementación final cuenta incluso con algunas propiedades no programadas en el planteamiento original, que lo hacen más robusto y seguro.
 
-Se ha llevado a cabo un proceso completo de estudio de herramientas relacionadas con la robótica y su accesibilidad, además de algunas otras con aparente carencia de dicha relación con el campo tecnológico robótico cuyos usos pueden ser replanteados para cumplir alguna función que sí tiene relación. Se ha desarrollado la capacidad de elección y la destreza necesarias para seleccionar un subconjunto de herramientas, aplicaciones y entornos que condujeron a la solución propuesta para un problema sin solución clara previa, además de la habilidad de discernir entre necesidad de desarrollar comportamientos y lógicas desde cero y la posibilidad de adaptar un programa o aplicación existente para que encajara en las necesidades del trabajo. Se consiguió descartar las vías que pudieran suponer no llegar a la solución o un cuello de botella en el desarrollo de la misma, llegando finalmente a la propuesta de un método válido y de funcionamiento verificado por distintas vías que constituye una buena solución para la idea expuesta entre todas las plausibles para este problema no abordado previamente. El cumplimiento de los objetivos demuestra que se ha desarrollado la capacidad de orientación, dirección y ejecución de un proceso de desarrollo asociado a una nueva idea, sin ser necesario el disponer de un guion preestablecido o un esquema de trabajo.
+Se ha llevado a cabo un proceso completo de estudio de herramientas relacionadas con la robótica y su accesibilidad, además de algunas otras con aparente carencia de dicha relación con el campo tecnológico robótico cuyos usos pueden ser replanteados para cumplir alguna función que sí tiene relación. Se ha desarrollado la capacidad de elección y la destreza necesarias para seleccionar un subconjunto de herramientas, aplicaciones y entornos que condujeron a la solución propuesta para un problema sin solución clara previa, además de la habilidad de discernir entre necesidad de desarrollar comportamientos y lógicas desde cero y la posibilidad de adaptar un programa o aplicación existente para que encajara en las necesidades del trabajo. Se consiguió descartar las vías que pudieran suponer no llegar a la solución o un cuello de botella en el desarrollo de la misma, llegando finalmente a la propuesta de un método válido y de funcionamiento verificado por distintas vías que constituye una buena solución para la idea expuesta entre todas las plausibles para este problema no abordado previamente. El cumplimiento de los objetivos demuestra que se ha desarrollado la capacidad de orientación, dirección y ejecución de un proceso de desarrollo asociado a una nueva idea, sin ser necesario el disponer de un guión preestablecido o un esquema de trabajo.
 En cuanto al periodo de implementación, se extrajo una serie de conclusiones más específicas acerca de la herramienta desarrollada, la coyuntura tecnológica en relación a la robótica y del modo de trabajar al enfrentarse a un proyecto robótico:
 \begin{itemize}
     \item [-] Los primeros pasos de este proyecto desembocaron en un problema sin aparente solución, el cual fue abordable cambiando el enfoque inicial, algo muy común en proyectos tecnológicos. Esto arrojó luz sobre el método de ``trabajo previo’’ que es altamente recomendable llevar a cabo antes de empezar un proyecto: plantear un estudio previo de la viabilidad del mismo y de cada uno de los módulos que se quiere incluir en el diseño. Así pues, se dedujo que no sólo la implementación debe estar sujeta a un proceso iterativo de verificación de calidad como el planteado inicialmente, sino que también  el estudio debe estar sujeto a una constante supervisión en la que se busque mejorar la idea o el método e incluso en la que se replanteen los objetivos por el bien final del proyecto, lo que permite lidiar con potenciales imprevistos e incrementar la robustez y calidad.
@@ -48,7 +48,7 @@ Se ejemplifica a continuación algunos de los casos en los que el uso de la ``Ej
 
 \section{Trabajos Futuros y Líneas Futuras de Investigación }
 Dada la ``juventud’’ de la idea de este proyecto, su solución queda abierta a la alteración de algunas de sus partes para introducir mejoras e incrementar la eficiencia, o a la ampliación de sus características o de la funcionalidad que ofrece. Algunos ejemplos, escogidos por ser los de mayor prioridad, son los siguientes:
-Actualmente la herramienta Docker utilizada sobre MacOS tiene claras limitaciones en cuanto al acceso de \textit{hardware} conectado a través de los puertos USB del sistema. Se hará necesario revisitar la herramienta para las futuras versiones de Docker, en las cuales se asegura la superación de estas limitaciones, para garantizar el completo y correcto funcionamiento sobre dicho sistema operativo.
+Actualmente la herramienta Docker utilizada sobre Windows tiene claras limitaciones en cuanto al acceso de \textit{hardware} conectado a través de los puertos USB del sistema. Se hará necesario revisitar la herramienta para las futuras versiones de Docker, en las cuales se asegura la superación de estas limitaciones, para garantizar el completo y correcto funcionamiento sobre dicho sistema operativo.
 
 Se pretende crear un REST API de ``Ejecución Mixta’’ que permita a las aplicaciones ejercer cierto control sobre algunas de las tareas de la herramienta, pudiendo lanzarlas, interrumpirlas o detenerlas si se necesita.
 En relación con lo anterior, se planea construir un envoltorio profesional para la herramienta, en vistas a extender su uso.
@@ -57,4 +57,18 @@ En cuanto al enriquecimiento ``en caliente'' de la herramienta, estamos trabajan
 
 También se está trabajando en una segunda versión del contenedor Docker que reduzca casi a la mitad su peso actual (espacio en disco) a través de la utilización eficiente de las capas de construcción de Docker, cuyo tamaño se puede reducir mediante la recolocación inteligente de las instrucciones de instalación de herramientas afines o similares en grupos.
 
-\section{Videos?}
+\section{Vídeos Demostrativos}
+
+En los siguientes vídeos se puede encontrar un ejemplo de Ejecución Mixta para cada ejercicio implementado que demuestra su funcionamiento.
+
+1. \textbf{Ejercicio del Filtro de Color}
+
+\url{https://www.youtube.com/watch?v=QnhI0jsEtp4}
+
+2. \textbf{Ejercicio del Sigue-Líneas con Fórmula 1}
+
+\url{https://www.youtube.com/watch?v=39MVVn3u8SE}
+
+3. \textbf{Ejercicio del Cuadrado con el dron Tello}
+
+\url{https://www.youtube.com/watch?v=4GVvF_ce6Ko}

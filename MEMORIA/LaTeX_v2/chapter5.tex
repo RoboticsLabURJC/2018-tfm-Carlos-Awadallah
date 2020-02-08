@@ -58,7 +58,7 @@ Este ejercicio, consistente en el clásico Sigue Líneas de la Visión Artificia
 
 La infraestructura de este ejercicio queda también recogida en un fichero de \textit{back-end} que dispone, de manera similar al ejercicio anterior, un API de utilización del ejercicio que permite, en este caso, actuar sobre la simulación, es decir, acceder a las interfaces de actuación y sensorización del robot simulado y detener, pausar y reanudar la ejecución del código. Esta estructura de ejercicio incluye la disposición de los canales de ROS de intercambio de información entre Jupyter y el simulador, como ya se mostró en el capítulo anterior.
 
-Para resolverlo, se realiza uns sencilla segmentación basada en el color para obtener la línea de la imagen, aplicando un filtro y operaciónes morfólogicas de cierre y erosión para eliminar los falos positivos. El resultado del procesado sería similar al siguiente:
+Para resolverlo, se realiza una sencilla segmentación basada en el color para obtener la línea de la imagen, aplicando un filtro y operaciónes morfólogicas de cierre y erosión para eliminar los falos positivos. El resultado del procesado sería similar al siguiente:
 
 \begin{figure}[!hbtp]  \centering\noindent
     \includegraphics[width=0.99\textwidth]{figures/fl_process.png}
