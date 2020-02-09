@@ -1,32 +1,29 @@
 \chapter{Herramienta Web para Enseñanza e Investigación en Visión Artificial y Robótica}
-En este capítulo se explica cómo se implementó la idea planteada paso a paso, detallando minuciosamente cómo se alcanzó cada uno de los hitos mencionados y aportando la explicación técnica de los problemas encontrados y las soluciones propuestas. Se comenzará por describir el diseño de la herramienta en cuestión para cada paso y la arquitectura de cada uno de los módulos que la componen, para luego desembocar en el diseño y arquitectura finales.
+En este capítulo se explica cómo se implementó la idea planteada paso a paso, detallando minuciosamente cómo se alcanzó cada uno de los hitos mencionados y aportando la explicación técnica de los problemas encontrados y las soluciones propuestas.
 
-\clearpage
+Se comenzará por describir el diseño de la aplicación robótica a través de la web en cuestión que simplificará el acceso de los usuarios al mundo de la robótica. Se especificarán los puntos desfavorables que desembocan en la necesidad de un mecanismo que resuelva, además de lo anterior, tanto los posibles defectos como la ubicación del peso del cómputo. Para el primer paso se especificará la arquitectura de cada uno de los módulos que componen el servidor remoto y su interfaz de abstracción, para luego desembocar en el diseño y arquitectura finales de la ``Ejecución Mixta'' que aportaran el mencionado cómputo en el cliente y la escalabilidad de la aplicación web.
+
+\section{Servidor Web en Ejecución Remota}
+
 \begin{figure}[!ht]  \centering\noindent
-    \includegraphics[width=1.20\textwidth,height=10cm]{figures/ejecucion-mixta-infograma.png}
-    \caption{Arquitectura de la Ejecución Mixta para Aplicaciones de Robótica.}
-    \label{mixedexecarch}
+    \includegraphics[width=1.20\textwidth,height=8cm]{figures/servidor_remoto_arquitectura.png}
+    \caption{Arquitectura del Servidor en Ejecución Remota.}
+    \label{remoteexecarch}
 \end{figure}
-
-\section{Servidor Web Remoto}
 
 Del mismo modo que no se puede comenzar la casa por el tejado, no podemos empezar con la implementación del mecanismo de la ``Ejecución Mixta'' sin una aplicación robótica a la que conectarla, lo que también servirá para sacar a la luz las carencias o puntos desfavorables relacionados con el servicio web aplicado a la robótica.
 
-Como todo servicio web, estará ubicado en un punto físico que resultará siempre remoto al usuario que accede a él, es decir, que se ubica en una red distinta a la del usuario que accede a Internet. Por tanto, este servicio web se basará en el clásico entorno remoto en el que es el lado servidor el que carga con el peso computacional del servicio que ofrece.
+\subsection{Diseño del Servidor Web de la Aplicación}
 
-\subsection{Diseño e Infraestructura del Servidor Web de la Aplicación}
+El diseño del contenido prototípico que se quería servir a través de la aplicación web robótica utiliza Django como tecnología de servidor, Jupyter y Gazebo como herramientas en las que se basa la aplicación y sus versiones web para formar el interfaz de usuario y Apache como envoltura para entornos de producción. A fin de ilustrar el funcionamiento y la orientación de la herramienta, decidimos organizar el servicio como una aplicación para el aprendizaje de distintos ámbitos de la robótica por medio de ejercicios con contenido académico.
 
-\begin{figure}[!ht]  \centering\noindent
-    \includegraphics[width=0.99\textwidth]{figures/app_structure.png}
-    \caption{Arquitectura del Servidor Web}
-    \label{appstructure}
-\end{figure}
+Como todo servicio web, estará ubicado en un punto físico que resultará siempre remoto al usuario que accede a él, es decir, que se ubica en una red distinta a la del usuario que accede a Internet. Por tanto, este servicio web se basará en el clásico entorno remoto en el que es el lado servidor el que carga con el peso computacional del servicio que ofrece, y el cliente accede a él de manera muy sencilla a través de los motores de búsqueda de su sistema.
 
-El diseño del contenido prototípico que se quería servir a través de la aplicación web robótica utiliza Django como tecnología de servidor, Jupyter y Gazebo como herramientas del interfaz de usuario y Apache como envoltura para entornos de producción. A fin de ilustrar el funcionamiento y la orientación de la herramienta, decidimos organizar el servicio como una aplicación para el aprendizaje de distintos ámbitos de la robótica por medio de ejercicios con contenido académico.
+Para el diseño de la funcionalidad hemos recurrido a los referentes en aplicaciones web de este tipo, concretamente a la plataforma JdeRobot-Academy, para partir de una organización inicial.
 
-\subsubsection{Back-end del Servicio}
+\subsection{Back-end del Servicio}
 
-Como se puede ver en el esquema de arquitectura del servicio web (Fig. \ref{appstructure}), se ha utilizado Django y su gran cantidad de librerías relacionadas con el servicio web y el acceso y gestión de bases de datos para Python para construir el \textit{back-end} o infraestructura del servidor remoto. Como parte de esta estructura de bajo nivel se diseñó una serie de plantillas HTML que actuarán como interfaz de usuario que están alimentadas por variables Python que provienen de las vistas o \textit{views} de Django, las cuales se encargan de la gestión y el procesado de todas las peticiones que los usuarios de la aplicación generan a través del interfaz. La parte más importante de las vistas es la transformación de las peticiones recibidas en este caso en ejercicios concretos de visión artificial y robótica. Para ello es necesario proveer al servidor con ficheros estáticos que harán las funciones de infraestructura de cada ejercicio, con el fin de actuar como capa de abstracción para que el usuario tenga un API sencillo de utilización del ejercicio y las herramientas utilizadas en el \textit{front-end} puedan transformar sus interacciones en acciones concretas sobre el ejercicio y sus agentes simulados o reales.
+Como se puede ver en el esquema de arquitectura del servicio web (Fig. \ref{remoteexecarch}), se ha utilizado Django y su gran cantidad de librerías relacionadas con el servicio web y el acceso y gestión de bases de datos para Python para construir el \textit{back-end} o infraestructura del servidor remoto. Como parte de esta estructura de bajo nivel se diseñó una serie de plantillas HTML que actuarán como interfaz de usuario que están alimentadas por variables Python que provienen de las vistas o \textit{views} de Django, las cuales se encargan de la gestión y el procesado de todas las peticiones que los usuarios de la aplicación generan a través del interfaz. La parte más importante de las vistas es la transformación de las peticiones recibidas en este caso en ejercicios concretos de visión artificial y robótica. Para ello es necesario proveer al servidor con ficheros estáticos que harán las funciones de infraestructura de cada ejercicio, con el fin de actuar como capa de abstracción para que el usuario tenga un API sencillo de utilización del ejercicio y las herramientas utilizadas en el \textit{front-end} puedan transformar sus interacciones en acciones concretas sobre el ejercicio y sus agentes simulados o reales.
 
 Cabe destacar que el servicio implementado cuenta con muchos módulos internos encargados de las herramientas básicas de usabilidad y experiencia de usuario, como el inicio de sesión y la gestión de sesiones activas, en las cuales no se va a profundizar al no ser objeto específico de este proyecto.
 
@@ -36,21 +33,13 @@ Cabe destacar que el servicio implementado cuenta con muchos módulos internos e
     \label{appui}
 \end{figure}
 
-\subsubsection{Front-end de la Aplicación}
+Como parte del \textit{back-end} encargado del soporte de servicio, se contará tanto con un servidor de Jupyter como con un servidor de Gazebo (\textit{gzserver}) que estarán en constante ejecución durante la solicitud y desarrollo de un ejercicio académico. 
 
-Una vez preparada la estructura básica de gestión de peticiones, se construye encima de la misma la capa de usuario o \textit{front-end} de la aplicación para los ejercicios. Este interfaz se basa en un cuadernillo de Jupyter que permita al usuario, desde el navegador, visualizar el resultado de una ejecución de código Python. Dado que los ejercicios emplearán algún tipo de robot o sensor, también se incluye en la interfaz una sección de simulación con Gazebo o divisiones auxiliares que contendrán la información necesaria para que el usuario pueda depurar y resolver el ejercicio, como visualizadores de imágenes de una cámara.
+Recordemos que Jupyter es una plataforma de escritorio (requiere instalación) con capacidad de visualización a través de la web. El motor computacional de Jupyter requiere del uso de un \textit{kernel} físico del equipo para llevar a cabo sus funciones, y luego comunica los resultados al interfaz web. Por tanto, el procesado de peticiones cuenta con señales de control que disparan el levantamiento de un servidor remoto de Jupyter (local al servidor web) que será el encargado de ejecutar el código del ejercicio del usuario.  Como se puede ver el contexto inicial es puramente local y supone asumir que el código a ejecutar para el ejercicio robótico proviene de la misma máquina que lo sirve, y por tanto se va a encargar de todo el cómputo. 
 
-Recordemos que Jupyter es una plataforma de escritorio (requiere instalación) con capacidad de visualización a través de la web. El motor computacional de Jupyter requiere del uso de un \textit{kernel} físico del equipo para llevar a cabo sus funciones, y luego comunica los resultados al interfaz web. Por tanto, el procesado de peticiones comentado en el subapartado anterior cuenta con señales de control que disparan el levantamiento de un servidor remoto de Jupyter (local al servidor web) que será el encargado de ejecutar el código del ejercicio del usuario. Así, la interacción del usuario se realiza sobre un \textit{Notebook} de Jupyter cuya función es actuar como interfaz de edición de la aplicación (IDE), que enviará mensajes al \textit{kernel} del servidor para que compute. Como se puede ver el contexto inicial es puramente local y supone asumir que el código a ejecutar para el ejercicio robótico proviene de la misma máquina que lo sirve, y por tanto se va a encargar de todo el cómputo. Esto supone un grave problema atendiendo a la escalabilidad y la eficiencia computacional, dado que la conjunción de varios usuarios simultáneos generaría una carga de cómputo no asumible para el servicio.
+Por otro lado, la simulación a través de Gazebo sucede en un escenario análogo al de Jupyter, ya que también se trata de una aplicación de escritorio con interfaz web. Por tanto, también ha de levantarse un servidor de Gazebo que atienda a las peticiones de simulación. Todo lo anterior supone un grave problema atendiendo a la escalabilidad y la eficiencia computacional, dado que la conjunción de varios usuarios simultáneos generaría una carga de cómputo no asumible para el servicio, que para dar soporte a cada uno debería levantar una instancia de ambas aplicaciones.
 
-Por otro lado, la simulación a través de Gazebo sucede en un escenario análogo al de Jupyter, ya que también se trata de una aplicación de escritorio con interfaz web. Por tanto, también ha de levantarse un servidor de Gazebo que atienda a las peticiones de simulación. 
-
-\begin{figure}[!hbtp]  \centering\noindent
-    \includegraphics[width=0.99\textwidth]{figures/ui_simulation.png}
-    \caption{UI de Simulación de la Aplicación}
-    \label{simui}
-\end{figure}
-
-En cuanto a la conexión entre ambas partes, simulador y código, utilizamos ROS como \textit{middleware} de comunicaciones dada su fácil integración con Gazebo y el lenguaje Python, que nos permite construir una aplicación completa y autocontenida asociada al código del ejercicio que creará el mecanismo de inter-comunicación a través de mensajes de ROS (\textit{ROS Messages}) que abrirá canales o \textit{topics} de publicación y suscripción de información (Listing. 4.1) generada por el código que se ejecuta en un ejercicio o destinada a él, de tal manera que los resultados de las instrucciones que el usuario coloque en su código se reflejen en la simulación y en la aplicación web al mismo tiempo.
+En cuanto a la conexión entre ambas partes, simulador y código, utilizamos ROS como \textit{middleware} de comunicaciones dada su fácil integración con Gazebo y el lenguaje Python. Esto permite construir una aplicación completa y autocontenida asociada al código del ejercicio que creará el mecanismo de inter-comunicación a través de mensajes de ROS (\textit{ROS Messages}) que se intercambian por canales o \textit{topics} de publicación y suscripción de información (Listing. 4.1). De esta manera los resultados de las instrucciones que el usuario coloque en su código se reflejan en la simulación.
 
 \begin{lstlisting}[language=bash, caption=Topics de ROS asociados a los Canales de Comunicación Internos]
 ~$ rostopic list
@@ -74,15 +63,33 @@ En cuanto a la conexión entre ambas partes, simulador y código, utilizamos ROS
 
 De nuevo, todo este mecanismo añade demasiada carga al lado servidor, que empieza a requerir soporte computacional adicional para dar servicio, como granjas de ordenadores de soporte o procesadores adicionales. Además, cabe destacar también que el uso de un servicio web remoto como el descrito está muy limitado en cuanto a la variedad de robots soportados. Se ha de tener en cuenta que, por ejemplo en el uso de una cámara, el ejercicio que se construya estará supeditado al tipo de \textit{hardware} del que se disponga en el lado servidor, al entorno de servicio en el que la cámara será estática (lo que limita la riqueza de ejercicios que se pueden construir al estar siempre enfocando al mismo entorno), y en todo caso imposibilita el empleo de los robots de los que los usuarios puedan disponer.
 
-\subsubsection{Envoltura de Servicio HTTP}
-
-Para poner un servicio en producción y que los usuarios puedan acceder a él es necesario el empaquetamiento de toda la estructura en una envoltura de servidor HTTP dado que Django no ofrece por sí mismo este soporte. La tecnología Apache interviene para cumplir esta función. Se trata simplemente de una capa de servidor HTTP orientado a dar un formato correcto a todas las peticiones generadas desde el servicio web y destinadas a él para que puedan viajar por Internet sin percances. Aporta también mecanismos extra de seguridad para proteger el servicio frente a las intrusiones y permite configurar una capa de TLS a través del protocolo SSL y el uso de certificados de encriptación de información.
+Para poner este servicio en producción y que los usuarios puedan acceder a él es necesario el empaquetamiento de toda la estructura en una envoltura de servidor HTTP dado que Django no ofrece por sí mismo este soporte. La tecnología Apache interviene para cumplir esta función. Se trata simplemente de una capa de servidor HTTP orientado a dar un formato correcto a todas las peticiones generadas desde el servicio web y destinadas a él para que puedan viajar por Internet sin percances. Aporta también mecanismos extra de seguridad para proteger el servicio frente a las intrusiones y permite configurar una capa de TLS a través del protocolo SSL y el uso de certificados de encriptación de información.
 
 Todo ello se refleja en los ficheros de configuración de servicio de Apache, compuestos por directivas que indican el tipo de cabeceras HTTP que deben llevar los mensajes, los \textit{endpoints} donde la aplicación web espera a recibir peticiones, la ubicación de los ficheros estáticos y la configuración básica de seguridad, permisos de actuación y servicio.
 
+\subsection{Front-end de la Aplicación}
+
+Una vez preparada la estructura básica de gestión de peticiones, se construye encima de la misma la capa de usuario o \textit{front-end} de la aplicación para los ejercicios. El agente encargado de disponer el interfaz de usuario será el navegador web del cliente. Este interfaz se basa en un cuadernillo de Jupyter que permita al usuario, desde el navegador, visualizar el resultado de una ejecución de código Python. Dado que los ejercicios emplearán algún tipo de robot o sensor, también se incluye en la interfaz una sección de simulación con GzWeb o divisiones auxiliares que contendrán la información necesaria para que el usuario pueda depurar y resolver el ejercicio, como visualizadores de imágenes de una cámara.
+
+Así, la interacción del usuario se realiza sobre un \textit{Notebook} de Jupyter almacenado en el servidor cuya función es actuar como interfaz de edición de la aplicación (IDE), que enviará mensajes al \textit{kernel} del servidor para que compute.
+
+\begin{figure}[!hbtp]  \centering\noindent
+    \includegraphics[width=0.99\textwidth]{figures/ui_simulation.png}
+    \caption{UI de Simulación de la Aplicación}
+    \label{simui}
+\end{figure}
+
+Se puede ver que el cliente web no asume ninguna carga de procesamiento, sino que sólo cuenta con un navegador que en todo momento solicita la visualización de varias aplicaciones que están corriendo coordinadas en el lado del servidor web.
+
 \section{``Ejecución Mixta''}
 
-En este punto, disponemos de una versión completamente remota del servicio de aprendizaje, docencia e investigación que se quiere construir. Se han relatado los problemas derivados de este tipo de servicio, y se puede ver claramente como no encajan con las características deseadas para la herramienta robótica objeto de esta tesis. Por tanto, y tras la investigación correspondiente, se procedió a la implementación de un \textit{local runtime}, es decir, de un entorno de ejecución utilizando un \textit{kernel} local al cliente, en comunicación constante con la aplicación web remota. Había que desarrollar un servidor remoto que contuviese la aplicación y el modelo de ejercicio creado y que, ante una nueva petición del ejercicio, estableciese una comunicación fluida con el \textit{kernel} del cliente para coordinar la ejecución en su \textit{hardware}, por medio del lanzamiento del servidor de ``Ejecución Mixta'' en su máquina. 
+\begin{figure}[!ht]  \centering\noindent
+    \includegraphics[width=1.20\textwidth,height=9cm]{figures/ejecucion-mixta-infograma.png}
+    \caption{Arquitectura de la Ejecución Mixta para Aplicaciones de Robótica.}
+    \label{mixedexecarch}
+\end{figure}
+
+En este punto, disponemos de una versión completamente remota del servicio de aprendizaje y docencia que se quiere construir. Se han relatado los problemas derivados de este tipo de servicio, y se puede ver claramente como no encajan con las características deseadas para la herramienta robótica objeto de esta tesis. Por tanto, y tras la investigación correspondiente, se procedió a la implementación de un \textit{local runtime}, es decir, de un entorno de ejecución utilizando un \textit{kernel} local al cliente, en comunicación constante con la aplicación web remota. Había que desarrollar un servidor remoto que contuviese la aplicación y el modelo de ejercicio creado y que, ante una nueva petición del ejercicio, estableciese una comunicación fluida con el \textit{kernel} del cliente para coordinar la ejecución en su \textit{hardware}, por medio del lanzamiento del servidor de ``Ejecución Mixta'' en su máquina. 
 
 Partiendo del básico servidor web en Django (Fig. \ref{appstructure}), descrito anteriormente, con capacidad para atender a un cliente que solicitase un ejercicio por medio de un click en el interfaz web, se colocó la arquitectura de ``Ejecución Mixta'' debajo del botón sobre el que el usuario hace click para entrar al ejercicio que resolverá el mecanismo de enlazado y comunicación para disponer el entorno mixto.
 
@@ -480,7 +487,7 @@ Además, los diferentes programas que ejecutan en el interior del contenedor Doc
 
 \includepdf[addtolist={1,figure,{Flujograma},flowchart}]{figures/flowchart.png}
 
-\subsection{Mecanismo subyacente de la Herramienta}
+\subsection{Ejecución Mixta: Diagrama de flujo}
 
 Para explicar el mecanismo que desata el uso de la ``Ejecución Mixta'' por parte de una aplicación, se utilizará el caso hipotético de un usuario que dispone de un robot móvil con conectividad inalámbrica a través de una red propia con visibilidad a la red local del usuario, al ser la del robot una subred de ésta.
 
