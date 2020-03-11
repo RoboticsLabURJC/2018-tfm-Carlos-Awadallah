@@ -1,0 +1,139 @@
+\chapter{Infraestructura Utilizada}
+
+Este capítulo recoge el conjunto de herramientas seleccionadas para este proyecto, así como una detallada descripción de la relación entre unas y otras. Se introducirá cada una de las herramientas y se especificará tanto las razones de su elección para el proyecto como la función que cumplirá en él.
+
+Lo que se recoge a continuación es el resultado de los meses de investigación, en los cuales estudiamos numerosas herramientas, entornos y plataformas aplicables a la robótica web que podían aportar algo a nuestros intereses. Finalmente se escogieron los que se listan en este tercer capítulo para formar parte de la solución de ``Ejecución mixta'' para aplicaciones robóticas que proponemos en este Trabajo Fin de Máster.
+
+\section{Proyecto Jupyter}
+
+La herramienta fundamental en la que se basa este desarrollo es el proyecto Jupyter\footnote{\url{https://jupyter.org/}}, la evolución de \textit{IPython 3.0}. Se trata de una aplicación web de código abierto que ofrece la capacidad de crear y compartir documentos, llamados cuadernillos o \textit{Notebooks}, los cuales puede contener textos narrativos y elementos de texto enriquecido (párrafos, ecuaciones, figuras, enlaces, etc.), imágenes ilustrativas, códigos empotrados, ecuaciones, visualizaciones (figuras, gráficos, tablas, etc.) y gran cantidad de elementos gráficos inteligentes. La razón principal de su elección, además de por pertenecer al ámbito de las tecnologías web, es que además de empotrar y editar código el usuario puede ejecutarlo desde su navegador, gracias a la comunicación implícita de la aplicación con los núcleos o \textit{kernels} de computación que incluye el sistema, incluyendo intérpretes para distintos lenguajes. Con ello se dispone de una herramienta a través de la cual se pueden llevar a cabo potentes tareas como la transformación de datos, el modelados estadístico de los mismos, simulaciones numéricas, visualización y análisis de los datos y aprendizaje automático, siendo todos ellos sus principales usos, aunque su funcionalidad es mucho más amplia.
+
+La característica principal del entorno son sus \textit{Notebooks}, documentos generados a través del interfaz de usuario que pueden contener todo lo anteriormente mencionado, completamente legibles por usuarios humanos pero con capacidad para ejecutar código de computadora en hasta 100 lenguajes diferentes para los que da soporte en la actualidad. Básicamente consisten en una
+secuencia lineal de celdas que pueden ser de diferentes tipos, dependiendo de su contenido:
+\begin{itemize}
+\item Celdillas de código: entrada y salida del código en el lenguaje seleccionado para el \textit{Notebook} que se ejecuta en el \textit{kernel}. Estas celdas son extensibles para poder visualizar el resultado de la ejecución del código especificado.
+\item Casillas de reducción: contienen texto narrativo con ecuaciones en formato LaTeX embebidas.
+\item Encabezado de celdas: texto de 6 niveles de organización jerárquica y formato. Útiles para establecer títulos y subtítulos y obtener un documento mucho más claro y ordenado.
+\item Celdas sin formato: texto sin formato específico para ser exportado a diferentes formatos mediante \textit{nbconvert} sin sufrir cambios.
+\end{itemize}
+
+\begin{figure}[!hbtp]  \centering\noindent
+    \includegraphics[width=0.8\textwidth]{figures/jupyterpreview.png}
+    \caption{Cuadernillos de Jupyter}
+    \label{jppreview}
+\end{figure}
+
+Se crean cuadernillos mediante la combinación de los elementos anteriores a través del navegador web, y la aplicación servidor-cliente permite editarlos y ejecutarlos dinámicamente. Para utilizar el servicio, se debe instalar su \textit{software} en un escritorio local y lanzar la aplicación, supuesto en el que no se requiere conectividad de red, o bien puede instalarse en un servidor remoto y utilizar Internet para el acceso. Además de mostrar, editar y ejecutar \textit{Notebooks}, el entorno dispone de un panel de control compuesto de una serie de instrumentos que ejercen alguna clase de acción sobre el cuadernillo, entre los que se encuentran las funciones de abrir y cerrar documentos, levantar, borrar o reiniciar un núcleo, cambiar el formato de una celda concreta o sus meta-datos, etc.
+
+Quizá la parte más importante de esta aplicación son los \textit{kernels} que se han mencionado. Se trata de ``motores computacionales'' que ejecutan el código que el usuario escribe en el cuadernillo. Corrigen la sintaxis del lenguaje y devuelven una serie de instrucciones en código máquina que pueden ser ejecutadas, evalúan su resultado y lo disponen para que el usuario tenga acceso a él a través del interfaz, tal y como haría un intérprete en el caso de los lenguajes interpretados y la secuencia de un compilador y un ejecutor en el resto de casos. Cuando se inicia un \textit{Notebook}, el \textit{kernel} asociado (especificado automáticamente en los meta-datos del documento) se levanta automáticamente, de manera que al ejecutar cada celdilla con código éste realiza el cálculo y produce los resultados. Dependiendo del tipo de cálculos, el \textit{kernel}
+puede consumir CPU y RAM significativas (siempre de la máquina en la que se está ejecutando la aplicación), pudiendo ejecutar procesos más exigentes y desarrollar aplicaciones de mayor complejidad. Finalmente, los cuadernillos pueden ser guardados por el usuario en su sistema de ficheros local, como un documento con extensión \textit{.ipynb}.
+
+Se han mencionado varias características muy interesantes de esta herramienta que encajan a la perfección con nuestros propósitos. En primer lugar, el \textit{kernel} aprovecha toda la capacidad de cómputo del sistema del cliente en que se levanta la aplicación, es decir, puede utilizar su sistema a su conveniencia en función del código que ejecuta. Esto significa que tiene la capacidad de acceder al \textit{hardware} del usuario y de actuar sobre él, justo lo que necesitamos para el proyecto que se presenta. Además, tal y como se especifica en la documentación, el interfaz de Jupyter puede ser accedido remotamente a través de un navegador si se conoce su origen. Eso supone que, aunque el código se está ejecutando en cliente, un agente remoto puede actuar sobre el documento y enviar la orden para que se ejecute de algún modo. Mediante la combinación de estas dos características obtenemos una herramienta que puede actuar de editor de texto para el código del usuario, y que proporciona herramientas para el acceso a su \textit{hardware} de modo remoto, siempre y cuando sea el usuario quien escribe el código. 
+
+Los \textit{Notebooks} que ofreceremos en este TFM se basarán en código Python, versiones 2.7 o 3.5 según las necesidades. Hemos escogido este lenguaje dadas sus amplias ventajas en accesibilidad (mismo intérprete en distintos SO), su versatilidad, su potencia y su fácil adaptación con los mecanismos robóticos, siendo que existen numerosas librerías estándar en robótica con soporte para Python.
+
+\section{Plataforma Docker}
+
+Docker\footnote{\url{https://www.docker.com/}} es una plataforma integral de código abierto para desarrollar, enviar y ejecutar aplicaciones en un entorno virtualizado ligeramente aislado, de manera que aprovecha todas las ventajas y funciones que pone a su disposición un sistema operativo sin requerir todas las dependencias que en primera instancia hacen falta para una virtualización completa como la que se puede encontrar en la tecnología de máquinas virtuales. Docker permite separar la aplicación final de la infraestructura de desarrollo, de tal manera que el \textit{software} se puede compartir rápidamente. Incluso ofrece la capacidad de gestión de una infraestructura completa reduciendo significativamente el tiempo que transcurre entre la desarrollo de la aplicación y su puesta en marcha en un entorno de producción, eliminado los obstáculos que pueden surgir al llevar el código de una máquina a otra. Esto se consigue a través de unidades estándar de software capaces de empaquetar el código de una aplicación y todas sus dependencias para que se ejecute de forma rápida y fiable de un entorno informático a otro. Estas unidades reciben el nombre de contenedores Docker.
+
+Los contenedores garantizan aislamiento y seguridad, lo que permite ejecutar varios contenedores simultáneamente en un \textit{host} determinado sin que se produzcan colisiones y protege el sistema anfitrión sobre el que se monta el contenedor. Además, como ya se ha dicho, son ligeros porque no necesitan la carga extra de un hipervisor, sino que se ejecutan directamente en el \textit{kernel} de la máquina anfitriona, lo que también supone que se superan los largos y tediosos procesos de instalación de la aplicación, sustituyéndose por una ligera descarga. La versatilidad de estas unidades de computación es muy elevada, permitiendo combinaciones complejas como construir una unidad de contenedor sobre un anfitrión que es una máquina virtual, sobre un centro de datos local, un proveedor de \textit{cloud computing} o incluso un híbrido entre ambos (Fig. \ref{docker}).
+
+\begin{figure}[!hbtp]  \centering\noindent
+    \includegraphics[width=0.8\textwidth]{figures/docker-engine.png}
+    \caption{Estructura de Docker}
+    \label{docker}
+\end{figure}
+
+Así, se puede decir que utilizar Docker multiplica exponencialmente la escalabilidad y portabilidad de una aplicación, ya que no hay que prestar atención el sistema operativo latente en el anfitrión, pues la infraestructura del contenedor configura el entorno que la aplicación necesita. Consideramos que esta característica puede resolver toda la parte de accesibilidad a la herramienta que queremos construir, en tanto que se pretende que ésta sea un cliente que se comunica con una aplicación robótica remota y que necesita disponer de ciertos recursos y ejecutar ciertas tareas en el sistema del usuario.
+
+La necesidad de usar esta plataforma surgió a medida que avanzó el proyecto. Se usará en sustitución de la instalación en el ordenador del cliente de la parte de la plataforma web propuesta que es necesaria para que se ejecute en el ordenador del usuario el cómputo de las aplicaciones robóticas. Persiguiendo las ventajas de un proyecto multiplataforma e independiente del sistema del cliente, investigamos Docker para mejorar la experiencia de usuario al evitar que éste tenga que llevar a cabo procesos de instalación, en tanto que podríamos disponer uno con todo lo necesario para que el cliente disfrute de las funciones para aplicaciones robóticas que pueda necesitar desde un entorno predispuesto y debidamente configurado a través de un contenedor.
+
+\section{Entorno Django}
+
+Django\footnote{\url{https://www.djangoproject.com/}} es un marco de trabajo clasificado como tecnología de servidor de alto nivel en Python que garantiza el desarrollo rápido del lado servidor de una aplicación y su diseño. Ofrece gran cantidad de funcionalidad resuelta que se encarga de los detalles del desarrollo Web. Con Django se puede construir una aplicación reutilizando módulos de código con la funcionalidad típica de una aplicación, de tal manera que el desarrollo puede centrarse en escribir la lógica específica del servicio que quiere ofrecer sin necesidad de empezar desde el principio programando cada módulo. Es gratuito y de filosofía abierta.
+
+La arquitectura de Django resulta bastante simple. Como se puede ver en la Figura \ref{django}, organiza la aplicación de tal manera que resulta muy sencillo conocer en todo momento el estado del proceso de servicio.
+
+\begin{figure}[!hbtp]  \centering\noindent
+    \includegraphics[width=0.65\textwidth]{figures/django-arch.png}
+    \caption{Arquitectura de Django}
+    \label{django}
+\end{figure}
+
+Se controla muy fácilmente lo que el usuario ve a través de las vistas de Django, con las que además se dota a la aplicación web de dinamismo e inteligencia. También se controla cómo ve el usuario el contenido de la aplicación a través de las plantillas, que proporcionan herramientas de interacción entre el usuario y el servidor y le permiten realizar peticiones simples para potenciar la funcionalidad que se puede ofrecer. Por último facilita mecanismos muy simples de gestión y acceso a bases de datos a través de distintas tecnologías como MySQL o MongoDB, necesarias para las aplicaciones y que evita la especialización en lenguajes utilizados para peticiones a bases de datos por parte del desarrollador web. En resumen, facilita el proceso de construcción y diseño de aplicaciones web para que el desarrollador no tenga que preocuparse por el bajo y medio nivel.
+
+Esta característica, junto con la escalabilidad del lado servidor construido con tecnologías web de servidor, es precisamente la que decantó la balanza hacia el uso de Django en nuestra plataforma. La aplicación web resultante será enriquecida con la herramienta de ``Ejecución Mixta'' para ofrecer cierto servicio robótica docente. La aplicación remota basada en Django ofrecerá la funcionalidad para la que ha sido diseñada sin consumir recursos en el sistema anfitrión, y llevará a cabo el proceso de ``Ejecución mixta'' que queremos conseguir para garantizar el acceso a cualquier cliente.
+
+\section{ROS (Robot Operating System)}
+
+ROS (Robot Operating System)\footnote{\url{https://www.ros.org/}} es un \textit{middleware} flexible ideado para desarrollar \textit{software} robótico. Proporciona multitud de bibliotecas, paquetes de código y herramientas para ayudar a los desarrolladores de aplicaciones relacionadas con la robótica en todos sus ámbitos a crear aplicaciones de robots. Su uso está muy extendido por todo el mundo, desde caseros a profesionales, dadas sus ventajas frente a otros soportes similares. Su extensión se debe en parte a que surgió en una etapa en la que no existía un entorno abierto que unificara todos los módulos necesarios para construir una aplicación robótica completa, y en la que tampoco existía \textit{software} estándar para la programación de robots. En esos años el desarrollo de un proyecto en muchos casos se tornaba arduo, además de la complejidad presente a la hora de extenderlo, incluir herramientas o funcionalidad externa o incluso al agrandar el grupo de desarrollo, en el que cada uno podía tener su método de trabajo. ROS alivia todos estos problemas al ofrecer los módulos necesarios para implementar el código y llevarlo al robot, de principio a fin, todo en un mismo sitio distribuido bajo una licencia BSD de código abierto. Permite la abstracción de la capa \textit{hardware}, proporciona controladores de dispositivo (\textit{drivers} o \textit{plugins}), bibliotecas, visualizadores, resuelve el intercambio de mensajes y facilita la administración de paquetes entre muchas otras cosas.
+
+Resulta bastante lógica su elección para este TFM, en el que precisamente queremos lograr esa abstracción del bajo nivel para ofrecer una plataforma de desarrollo de aplicaciones de alto nivel para que el usuario se sienta cerca de la robótica. Cabe destacar también que ROS ofrece soporte para distintos lenguajes, entre ellos Python, y que dispone de canales de comunicación automáticos configurables y parametrizables que simplifican en gran medida la comunicación con el \textit{hardware} y con aplicaciones externas.
+
+En esta línea destaca otra de las fortalezas de ROS, que es su integración con el simulador Gazebo mediante la serie de paquetes \textit{gazebo\_ros\_pkgs}\footnote{\url{https://wiki.ros.org/gazebo\_ros\_pkgs}} que utilizan estructuras de tipo \textit{ROS Messages} para permitir la simulación de robots y  ofrecer servicios sobre la simulación como la reconfiguración dinámica. Esta ventaja puede ser muy útil para el soporte de simulación que queremos incluir en la solución de ``Ejecución Mixta'', para aquellos usuarios que no disponen de sistemas electro-mecánicos reales. ROS provee de los módulos \textit{software} que permiten controlar las interfaces de los robots simulados pero también reales, proporcionándonos acceso a sus sensores y control sobre sus actuadores.
+
+ROS propone un desarrollo basado en la estructura de la aplicación organizada como una colección de nodos (procesos que conllevan computación) que se jerarquizan y se combinan en un grafo comunicándose entre ellos mediante \textit{topics} o canales de transmisión, servicios RPC y el Servidor de
+Parámetros. Con esto, podemos ejercer un control específico y restrictivo sobre cada módulo implicado en el sistema de control de un robot, que generalmente comprenderá muchos, y ofrecer al usuario sólo aquellos que necesita en cada ocasión para facilitarle el desarrollo. El empleo de nodos en ROS proporciona  beneficios como la tolerancia adicional a errores (quedan contenidos en nodos individuales) y la disminución de la complejidad del código.
+
+En cuanto a los \textit{topics} como medio de comunicación, se definen como buses que los nodos utilizan para intercambiar mensajes con formatos específicos. Tienen una semántica  basada en la publicación de mensajes y/o suscripción anónima a un canal concreto o varios, que desacopla el cómo o quién genera cierta información del quién o qué la consume. Con ello, los nodos no tienen por qué saber la fuente o el receptor de sus datos, sino que simplemente adquieren aquello que necesitan y divulgan lo que puede resultar útil para cumplir otras funciones según lo que se necesite en cada momento. De esta manera puede haber muchos consumidores de una misma fuente, e incluso se puede obtener y difundir datos desde el mismo nodo.
+
+Usaremos ROS para resolver todo el bajo nivel robótico de nuestra plataforma, así como de \textit{middleware} de comunicaciones entre el robot (real o simulado) y el código del usuario, que además dispondrá de un API público programado en Python que le proporcione la abstracción mencionada y le facilite el envío de órdenes y la recepción de resultados del sistema robótico.
+
+\section{Simulador Gazebo}
+
+Gazebo\footnote{\url{http://gazebosim.org/}} es un simulador cuyo uso está muy extendido en el campo de la robótica. Para poder evaluar el código destinado a un robot o sistema en un paso previo al de cargar dicho código en él, este simulador ofrece la capacidad de emular diversos escenarios tridimensionales customizables para robots autónomos. Está diseñado por ejemplo para probar lógica de elusión de objetos y algoritmos de visión artificial, aunque su uso es extensible a cualquier tipo de implementación. 
+
+Para nuestro proyecto era necesario disponer de soporte de simulación, dado que la intención es ofrecer un interfaz que funcione con robots reales y simulados para ofrecer la robótica a usuarios con y sin recursos. Además, especialmente en un proceso de aprendizaje o investigación en el que no se es experto en la materia tratada, se hace necesario probar el \textit{software} desarrollado antes de correr el riesgo de utilizarlo en un sistema real, que suele ser frágil y costoso en este campo, e incluso peligroso para los usuarios según el diseño mecánico del sistema y la tarea a realizar. El uso de simuladores en robótica evita la implementación de costosas y poco útiles pruebas de código en \textit{hardware} real en las primeras fases del desarrollo. Ofrecer este ``\textit{hardware} virtual'' permite evaluar y supervisar el desempeño de la lógica en todo momento, agilizando el desarrollo y abaratando costes, y abre el abanico de usuarios que pueden acceder a la robótica. Estas son las razones principales de su elección como simulador para este proyecto, además del hecho de que es de código abierto.
+
+Existen muchos otros simuladores con características similares como Webots, V-Rep, Morse, etc. que hacen que Gazebo esté lejos del estándar de simulación robótica. A continuación veremos otras características que hemos analizado para elegir Gazebo y no otro en relación con el uso final que se va a hacer de él: docente, investigativo o formativo.
+
+La característica más importante es su versatilidad, ya que puede simular robots, objetos y los sensores actuales más utilizados en entornos complejos de
+interior y exterior con multitud de elementos realistas para los robots. Es de los pocos simuladores que incluyen elementos que pueden emular problemas reales como ruido sensorial producido por superficies reflectantes, o la inclusión de texturas que el robot puede detectar, entre otras cosas. Además, posee un interfaz de gran calidad.
+
+Por otro lado, cabe mencionar su robusto motor de físicas\footnote{\url{http://opende.sourceforge.net}} (Fig. \ref{gazebo-physics}), creado por Russel Smith, que permite caracterizar elementos del robot como su masa, el rozamiento al que se somete, su inercia, amortiguamiento, etc. Con ello y los mecanismos que proporciona para conectar los cuerpos entre sí formando relaciones cinemáticas y dinámicas, y las propiedades de color, textura y transparencia que se pueden incluir, se consigue diseñar modelos de simulación con visualizaciones muy realistas a través de OpenGL\footnote{\url{https://www.opengl.org/}} que se adaptan bien a situaciones reales (Fig. \ref{gazebo-models}).
+
+\begin{figure}[!hbtp]  \centering\noindent
+    \includegraphics[width=0.99\textwidth]{figures/gazebo-engine.png}
+    \caption{Motor de físicas de Gazebo}
+    \label{gazebo-physics}
+\end{figure}
+
+\begin{figure}[!hbtp]  \centering\noindent
+    \includegraphics[width=0.99\textwidth]{figures/gazebo-models.png}
+    \caption{Modelos de Simulación en Gazebo}
+    \label{gazebo-models}
+\end{figure}
+ 
+La configuración de mundos 3D con Gazebo se describe en ficheros con extensión ``\textit{.world}'', que son documentos de texto en formato de marcado XML (\textit{Extensible Markup Language}) de documentos, con etiquetas definidas en el lenguaje \textit{Simulation Description Format} (SDF), donde se
+recogen todos los elementos del escenario (luz ambiente, propiedades del cielo, sombras, conjunto de modelos, \textit{plugins}, propiedades
+físicas y temporales etc.).
+ 
+Aunque la versión 7 de Gazebo incluye un editor de modelos muy básico con el que se pueden crear robots y mundos simples, el simulador acepta la importación de modelos complejos creados con programas de modelado como Blender o Sketchup. A partir del modelo, se especifica un \textit{plugin} asociado al mismo para recoger y publicar la información de los sensores, y para enviar órdenes a los actuadores y dotar al robot simulado de inteligencia e interacción. Es aquí donde se materializa la relación entre el simulador y el sistema de comunicaciones de ROS, que hará las funciones de mediador entre la aplicación y el robot simulado en este caso.
+
+Por último, es importante destacar que cuenta con un cliente web, llamado GzWeb que permite acceder al interfaz de simulación desde un navegador web. Se trata de un cliente con tecnología WebGL que se comunica con un proceso de Gazebo para conseguir que la simulación sea multiplataforma y su acceso no requiera instalación, características ideales para el proyecto.
+
+\section{Biblioteca OpenCV}
+En primera instancia, la plataforma que planeábamos diseñar perseguía la ampliación del acceso al campo de la Visión Artificial de la robótica, en tanto que los sensores necesarios (cámaras, ToF, sensores de profundidad) son los más extendidos entre los usuarios de cualquier clase. Es por eso que, aunque la funcionalidad finalmente se extendió para que la plataforma soportase cualquier ámbito de la disciplina robótica, merece una mención especial la tecnología utilizada para el control de los sensores de imagen: las bibliotecas OpenCV\footnote{\url{https://opencv.org/}}.
+
+OpenCV es una librería de código abierto desarrollada inicialmente por Intel y publicada bajo licencia BSD. Incluye gran variedad de herramientas para el tratamiento digital de la imagen y el aprendizaje máquina. Su propósito principal es facilitar la programación de aplicaciones en tiempo real de visión por computador mediante la disposición de módulos de lógica resuelta que implementan alguna técnica de procesamiento o análisis de la imagen (Fig. \ref{opencv}).
+
+\begin{figure}[!hbtp]  \centering\noindent
+    \includegraphics[width=0.99\textwidth]{figures/opencv-face.png}
+    \caption{Herramientas de procesado con OpenCV: Segmentación de caras.}
+    \label{opencv}
+\end{figure}
+
+Se escogió esta librería por ser el estándar en lo relativo a la visión artificial, y se usará tanto para obtener acceso al \textit{hardware} que proporcione la fuente de fotogramas como para utilizarse en la aplicación robótica que se creará para tratar las imágenes.
+
+\section{Lenguajes de Programación: Python, JavaScript}
+
+En cuanto a los lenguajes de programación escogidos para la implementación, se hace necesaria una sub-división en dos ámbitos:
+
+\begin{itemize}
+    \item Lenguaje de Aplicación y de Usuario. Es necesario escoger un lenguaje para programar toda la lógica de la aplicación a ofrecer. También se hizo necesario ofrecer un lenguaje al usuario para que aborde su desarrollo robótico.
+    \item Lenguaje de Infraestructura. El contexto de tecnologías web en el que se encuentra la ``Ejecución Mixta'' requiere de la elección de un lenguaje que pueda hacer que los distintos agentes colaboren entre sí, principalmente mediante protocolos.
+\end{itemize}
+
+Así, el primer lenguaje escogido ha sido Python\footnote{\url{https://www.python.org/}}, como lenguaje de aplicación y usuario. En primer lugar, la elección se debe a la compatibilidad del lenguaje con la infraestructura detallada en este capítulo. Tanto Gazebo como ROS, OpenCV, Jupter y Django ofrecen interfaces Python. Por otro lado están las atractivas características del lenguaje, como sus estructuras de datos integradas de alto nivel, su apariencia intuitiva, y la combinación del tipado y el enlace dinámicos, que hacen al lenguaje idóneo para desarrollar aplicaciones rápidamente. Además, su sintaxis resulta simple y fácil de aprender y enfatiza la legibilidad, lo que a grandes rasgos reduce el costo del mantenimiento del programa. Además fomenta la modularidad del programa y la reutilización de código, lo que lo convierte en un lenguaje de programación muy adecuado para el aprendizaje. Eliminando las peculiaridades que pueden hacer a un lenguaje difícil de tratar, conseguimos que el usuario se centre en su objetivo de carácter robótico y evite los dilemas y contratiempos relacionados con la programación.
+
+En cuanto al lenguaje a usar para la infraestructura de la herramienta, el entorno web hace que la elección de JavaScript\footnote{\url{https://developer.mozilla.org/es/docs/Web/JavaScript}} resulte prácticamente obvia. Desde el 2012, todos los navegadores modernos soportan completamente ECMAScript 5.1\footnote{\url{https://developer.mozilla.org/en-US/docs/Web/JavaScript/Language_Resources}}, el estándar de JavaScript. Por tanto, este lenguaje va a permitir realizar actividades complejas en páginas web, entorno en el que deberá operar la ``Ejecución Mixta'' para aplicaciones robóticas. Este entorno permitirá aprovechar los mecanismos y protocolos de comunicación de Internet para resolver el intercambio de mensajes entre nuestra herramienta, la aplicación robótica, el navegador y el cliente.

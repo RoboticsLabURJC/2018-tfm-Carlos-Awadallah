@@ -1,0 +1,168 @@
+% Carlos Awadallah Estévez
+\documentclass[11pt,a4paper,twoside]{book}
+\setcounter{tocdepth}{3}
+\setcounter{secnumdepth}{3}
+\usepackage[pdftex]{hyperref}
+\usepackage{graphicx}
+\usepackage[spanish,es-tabla]{babel} %\usepackage[english]{babel}
+\usepackage[utf8]{inputenc}
+\usepackage{fancyhdr}
+\usepackage{invuc3mlib}
+\usepackage{url}
+\usepackage{apacite}
+\usepackage[nottoc,notlof,notlot]{tocbibind}
+\usepackage{palatino}
+\usepackage[Lenny]{fncychap}
+\usepackage[font=small,format=plain,labelfont=bf,up,textfont=it,up]{caption}
+\usepackage{colortbl}
+\usepackage{indentfirst}
+\usepackage{hhline}
+\usepackage{mathtools}
+\usepackage{amsmath}
+\usepackage{listings}
+\usepackage{multirow} % para las tablas
+\usepackage{subcaption}
+\usepackage{pdfpages}
+\usepackage{minted}
+\hypersetup{  
+    pdftitle={Master Thesis - Author},
+    pdfsubject={Master Thesis - Author},
+    pdfauthor={Author},
+    pdfkeywords={keyword1} {keyword2},
+    colorlinks,
+    citecolor=black,
+    filecolor=black,
+    linkcolor=black,
+    urlcolor=black, } 
+
+\usepackage{color}
+\definecolor{lightgray}{rgb}{.9,.9,.9}
+\definecolor{darkgray}{rgb}{.4,.4,.4}
+\definecolor{purple}{rgb}{0.65, 0.12, 0.82}
+\lstdefinelanguage{JavaScript}{
+  keywords={const, typeof, new, true, false, catch, function, return, null, catch, switch, var, if, in, while, do, else, case, break},
+  keywordstyle=\color{blue}\bfseries,
+  ndkeywords={class, export, boolean, throw, implements, import, this},
+  ndkeywordstyle=\color{darkgray}\bfseries,
+  identifierstyle=\color{black},
+  sensitive=false,
+  comment=[l]{//},
+  morecomment=[s]{/*}{*/},
+  commentstyle=\color{purple}\ttfamily,
+  stringstyle=\color{red}\ttfamily,
+  morestring=[b]',
+  morestring=[b]"
+}
+\definecolor{gray}{rgb}{0.4,0.4,0.4}
+\definecolor{darkblue}{rgb}{0.0,0.0,0.6}
+\definecolor{cyan}{rgb}{0.0,0.6,0.6}
+
+\lstset{
+  basicstyle=\ttfamily,
+  columns=fullflexible,
+  showstringspaces=false,
+  commentstyle=\color{gray}\upshape
+}
+\lstdefinelanguage{XML}{
+  morestring=[b]",
+  morestring=[s]{>}{<},
+  morecomment=[s]{<?}{?>},
+  stringstyle=\color{black},
+  identifierstyle=\color{darkblue},
+  keywordstyle=\color{cyan},
+  morekeywords={xmlns,version,type}% list your attributes here
+}
+
+\usepackage{geometry}
+\geometry{bindingoffset=1cm, papersize={210mm,297mm}, total ={135mm, 220mm}, includefoot, includehead}
+
+\setlength{\topmargin}{0cm} 
+\setlength{\headsep}{8mm}
+\newcommand{\clearemptydoublepage}{\newpage{\pagestyle{empty}%
+\cleardoublepage}}
+
+\begin{document}
+	\title{\textbf{Ejecución Mixta de Ejercicios de Visión Artificial y Robótica a través de la Web}}
+	\author{Carlos Kamal Awadallah Estévez}
+	 
+	\tutor{Arturo de la Escalera Hueso}
+	\cotutor{José María Cañas Plaza}
+  %\stutor{Miguel Ángel Salichs Sánchez-Caballero}
+
+        \primerjurado{Dr./Dra.}
+        \segundojurado{Dr./Dra.}
+        \thirdreader{Dr./Dra.}
+		
+    \dedicate{
+\begin{flushright}
+ ``The only thing that comes to a sleeping man is dreams''
+\end{flushright}
+\begin{flushright}
+Tupac Amaru Shakur a.k.a Makaveli
+\end{flushright}
+    }
+
+    	\beforepreface
+
+    \prefacesection{Agradecimientos}
+Es curioso ver cómo se cierra ésta importante y larguísima etapa estudiantil sin sentir ya ningún cambio en especial y, sin embargo, darme cuenta de que siempre estuve preparado para todo lo que esté por venir. Esta seguridad es en gran parte debida a los aportes y el sustento, ya fuera anímico o económico, de todos aquellos a los que a continuación quiero dedicar algunas palabras.
+
+Hace algunos años ya desde que no puedo evitar pensar en todo lo que mi madre dio, da y dará por mi durante mi vida, e incluso antes de ella. No sorprendo a nadie si confieso que sin ella jamás habría llegado aquí y, aún más importante, no sería quien soy. Su fuerza y su visión del camino es lo que me impulsó día a día para crecer, y es ahora cuando veo el valor de sus sacrificios. Ninguna palabra que escriba serviría para darte las gracias por lo que haces, MªLuz, y aunque ya lo sabes quiero que quede escrito que te quiero con todo mi corazón. 
+
+Mi familia estuvo siempre al pie del cañón, tanto mi hermana Shadia, como mi abuela MªRosa y mi tía Rosi siempre me desearon lo mejor y me agasajaron con sus ánimos de valor incalculable. Cómo no mencionar también a Antonio, sin él ni siquiera habría tenido la oportunidad que hoy estoy aprovechando. A todos ellos, y también al resto de mi familia presente, gracias por todo.
+
+Continuo con mis tutores, quienes hicieron el terreno muy llano, acallaron mis dudas y me orientaron siempre con sabiduría y razón. Gracias a José María por transmitirme el gusto por la Robótica y por tratarme siempre de la mejor manera, por saciar mi curiosidad y por tu dedicación, sin la que el proyecto no habría salido adelante. Muchas gracias a Arturo por hacerlo todo tan fácil, y en especial por haberme permitido desarrollar mi propia idea y por impulsarme a alcanzar mis objetivos.
+
+En este punto de mi vida es también cuando he caído en la cuenta del precioso tesoro que tengo alrededor. Me refiero, por supuesto, a mis amigos de siempre. Reciben una mención especial Joel. C, Patri, Lidia y Joel. Y, y no necesito dar detalles del merecimiento de la misma. Crecemos y tomamos caminos distintos, pero siempre tenemos un hueco para tomarnos una cerveza y construir lazos mucho más fuertes aún con las escasas oportunidades que tenemos para ello. Es increíble, son increíbles. Sigan inspirándome como lo hacen.
+
+Por todas aquellas personas que conocí en Madrid y que cobraron gran protagonismo en mi vida. Por mis amigos de la Universidad y por mis chicas del gimnasio, estoy agradecido. Han hecho esta dura etapa un camino limpio e iluminado. A todos, un fuerte abrazo.
+
+Por último, pero quizá mas importante, gracias a mi. Probablemente suene algo narcisista pero debo ser consciente de que si estoy aquí es porque yo me he traído. Que por encima de todo he sido yo el responsable de decidir, hacer y decidir hacer. Nunca cambies tu forma de trabajar y sobre todo de ver, porque has comprobado su valor único y su efectividad al llegar donde estas. Recuerda estas palabras para que nunca te falte fuerza de voluntad.
+
+  	\prefacesection{Resumen}
+Esta tesis busca dar solución a un problema latente en el joven campo de la Ingeniería Robótica: su difícil accesibilidad. Se ha llevado a cabo un exhaustivo proceso de investigación que ha desembocado en las causas de ésta limitación y se ha diseñado una herramienta, cuyo desarrollo también se recoge en este documento, de características potentes y novedosas, que puede suponer un paso adelante en la resolución del problema mencionado. 
+
+El proyecto comienza con el estudio del panorama robótico actual y de las tendencias últimas en lo relativo al desarrollo de aplicaciones robóticas. Tras este análisis de estado se plantea el problema y se propone una idea, la ``Ejecución Mixta'' para tareas de visión artificial y robótica, como primera aproximación existente a la solución.
+
+Tras la descripción y planteamiento iniciales se establecen en el Capítulo 2 unos objetivos determinados y se explica cómo se abordarán para, después, comenzar en el Capítulo 3 con la etapa de investigación asociada al proyecto que culminó con la selección de las herramientas y tecnologías involucradas en el proyecto.
+
+Se detalla ya en el Capítulo 4 la estructura diseñada para abordar el problema y su arquitectura. También se recoge el proceso de implementación de la herramienta junto con los problemas que surgieron y la solución adoptada, además del funcionamiento de la misma.
+
+Se expone en Capítulo 5 el conjunto de pruebas utilizado para validad la herramienta y medir sus prestaciones, también útil para la extracción de inferencias, las cuales se recogen en el último capítulo a modos de conclusión, junto con una hoja de ruta a corto plazo y las aplicaciones principales del desarrollo.
+
+		\prefacesection{Abstract}
+This thesis looks forward to providing a solution to an underlying problem in the young field of Robotic Engineering: its difficult accessibility. An exhaustive research process has been carried out that has led to the causes of this limitation and a tool, whose development is also included in this document, with powerful and innovative features, has been designed and may represent a step forward in solving the aforementioned problem. 
+
+The project begins with the study of the current robotic outlook and the latest trends in the development of robotic applications. After this state analysis the problem is presented and an idea is proposed, the 'Mixed Execution' for artificial vision and robotic tasks, as a first existing approach to the solution.
+
+After the initial description and consideration, in Chapter 2 some specific objectives are established and it is explained how they will be achieved. Then, in Chapter 3, the research stage associated to the project is started, culminating with the selection of the tools and technologies involved in the project.
+
+The structure designed to address the problem and its architecture is detailed in Chapter 4. The process of implementing the tool is also described, along with the problems that arose and the solution adopted, as well as how the final tool operates.
+
+The test suite used to validate the tool and measure its performance, also useful for drawing inferences, is presented in Chapter 5. Those findings are set out in the last chapter in conclusion mode, together with a short-term roadmap and the main applications of the development.
+
+	\cleardoublepage
+    	\afterpreface
+
+	\pagestyle{fancyplain}
+	\renewcommand{\chaptermark}[1] %
+	{\markboth{#1}{\thechapter\ #1}}
+	\renewcommand{\sectionmark}[1]%
+	{\markright{\thesection\ #1}}
+	\lhead[\fancyplain{}{\bfseries\thepage}]
+	{\fancyplain{}{\bfseries\rightmark}}
+	\rhead[\fancyplain{}{\bfseries\leftmark}] {\fancyplain{}{\bfseries\thepage}}
+	\cfoot{}
+	
+	\input{chapter1}
+	\input{chapter2}
+	\input{chapter3}
+	\input{chapter4}
+	\input{chapter5}
+    \input{chapter6}
+
+\nocite{*}
+\bibliographystyle{apacite}
+\bibliography{library}
+		
+\end{document}
